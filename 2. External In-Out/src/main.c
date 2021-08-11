@@ -1,13 +1,15 @@
 /*
- * @FILENAME:          main.c
+ * @FILENAME:           main.c
  *
- * @DESCRIPTION:       Intermitently lights a LED conected to PE1. There is a push button
- *                     connected in PE0 and, while it is pressed, the LED whil turn on and off
- *                     faster.
+ * @DESCRIPTION:        Intermitently lights a LED conected to PE1. There is a push button
+ *                      connected in PE0 and, while it is pressed, the LED whil turn on and off
+ *                      faster.
  *
- * @AUTHOR:            Hiram Montejano Gómez
+ * @AUTHOR:             Hiram Montejano Gómez
  * 
- * @STARTING DATE:     10/08/2021
+ * @STARTING DATE:      10/08/2021
+ *
+ * @ENDING DATE:        10/08/2021
  */
 
 #include <TM4C123GH6PM.h>
