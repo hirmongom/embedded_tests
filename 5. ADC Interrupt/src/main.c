@@ -5,17 +5,17 @@
  *                      and turns on a length of them based on
  *                      the input from a potentiometer.
  *
+ *                      The difference with the last application is that instead
+ *                      of using a polling method (which is a waste of microcontroller
+ *                      processing time and resources), we use the ADC interrupt
+ *                      handler to read the conversion value.
+ *
  * @HARDWARE:           - PE0 ->  Potentiometer
  *                      - PE1 ->  Green LED
  *                      - PE2 ->  Blue LED
  *                      - PE3 ->  White LED
  *                      - PE4 ->  Yellow LED
  *                      - PE5 ->  Red LED
- *
- *                      The difference with the last application is that instead
- *                      of using a polling method (which is a waste of microcontroller
- *                      processing time and resources), we use the ADC interrupt
- *                      handler to read the conversion value.
  *
  * @AUTHOR:             Hiram Montejano Gómez
  * 
@@ -91,7 +91,7 @@ void PortE_Init(void)
 
   ADC0->ACTSS &= ~(1<<3);                 // Disable Sample Sequencer 3 (SS3) during configuration
   ADC0->EMUX &= ~0xF000;                  // Conversion event trigger initialized by software
-  ADC0->SSMUX3 |= 0x03;                    // Get input sample from channel AIN3 (PE0)
+  ADC0->SSMUX3 |= 0x03;                   // Get input sample from channel AIN3 (PE0)
   ADC0->SSCTL3 |= 0x06;                   // Take sample one at a time, set flag at first sample
 
   ADC0->IM |= (1<<3);                     // Unmask ADC0 SS3 interrupt
