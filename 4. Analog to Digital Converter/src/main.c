@@ -58,7 +58,7 @@ int main(void)
       GPIOE->DATA |= 0x1E;      // Turnn on the first 4 LEDs
       GPIOE->DATA &= 0x1E;      // Turn off the other LEDs
     }
-    else if(3400 < adc_value)
+    else if(3400 <= adc_value)
     {
       GPIOE->DATA |= 0x3E;      // Turn on all LEDs
     }
