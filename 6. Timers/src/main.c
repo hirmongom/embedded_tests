@@ -38,19 +38,19 @@ int main(void)
   portB_Init();
   Timer0A_Init();
 
-  uint32_t time;
+  uint32_t wave_time;
   uint32_t distance;
 
   while(1)
   {
 
     // Send ultrasonic wave for 10 microseconds
-    GPIOB->DATA |= 0x02;                    // Start sending wave
-    Timer1A_delay10microsec();              // Wait 10 microseconds    
-    GPIOB->DATA &= ~0x02;                   // Stop sending wave
+    GPIOB->DATA |= 0x02;                          // Start sending wave
+    Timer1A_delay10microsec();                    // Wait 10 microseconds    
+    GPIOB->DATA &= ~0x02;                         // Stop sending wave
 
-    time = Timer0A_CaptureWaveTime();       // Store time it took for the wave to travel
-    distance = (time * 10625)/10000000;     // Convert time traveled into centimeters traveled
+    wave_time = Timer0A_CaptureWaveTime();        // Store time it took for the wave to travel
+    distance = (wave_time * 10625)/10000000;      // Convert time traveled into centimeters traveled
 
     if(250 < distance)
     {
