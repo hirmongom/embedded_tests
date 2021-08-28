@@ -44,12 +44,11 @@ def Send_Temperature(temp):
     
 # main()
 
+while True:
 # Conversion to integer: remove decimal point
 # Conversion to string: for later encoding and sending it through serial
 # Division by 10: convert into 1 digit number
-
-while True:
     CPU_Temperature = str(int(Get_Temperature() / 10))
-    print(CPU_Temperature)
+    
     Send_Temperature(CPU_Temperature)
     time.sleep(2)
