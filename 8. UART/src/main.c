@@ -137,7 +137,7 @@ void Temperature_Output(unsigned char temperature)
  * @BRIEF:          Gets the value of temperature and lights the LEDs
  *                  based on that value.
  *
- * @ARGUMENTS:      unsigned_char temperature_UC -> Temperature
+ * @ARGUMENTS:      unsigned_char temperature -> Temperature to show in the LEDs
  */
 {
   if(temperature == '5')              // 50:59 ºC
