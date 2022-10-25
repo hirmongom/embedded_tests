@@ -1,25 +1,23 @@
 CC = arm-none-eabi-gcc
-CXX = arm-none-eabi-g++
 MACH = cortex-m4
 CFLAGS = -c -Icmsis -Iinc -mcpu=$(MACH) -mthumb -Wall -O0
 
 LD = arm-none-eabi-ld
 LS = src/GCC/gcc_arm.ld
-LDFLAGS = -T $(LS) -e Reset_Handler -shared -fno-exceptions
+LDFLAGS = -T $(LS) -e Reset_Handler
 
 OBJCOPY = arm-none-eabi-objcopy
 
-CSOURCES := $(wildcard src/*.c)
-CPPSOURCES := $(wildcard src/*.cpp)
-OBJECTS := $(patsubst src/%.c, obj/%.o, $(CSOURCES)) $(patsubst src/%.cpp, obj/%.o, $(CPPSOURCES))
+SOURCES := $(wildcard src/*.c)
+OBJECTS := $(patsubst src/%.c, obj/%.o, $(SOURCES))
 
 all : build/final.bin
 
 obj/%.o : src/%.c | obj
 	$(CC) $(CFLAGS) -o $@ $<
 
-obj/%.o : src/%.cpp | obj
-	$(CXX) $(CFLAGS) -o $@ $<
+src/startup_TM4C123.s : obj/startup_TM4C123.o
+	$(CC) $(CFLAGS) -o $@ $^
 
 build/final.elf : $(OBJECTS) | build
 	$(LD) $(LDFLAGS) -o $@ $^
