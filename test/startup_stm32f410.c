@@ -5,7 +5,9 @@
 
 #define OVERRIDABLE_HANDLER		__attribute__((weak, alias("Default_Handler")))
 
+void Default_Handler(void);
 void Reset_Handler(void);
+
 void NMI_Handler(void) 						OVERRIDABLE_HANDLER;
 void HardFault_Handler(void) 				OVERRIDABLE_HANDLER;
 void MemManage_Handler(void) 				OVERRIDABLE_HANDLER;
@@ -198,3 +200,15 @@ uint32_t NVIC[] __attribute__((section(".nvic"))) = {
 	(uint32_t)&I2C4_ER_Handler,
 	(uint32_t)&EXTI23_LPTIM1_Handler
 };
+
+void Reset_Handler(void) {
+	// TODO copy .data to SRAM
+
+	// TODO Init .bss to zero in SRAM
+
+	main();
+}
+
+void Default_Handler(void) {
+	while(1);
+}
