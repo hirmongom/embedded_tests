@@ -1,3 +1,13 @@
+/**
+ * @file	startup.c
+ * 
+ * @brief 	Startup file for the STM32F410 line of microcontrollers
+ * 
+ * @author 	Hiram Montejano Gomez
+ * 
+ * @date 	14/06/2023
+ */
+
 #define		SRAM_START		0x20000000U
 #define		SRAM_SIZE		(32 * 1024)
 #define		SRAM_END		(SRAM_START + SRAM_SIZE)
