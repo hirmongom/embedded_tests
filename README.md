@@ -51,6 +51,8 @@ You can find the applications I developed for the Texas Instruments Tiva TM4C123
 
 This project is licensed under the [GNU General Public License version 3](./LICENSE).
 
+
+
 ---
 
 Feel free to explore the applications and source code in this repository, although please note that extensive documentation may not be available
