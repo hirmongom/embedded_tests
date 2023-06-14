@@ -1,11 +1,27 @@
 /**
- * @file	startup.c
+ * @file		startup.c
  * 
- * @brief 	Startup file for the STM32F410 line of microcontrollers
+ * @brief 		Startup file for the STM32F410 line of microcontrollers
  * 
- * @author 	Hiram Montejano Gomez
+ * @author 		Hiram Montejano Gómez
  * 
- * @date 	14/06/2023
+ * @date 		14/06/2023
+ * 
+ * @copyright 	This file is part of the "STM32F10RB Microcontroller Applications" project.
+ * 
+ * 				Every file is free software: you can redistribute it and/or modify
+ * 				it under the terms of the GNU General Public License as published by
+ * 				the Free Software Foundation, either version 3 of the License, or
+ * 				(at your option) any later version.
+ * 
+ * 				These files are distributed in the hope that they will be useful,
+ * 				but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * 				MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * 				GNU General Public License for more details.
+ * 
+ * 				You should have received a copy of the GNU General Public License
+ * 				along with the "STM32F10RB Microcontroller Applications" project. If not, 
+ * 				see <http://www.gnu.org/licenses/>.
  */
 
 #define		SRAM_START		0x20000000U
@@ -220,23 +236,53 @@ extern uint32_t _ebss;
 int main(void);
 
 void Reset_Handler(void) {
-	// Copy .data to SRAM
+	// Copy .data section to SRAM
 	uint32_t size = (uint32_t)&_edata - (uint32_t)&_sdata;
 	uint8_t *pDestination = (uint8_t*)&_sdata;	// SRAM
 	uint8_t *pSource - (uint8_t*)&_etext;	// FLASH
 
-	for (uint32_t i = 0; i < size; i++) {
-		*pDestination++ = *pSource++;
-	}
+	asm volatile(
+		"mov r0, %[pDestination]\n"		// Load the start address of the destination into r0
+		"mov r1, %[size]\n"				// Load the size of the copy into r1
+		"mov r2, #0\n"					// Initialize r2 with zero
 
-	// Initialize .bss to zero in SRAM
+		"copy_loop:\n"
+			"cmp r1, #0\n"				// Compare the size with zero
+			"beq copy_end\n"			// Branch to copy_end if size is zero
+			"ldrb r3, [%[pSource]]\n"	// Load a byte from the source address
+			"strb r3, [r0], #1\n"		// Store the byte to the destination address and increment the destination pointer
+			"subs r1, r1, #1\n"			// Subtract 1 from size
+			"b copy_loop\n"				// Branch back to copy_loop
+
+		"copy_end:\n"
+		:
+		: [pDestination] "r" (pDestination), [size] "r" (size), [pSource] "r" (pSource)
+		: "r0", "r1", "r2", "r3"
+	);
+
+	// Initialize .bss section to 0
 	size = (uint32_t)&_ebss - (uint32_t)&_sbss;
 	pDestination = (uint8_t*)&_sbss;
 	
-	for (uint32_t i = 0; i < sizel i++) {
-		*pDestination++ = 0;
-	}
+	asm volatile(
+		"mov r0, %[dest]\n"				// Load the start address of .bss section into r0
+		"mov r1, %[size]\n"				// Load the size of .bss section into r1
+		"mov r2, #0\n"					// Initialize r2 with zero
 
+		"loop:\n"
+			"cmp r1, #0\n"				// Compare the size with zero
+			"beq end\n"					// Branch to end if size is zero
+			"strb r2, [r0], #1\n"		// Store byte zero at the current address and increment the address
+			"subs r1, r1, #1\n"			// Subtract 1 from size
+			"b loop\n"					// Branch back to the loop
+
+		"end:\n"
+		:
+		: [dest] "r" (pDestination), [size] "r" (size)
+		: "r0", "r1", "r2"
+	);
+
+	// Call program entry point
 	main();
 }
 
