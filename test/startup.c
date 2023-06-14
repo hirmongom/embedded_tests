@@ -3,6 +3,13 @@
  * 
  * @brief 		Startup file for the STM32F410 line of microcontrollers
  * 
+ * @details		This code defines the Nested Vectored Interrupt Controller (NVIC)
+ *				with the corresponding interrupts defined in the reference manual RM0401.
+ *				It implements the Reset_Handler(), which copies the .data section from
+ *				flash memory to SRAM and initializes it to zero. It also initializes the
+ *				.bss section in SRAM to zero. Finally, it calls the main() function as
+ *				the program's entry point
+ * 
  * @author 		Hiram Montejano Gómez
  * 
  * @date 		14/06/2023
@@ -260,7 +267,7 @@ void Reset_Handler(void) {
 		: "r0", "r1", "r2", "r3"
 	);
 
-	// Initialize .bss section to 0
+	// Initialize .bss section to zero
 	size = (uint32_t)&_ebss - (uint32_t)&_sbss;
 	pDestination = (uint8_t*)&_sbss;
 	
