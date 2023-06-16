@@ -39,16 +39,16 @@
  *              This structure defines the layout of the GPIO registers.
  */
 typedef struct {
-    uint32_t MODER;     // Mode
-    uint32_t OTYPER;    // Output type
-    uint32_t OSPEEDR;   // Output speed
-    uint32_t PUPDR;     // Pull-up/pull-down
-    uint32_t IDR;       // Input data
-    uint32_t ODR;       // Output data
-    uint32_t BSRR;      // Bit set/reset
-    uint32_t LCKR;      // Configuration lock
-    uint32_t AFRL;      // Alternate function low
-    uint32_t AFRH;      // Alternate function high
+    __IO    uint32_t MODER;     // Mode
+    __IO    uint32_t OTYPER;    // Output type
+    __IO    uint32_t OSPEEDR;   // Output speed
+    __IO    uint32_t PUPDR;     // Pull-up/pull-down
+    __I     uint32_t IDR;       // Input data
+    __O     uint32_t ODR;       // Output data
+    __IO    uint32_t BSRR;      // Bit set/reset
+    __IO    uint32_t LCKR;      // Configuration lock
+    __IO    uint32_t AFRL;      // Alternate function low
+    __IO    uint32_t AFRH;      // Alternate function high
 } GPIO_Type;
 
 #define GPIOA_BASE_ADDR     0x40020000UL
