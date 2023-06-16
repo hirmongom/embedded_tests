@@ -109,12 +109,19 @@ void I2C4_ER_ISR(void)                  OVERRIDABLE_ISR;
 void EXTI23_LPTIM1_ISR(void)            OVERRIDABLE_ISR;
 
 
-/*
- * Refer to Manual RM0401, page 198
- *      9. Interrupts and events
- *          9.2 External interrupt/event controller (EXTI)
- *              Table 39. Vector table
- * https://www.st.com/resource/en/reference_manual/rm0401-stm32f410-advanced-armbased-32bit-mcus-stmicroelectronics.pdf
+/**
+ * @brief Vector Table for Nested Vectored Interrupt Controller (NVIC)
+ *
+ * This array represents the vector table used by the Nested Vectored Interrupt Controller (NVIC)
+ * to handle various interrupts and exceptions in the system. Each entry in the table corresponds
+ * to a specific interrupt or exception and points to the corresponding interrupt service routine (ISR).
+ *
+ * @note The vector table is defined as an array of 32-bit unsigned integers (uint32_t).
+ *
+ * @warning Modifying the vector table requires a deep understanding of the system's interrupt handling
+ * mechanisms and should only be done with caution and in accordance with the RM0401 reference manual.
+ *
+ * @see RM0401 Reference Manual, Page 198 for more information on the NVIC and the vector table.
  */
 uint32_t NVIC[] __attribute__((section(".isr_vector"))) = {
     STACK_START,
@@ -240,8 +247,23 @@ extern uint32_t _edata;
 extern uint32_t _sbss;
 extern uint32_t _ebss;
 
+/**
+ * @brief Main function
+ *
+ * This is the entry point of the program. It is called after the reset sequence and
+ * performs necessary initialization before calling the user-defined main function.
+ *
+ * @return Integer value representing the exit status of the program.
+ */
 int main(void);
 
+/**
+ * @brief Reset Interrupt Service Routine (ISR)
+ *
+ * This ISR is invoked when a reset occurs. It is responsible for initializing
+ * the .data section by copying the data from FLASH to SRAM, initializing the .bss section
+ * by setting it to zero, and then calling the user-defined main function.
+ */
 void Reset_ISR(void) {
     // Copy .data section to SRAM
     uint32_t size = (uint32_t)&_edata - (uint32_t)&_sdata;
@@ -293,6 +315,12 @@ void Reset_ISR(void) {
     main();
 }
 
+/**
+ * @brief Default Interrupt Service Routine (ISR)
+ *
+ * This ISR is a placeholder for all other interrupts that do not have a dedicated ISR defined.
+ * It enters an infinite loop, effectively halting the system when an unexpected interrupt occurs.
+ */
 void Default_ISR(void) {
     while(1);
 }
