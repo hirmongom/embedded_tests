@@ -62,11 +62,10 @@ int main(void) {
 
     // Loop
     while (1) {
-        while (GPIOC->IDR & (1 << 13)) {
-            GPIOA->ODR |= (1 << 5);  // Turn on LED (PA5)
-        }
-        
+        GPIOA->ODR |= (1 << 5);  // Turn on LED (PA5)
+        for (int i = 0; i < 10000; i++);
         GPIOA->ODR &= ~(1 << 5); // Turn off LED (PA5)        
+        for (int i = 0; i < 10000; i++);
     }
 
     return 0;
