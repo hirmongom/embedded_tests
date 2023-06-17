@@ -1,0 +1,92 @@
+
+build/final.elf:     file format elf32-littlearm
+
+SYMBOL TABLE:
+08000000 l    d  .text	00000000 .text
+20000000 l    d  .data	00000000 .data
+20000000 l    d  .bss	00000000 .bss
+00000000 l    d  .comment	00000000 .comment
+00000000 l    d  .ARM.attributes	00000000 .ARM.attributes
+00000000 l    df *ABS*	00000000 startup.c
+080002a4 l       .text	00000000 copy_loop
+080002b2 l       .text	00000000 copy_end
+080002ca l       .text	00000000 loop
+080002d6 l       .text	00000000 end
+00000000 l    df *ABS*	00000000 main.c
+080002f8  w    F .text	00000008 I2C2_EV_ISR
+080002f8  w    F .text	00000008 TIM1_UP_ISR
+080002f8  w    F .text	00000008 DebugMonitor_ISR
+080002f8  w    F .text	00000008 USART1_ISR
+080002f8  w    F .text	00000008 DMA2_Stream6_ISR
+080002f8  w    F .text	00000008 DMA2_Stream2_ISR
+080002f8  w    F .text	00000008 PendSV_ISR
+08000300 g       .text	00000000 _etext
+20000000 g       .bss	00000000 _sbss
+080002f8  w    F .text	00000008 RTC_Alarm_ISR
+080002f8  w    F .text	00000008 DMA1_Stream6_ISR
+080002f8  w    F .text	00000008 TAMPER_STAMP_ISR
+080002f8  w    F .text	00000008 EXTI23_LPTIM1_ISR
+080002f8  w    F .text	00000008 NMI_ISR
+080002f8  w    F .text	00000008 ADC_ISR
+080002f8  w    F .text	00000008 EXTI3_ISR
+08000280 g     F .text	00000078 Reset_ISR
+080002f8  w    F .text	00000008 I2C1_EV_ISR
+080002f8 g     F .text	00000008 Default_ISR
+080002f8  w    F .text	00000008 Systick_ISR
+080002f8  w    F .text	00000008 EXTI9_5_ISR
+080002f8  w    F .text	00000008 DMA2_Stream5_ISR
+20000000 g       .data	00000000 _sdata
+080002f8  w    F .text	00000008 I2C4_ER_ISR
+08000000 g     O .text	000001cc NVIC
+080002f8  w    F .text	00000008 DMA1_Stream0_ISR
+080002f8  w    F .text	00000008 DMA1_Stream4_ISR
+080002f8  w    F .text	00000008 EXTI4_ISR
+080002f8  w    F .text	00000008 SPI2_ISR
+080002f8  w    F .text	00000008 TIM1_CC_ISR
+20000000 g       .bss	00000000 _ebss
+080002f8  w    F .text	00000008 DMA1_Stream1_ISR
+080002f8  w    F .text	00000008 WWDG_ISR
+080002f8  w    F .text	00000008 TIM5_ISR
+080002f8  w    F .text	00000008 I2C2_ER_ISR
+080002f8  w    F .text	00000008 EXTI22_RTC_WKUP_ISR
+080002f8  w    F .text	00000008 HardFault_ISR
+080002f8  w    F .text	00000008 I2C4_EV_ISR
+080002f8  w    F .text	00000008 DMA1_Stream2_ISR
+080002f8  w    F .text	00000008 UsageFault_ISR
+080002f8  w    F .text	00000008 I2C1_ER_ISR
+080002f8  w    F .text	00000008 FLASH_ISR
+080002f8  w    F .text	00000008 DMA2_Stream4_ISR
+080002f8  w    F .text	00000008 USART6_ISR
+080002f8  w    F .text	00000008 EXTI2_ISR
+080002f8  w    F .text	00000008 DMA1_Stream7_ISR
+080002f8  w    F .text	00000008 EXTI1_ISR
+080002f8  w    F .text	00000008 DMA2_Stream3_ISR
+080001cc g     F .text	000000b4 main
+080002f8  w    F .text	00000008 DMA1_Stream3_ISR
+080002f8  w    F .text	00000008 RTC_WKUP_ISR
+080002f8  w    F .text	00000008 EXTI20_ISR
+080002f8  w    F .text	00000008 DMA2_Stream7_ISR
+080002f8  w    F .text	00000008 SPI5_ISR
+080002f8  w    F .text	00000008 DMA2_Stream0_ISR
+080002f8  w    F .text	00000008 RCC_ISR
+080002f8  w    F .text	00000008 FPU_ISR
+080002f8  w    F .text	00000008 TIM1_TRG_COM_TIM11_ISR
+080002f8  w    F .text	00000008 RNG_ISR
+080002f8  w    F .text	00000008 TIM6_DAC_ISR
+20000000 g       .data	00000000 _edata
+080002f8  w    F .text	00000008 EXTI15_10_ISR
+080002f8  w    F .text	00000008 SVCall_ISR
+080002f8  w    F .text	00000008 SPI1_ISR
+080002f8  w    F .text	00000008 BusFault_ISR
+080002f8  w    F .text	00000008 TIM1_BRK_TIM9_ISR
+080002f8  w    F .text	00000008 MemManage_ISR
+080002f8  w    F .text	00000008 EXTI17_RTC_Alarm_ISR
+080002f8  w    F .text	00000008 PVD_ISR
+080002f8  w    F .text	00000008 DMA2_Stream1_ISR
+080002f8  w    F .text	00000008 DMA1_Stream5_ISR
+080002f8  w    F .text	00000008 USART2_ISR
+080002f8  w    F .text	00000008 EXTI19_ISR
+080002f8  w    F .text	00000008 EXTI0_ISR
+080002f8  w    F .text	00000008 EXTI21_TAMP_STAMP_ISR
+
+
