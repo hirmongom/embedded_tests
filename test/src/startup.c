@@ -12,7 +12,7 @@
  * 
  * @author      Hiram Montejano Gómez
  * 
- * @date        Last Updated:   16/06/2023
+ * @date        Last Updated:   17/06/2023
  * 
  * @copyright   This file is part of the "STM32F10RB Microcontroller Applications" project.
  * 
@@ -30,6 +30,8 @@
  *              along with the "STM32F10RB Microcontroller Applications" project. If not, 
  *              see <http://www.gnu.org/licenses/>.
  */
+
+#include <stdint.h>
 
 #define     SRAM_START      0x20000000U
 #define     SRAM_SIZE       (32 * 1024)
@@ -268,7 +270,7 @@ void Reset_ISR(void) {
     // Copy .data section to SRAM
     uint32_t size = (uint32_t)&_edata - (uint32_t)&_sdata;
     uint8_t *pDestination = (uint8_t*)&_sdata;  // SRAM
-    uint8_t *pSource - (uint8_t*)&_etext;   // FLASH
+    uint8_t *pSource = (uint8_t*)&_etext;   // FLASH
 
     asm volatile(
         "mov r0, %[pDestination]\n"     // Load the start address of the destination into r0

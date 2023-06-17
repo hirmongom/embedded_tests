@@ -29,7 +29,7 @@
  * 
  * @author      Hiram Montejano Gómez
  * 
- * @date        Last Updated:   16/06/2023
+ * @date        Last Updated:   17/06/2023
  * 
  * @copyright   This file is part of the "STM32F10RB Microcontroller Applications" project.
  * 
@@ -49,7 +49,7 @@
  */
 
 
-ENTRY(Reset_Handler)
+ENTRY(Reset_ISR)
 
 MEMORY {
     FLASH (rx) : ORIGIN = 0x08000000, LENGTH = 128K

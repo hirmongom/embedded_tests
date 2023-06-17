@@ -10,7 +10,7 @@
  * 
  * @author      Hiram Montejano Gómez
  * 
- * @date        Last Updated:   16/06/2023
+ * @date        Last Updated:   17/06/2023
  * 
  * @copyright   This file is part of the "STM32F10RB Microcontroller Applications" project.
  * 
@@ -28,6 +28,8 @@
  *              along with the "STM32F10RB Microcontroller Applications" project. If not, 
  *              see <http://www.gnu.org/licenses/>.
  */
+
+#include <stdint.h>
 
 #define     __I     volatile const       // Defines 'read only' permissions
 #define     __O     volatile             // Defines 'write only' permissions
@@ -55,9 +57,9 @@ typedef struct {
 #define GPIOB_BASE_ADDR     0x40020400UL
 #define GPIOC_BASE_ADDR     0x40020800UL
 
-#define GPIOA               ((GPIO_Type*)) GPIOA_BASE_ADDR
-#define GPIOB               ((GPIO_Type*)) GPIOB_BASE_ADDR
-#define GPIOC               ((GPIO_Type*)) GPIOC_BASE_ADDR
+#define GPIOA               ((GPIO_Type*) GPIOA_BASE_ADDR)
+#define GPIOB               ((GPIO_Type*) GPIOB_BASE_ADDR)
+#define GPIOC               ((GPIO_Type*) GPIOC_BASE_ADDR)
 
 /**
  * @brief       Initialize GPIOs
