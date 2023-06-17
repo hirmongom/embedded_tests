@@ -4,7 +4,7 @@ CFLAGS = -c -Iinc -mcpu=$(MCPU) -mthumb -mfloat-abi=soft -std=gnu11 -Wall -Wextr
 
 LD = arm-none-eabi-ld
 LS = src/GCC/linker_script.ld
-LDFLAGS = -T $(LS)
+LDFLAGS = -T $(LS) -Map=build/final.map
 
 SOURCES := $(wildcard src/*.c)
 OBJECTS := $(patsubst src/%.c, build/obj/%.o, $(SOURCES))
@@ -25,12 +25,6 @@ build:
 
 build/obj:
 	mkdir -p $@
-
-build/map:
-	mkdir -p $@
-
-map: | build/map
-	$(OBJDUMP) $(ODFLAGS)
 
 ocd:
 	openocd -f board/st_nucleo_f4.cfg
