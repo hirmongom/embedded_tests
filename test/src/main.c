@@ -50,15 +50,15 @@ int main(void) {
     RCC->AHB1ENR |= (1 << 0);       // Enable clock for GPIOA
     RCC->AHB1ENR |= (1 << 2);       // Enable clock for GPIOC
 
-    // Initi GPIO ports
+    // Init GPIO ports
     RCC->AHB1RSTR |= (1 << 0);      // Reset GPIOA
     RCC->AHB1RSTR |= (1 << 2);      // Reset GPIOC
 
-    GPIOA->MODER &= ~(2 << 10);  // Set PA5 as output
-    GPIOC->MODER &= ~(3 << 26);  // Set PC13 as input (redundant)
+    GPIOA->MODER &= ~(2 << 10);     // Set PA5 as output
+    GPIOC->MODER &= ~(3 << 26);     // Set PC13 as input (redundant)
 
     GPIOA->OTYPER &= ~(1 << 4);     // Set PA5 as output push-pull (redundant)
-    GPIOC->PUPDR |= (3 << 26);   // Set PC13 as pull-down
+    GPIOC->PUPDR |= (3 << 26);      // Set PC13 as pull-down
 
     // Loop
     while (1) {
