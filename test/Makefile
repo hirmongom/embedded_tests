@@ -31,6 +31,9 @@ build/map:
 
 map: | build/map
 	$(OBJDUMP) $(ODFLAGS)
+
+ocd:
+	openocd -f board/st_nucleo_f4.cfg
  
 clean:
 	rm -rf build
