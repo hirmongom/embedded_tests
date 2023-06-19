@@ -45,9 +45,13 @@
 int main(void) {
     
     RCC->AHB1ENR |= (1 << 0);       // Enable clock for GPIOA
-    RCC->AHB1RSTR |= (1 << 0);      // Reset GPIOA
-    GPIOA->MODER &= ~(2 << 10);     // Set PA5 as output
-    GPIOA->OTYPER &= ~(1 << 4);     // Set PA5 as output push-pull (redundant)
+
+    // do two dummy reads after enabling the peripheral clock, as per the errata
+    volatile uint32_t dummy;
+    dummy = *(RCC_AHB1ENR);
+    dummy = *(RCC_AHB1ENR);
+
+    GPIOA->MODER |= (1 << 10);     // Set PA5 as output
 
     // Loop
     while (1) {
