@@ -1,10 +1,11 @@
 /**
- * @file        gpio.h
+ * @file        stm32f410rb.h
  * 
- * @brief       Header file for General-purpose I/Os (GPIO) configuration
+ * @brief       Header file for STM32F410RB microcontroller peripherals.
  * 
- * @details     This file defines the structure and functions for configuring 
- *              and controlling the General-Purpose I/Os (GPIO) peripherals.
+ * @details     This file contains the structures and definitions for various peripherals
+ *              on the STM32F410RB microcontroller. It provides an interface for configuring
+ *              and accessing the peripherals such as GPIO, RCC, etc.
  * 
  * @see         RM0401 Reference Manual, Page 135 for more information on GPIO configuration.
  * 
