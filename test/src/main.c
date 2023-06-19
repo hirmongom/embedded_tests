@@ -1,13 +1,14 @@
 /**
  * @file        main.c
  * 
- * @brief       
+ * @brief       LED Blinking Application
  *
- * @details     
+ * @details     This file contains a simple program to blink an LED connected 
+ *              to Pin PA5 of the STM32F10RB microcontroller.
  * 
  * @author      Hiram Montejano Gómez
  * 
- * @date        Last Updated:   17/06/2023
+ * @date        Last Updated:   19/06/2023
  * 
  * @copyright   This file is part of the "STM32F10RB Microcontroller Applications" project.
  * 
@@ -36,7 +37,7 @@ int main(void) {
 
     // Loop
     while (1) {
-        GPIOA->ODR ^= (1 << 5);  // Turn on LED (PA5)  
+        GPIOA->ODR ^= (1 << 5);  // Toggle LED (PA5)  
         for (uint32_t i = 0; i < 1000000; i++);
     }
 
