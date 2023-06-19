@@ -40,7 +40,7 @@
 #define     __IO    volatile             // Defines 'read / write' permissions
 
 
-/******************************RCC******************************/
+/****************************** RCC ******************************/
 /**
  * @brief       RCC register structure
  */
@@ -74,7 +74,8 @@ typedef struct {
     __IO uint32_t DCKCFGR2;     // Dedicated Clocks Configuration 2
 } RCC_Type;
 
-/******************************GPIOA******************************/
+
+/****************************** GPIO ******************************/
 /**
  * @brief       GPIO register structure
  */
@@ -92,14 +93,18 @@ typedef struct {
 } GPIO_Type;
 
 
-/*************************Memory Map************************/
+/********************* Peripheral Memory Map ********************/
 
-#define RCC_BASE_ADDR       0x40023800
-#define RCC                 ((RCC_Type*) RCC_BASE_ADDR)
-
+#define RCC_BASE_ADDR       0x40023800UL
 #define GPIOA_BASE_ADDR     0x40020000UL
 #define GPIOB_BASE_ADDR     0x40020400UL
 #define GPIOC_BASE_ADDR     0x40020800UL
+
+
+/********************* Peripheral Declaration ********************/
+
+#define RCC                 ((RCC_Type*) RCC_BASE_ADDR)
+
 #define GPIOA               ((GPIO_Type*) GPIOA_BASE_ADDR)
 #define GPIOB               ((GPIO_Type*) GPIOB_BASE_ADDR)
 #define GPIOC               ((GPIO_Type*) GPIOC_BASE_ADDR)
