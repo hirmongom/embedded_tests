@@ -50,25 +50,25 @@ typedef struct {
     __IO uint32_t CFGR;         // Clock configuration
     __IO uint32_t CIR;          // Clock interrupt
     __IO uint32_t AHB1RSTR;     // AHB1 peripheral reset
-    __I uint32_t RESERVED1[2];
+    __I uint32_t RESERVED1[3];
     __IO uint32_t APB1RSTR;     // APB1 peripheral reset
     __IO uint32_t APB2RSTR;     // APB2 peripheral reset
-    __I uint32_t RESERVED2;
+    __I uint32_t RESERVED2[2];
     __IO uint32_t AHB1ENR;      // AHB1 peripheral clock enable
-    __I uint32_t RESERVED3[2];
+    __I uint32_t RESERVED3[3];
     __IO uint32_t APB1ENR;      // APB1 peripheral clock enable
     __IO uint32_t APB2ENR;      // APB2 peripheral clock enable
-    __I uint32_t RESERVED4;
+    __I uint32_t RESERVED4[2];
     __IO uint32_t AHB1LPENR;    // AHB1 peripheral clock enable in low power mode
-    __I uint32_t RESERVED5[2];
+    __I uint32_t RESERVED5[3];
     __IO uint32_t APB1LPENR;    // APB1 peripheral clock enable in low power mode
     __IO uint32_t APB2LPENR;    // APB2 peripheral clock enable in low power mode
-    __I uint32_t RESERVED6;
+    __I uint32_t RESERVED6[2];
     __IO uint32_t BDCR;         // Backup domain control
     __IO uint32_t CSR;          // Clock control & status
-    __I uint32_t RESERVED7;
+    __I uint32_t RESERVED7[2];
     __IO uint32_t SSCGR;        // Spread spectrum clock generation
-    __I uint32_t RESERVED8;
+    __I uint32_t RESERVED8[2];
     __IO uint32_t DCKCFGR;      // Dedicated Clocks Configuration
     __I uint32_t RESERVED9;
     __IO uint32_t DCKCFGR2;     // Dedicated Clocks Configuration 2
