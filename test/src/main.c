@@ -28,16 +28,20 @@
 
 #include "stm32f410rb.h"
 
-int not_working_main(void) {
+int main(void) {
     
     RCC->AHB1ENR |= (1 << 0);       // Enable clock for GPIOA
+
+    volatile uint32_t dummy;
+    dummy = RCC->AHB1ENR;
+    dummy = RCC->AHB1ENR;
 
     GPIOA->MODER |= (1 << 10);     // Set PA5 as output
 
     // Loop
     while (1) {
         GPIOA->ODR ^= (1 << 5);  // Turn on LED (PA5)  
-        for (int i = 0; i < 1000000; i++);
+        for (uint32_t i = 0; i < 1000000; i++);
     }
 
     return 0;
@@ -60,6 +64,7 @@ int not_working_main(void) {
 
 #define LED_PIN 5
 
+/*
 int main(void)
 {
     *RCC_AHB1ENR |= (1 << RCC_AHB1ENR_GPIOAEN);
@@ -78,4 +83,4 @@ int main(void)
     }
 
     return 0;
-}
+}*/
