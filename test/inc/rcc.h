@@ -10,7 +10,7 @@
  * 
  * @author      Hiram Montejano Gómez
  * 
- * @date        Last Updated:   17/06/2023
+ * @date        Last Updated:   19/06/2023
  * 
  * @copyright   This file is part of the "STM32F10RB Microcontroller Applications" project.
  * 
@@ -29,7 +29,11 @@
  *              see <http://www.gnu.org/licenses/>.
  */
 
+#ifndef RCC_H
+#define RCC_H
+
 #include <stdint.h>
+
 
 /**
  * @brief       RCC register structure
@@ -66,3 +70,5 @@ typedef struct {
 
 #define RCC_BASE_ADDR   0x40023800
 #define RCC             ((RCC_Type*) RCC_BASE_ADDR)
+
+#endif

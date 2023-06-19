@@ -10,7 +10,7 @@
  * 
  * @author      Hiram Montejano Gómez
  * 
- * @date        Last Updated:   17/06/2023
+ * @date        Last Updated:   19/06/2023
  * 
  * @copyright   This file is part of the "STM32F10RB Microcontroller Applications" project.
  * 
@@ -28,6 +28,9 @@
  *              along with the "STM32F10RB Microcontroller Applications" project. If not, 
  *              see <http://www.gnu.org/licenses/>.
  */
+
+#ifndef GPIO_H
+#define GPIO_H
 
 #include <stdint.h>
 
@@ -71,3 +74,5 @@ typedef struct {
  * @warning     It is still not implemented
  */
 void GPIO_Init(void);   // Temporary
+
+#endif
