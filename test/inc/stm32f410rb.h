@@ -29,8 +29,8 @@
  *              see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef GPIO_H
-#define GPIO_H
+#ifndef STM32F410RB_H
+#define STM32F410RB_H
 
 #include <stdint.h>
 
@@ -38,10 +38,44 @@
 #define     __O     volatile             // Defines 'write only' permissions
 #define     __IO    volatile             // Defines 'read / write' permissions
 
+
+/******************************RCC******************************/
+/**
+ * @brief       RCC register structure
+ */
+typedef struct {
+    __IO uint32_t CR;           // Clock control
+    __IO uint32_t PLLCFGR;      // PLL configuration
+    __IO uint32_t CFGR;         // Clock configuration
+    __IO uint32_t CIR;          // Clock interrupt
+    __IO uint32_t AHB1RSTR;     // AHB1 peripheral reset
+    __I RESERVED1[2];
+    __IO uint32_t APB1RSTR;     // APB1 peripheral reset
+    __IO uint32_t APB2RSTR;     // APB2 peripheral reset
+    __I RESERVED2;
+    __IO uint32_t AHB1ENR;      // AHB1 peripheral clock enable
+    __I RESERVED3[2];
+    __IO uint32_t APB1ENR;      // APB1 peripheral clock enable
+    __IO uint32_t APB2ENR;      // APB2 peripheral clock enable
+    __I RESERVED4;
+    __IO uint32_t AHB1LPENR;    // AHB1 peripheral clock enable in low power mode
+    __I RESERVED5[2];
+    __IO uint32_t APB1LPENR;    // APB1 peripheral clock enable in low power mode
+    __IO uint32_t APB2LPENR;    // APB2 peripheral clock enable in low power mode
+    __I uint32_t RESERVED6;
+    __IO uint32_t BDCR;         // Backup domain control
+    __IO uint32_t CSR;          // Clock control & status
+    __I uint32_t RESERVED7;
+    __IO uint32_t SSCGR;        // Spread spectrum clock generation
+    __I uint32_t RESERVED8;
+    __IO uint32_t DCKCFGR;      // Dedicated Clocks Configuration
+    __I uint32_t RESERVED9;
+    __IO uint32_t DCKCFGR2;     // Dedicated Clocks Configuration 2
+} RCC_Type;
+
+/******************************GPIOA******************************/
 /**
  * @brief       GPIO register structure
- * 
- *              This structure defines the layout of the GPIO registers.
  */
 typedef struct {
     __IO    uint32_t MODER;     // Mode
@@ -56,23 +90,17 @@ typedef struct {
     __IO    uint32_t AFRH;      // Alternate function high
 } GPIO_Type;
 
+
+/*************************Memory Map************************/
+
+#define RCC_BASE_ADDR       0x40023800
+#define RCC                 ((RCC_Type*) RCC_BASE_ADDR)
+
 #define GPIOA_BASE_ADDR     0x40020000UL
 #define GPIOB_BASE_ADDR     0x40020400UL
 #define GPIOC_BASE_ADDR     0x40020800UL
-
 #define GPIOA               ((GPIO_Type*) GPIOA_BASE_ADDR)
 #define GPIOB               ((GPIO_Type*) GPIOB_BASE_ADDR)
 #define GPIOC               ((GPIO_Type*) GPIOC_BASE_ADDR)
-
-/**
- * @brief       Initialize GPIOs
- * 
- *              This function initializes the GPIOs by configuring their mode, output type, 
- *              output speed, and pull-up/pull-down settings.
- *              Call this function before using the GPIOs.
- * 
- * @warning     It is still not implemented
- */
-void GPIO_Init(void);   // Temporary
 
 #endif
