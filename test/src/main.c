@@ -33,8 +33,8 @@ int main(void) {
     RCC->AHB1ENR |= (1 << 0);       // Enable clock for GPIOA
 
     volatile uint32_t dummy;
-    dummy = RCC->AHB1ENR;
-    dummy = RCC->AHB1ENR;
+    dummy = *RCC->AHB1ENR;
+    dummy = *RCC->AHB1ENR;
 
     GPIOA->MODER |= (1 << 10);     // Set PA5 as output
 
