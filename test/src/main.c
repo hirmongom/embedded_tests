@@ -44,28 +44,15 @@
 
 int main(void) {
     
-    // Init clock
-    RCC->CR |= (1 << 0);            // Enable internal high-speed clock
-    while (RCC->CR & (1 << 1));     // Wait for Internal high-speed clock ready flag
     RCC->AHB1ENR |= (1 << 0);       // Enable clock for GPIOA
-    RCC->AHB1ENR |= (1 << 2);       // Enable clock for GPIOC
-
-    // Init GPIO ports
     RCC->AHB1RSTR |= (1 << 0);      // Reset GPIOA
-    RCC->AHB1RSTR |= (1 << 2);      // Reset GPIOC
-
     GPIOA->MODER &= ~(2 << 10);     // Set PA5 as output
-    GPIOC->MODER &= ~(3 << 26);     // Set PC13 as input (redundant)
-
     GPIOA->OTYPER &= ~(1 << 4);     // Set PA5 as output push-pull (redundant)
-    GPIOC->PUPDR |= (3 << 26);      // Set PC13 as pull-down
 
     // Loop
     while (1) {
-        GPIOA->ODR |= (1 << 5);  // Turn on LED (PA5)
-        for (int i = 0; i < 10000; i++);
-        GPIOA->ODR &= ~(1 << 5); // Turn off LED (PA5)        
-        for (int i = 0; i < 10000; i++);
+        GPIOA->ODR ^= (1 << 5);  // Turn on LED (PA5)  
+        for (int i = 0; i < 1000000; i++);
     }
 
     return 0;
