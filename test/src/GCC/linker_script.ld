@@ -57,12 +57,11 @@ MEMORY {
 }
 
 SECTIONS {
-    .isr_vector:
-    {
+    .isr_vector : {
         KEEP(*(.isr_vector))
     } > FLASH
     .text : {
-        . = ALIGN(4)
+        . = ALIGN(4);
 
         *(.text)
         *(.rodata)
