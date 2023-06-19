@@ -33,10 +33,10 @@
 
 #include <stdint.h>
 
-#define     SRAM_START      0x20000000U
-#define     SRAM_SIZE       (32 * 1024)
+#define     SRAM_START      (0x20000000U)
+#define     SRAM_SIZE       (32U * 1024U)
 #define     SRAM_END        (SRAM_START + SRAM_SIZE)
-#define     STACK_START     SRAM_END
+#define     STACK_START     (SRAM_END)
 
 #define OVERRIDABLE_ISR     __attribute__((weak, alias("Default_ISR")))
 
