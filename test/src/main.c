@@ -36,8 +36,8 @@ int main(void) {
 
     // Loop
     while (1) {
-        GPIOA->ODR |= (1 << 5);  // Turn on LED (PA5)  
-        //for (uint32_t i = 0; i < 1000000; i++);
+        GPIOA->ODR ^= (1 << 5);  // Turn on LED (PA5)  
+        for (uint32_t i = 0; i < 1000000; i++);
     }
 
     return 0;
