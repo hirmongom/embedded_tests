@@ -1,22 +1,9 @@
 /**
  * @file        main.c
  * 
- * @brief       GPIO Button and LED Control
- * 
- *              This code initializes GPIO ports, configures a button on PC13, and controls 
- *              a LED on PA5.
- *              While the button is pressed, the LED is turned on, and when the button is 
- *              released, the LED is turned off.
+ * @brief       
  *
- * @details     The code performs the following steps:
- *                  1. Initializes the clock for the GPIO ports.
- *                  2. Configures GPIOA (PA5) as an output pin for the LED and GPIOC (PC13) 
- *                      as an input pin for the button.
- *                  3. Implements a main loop that continuously checks the state of the button.
- *                      - While the button is pressed (PC13 is high), 
- *                          the LED is turned on (PA5 is set high).
- *                      - While the button is released (PC13 is low), 
- *                          the LED is turned off (PA5 is set low)
+ * @details     
  * 
  * @author      Hiram Montejano Gómez
  * 
@@ -39,8 +26,7 @@
  *              see <http://www.gnu.org/licenses/>.
  */
 
-#include "gpio.h"
-#include "rcc.h"
+#include "stm32f410rb.h"
 
 int main(void) {
     
