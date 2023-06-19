@@ -28,7 +28,7 @@
 
 #include "stm32f410rb.h"
 
-int main(void) {
+int not_working_main(void) {
     
     RCC->AHB1ENR |= (1 << 0);       // Enable clock for GPIOA
 
@@ -38,6 +38,26 @@ int main(void) {
     while (1) {
         GPIOA->ODR ^= (1 << 5);  // Turn on LED (PA5)  
         for (int i = 0; i < 1000000; i++);
+    }
+
+    return 0;
+}
+
+int main(void)
+{
+    *RCC_AHB1ENR |= (1 << RCC_AHB1ENR_GPIOAEN);
+
+    // do two dummy reads after enabling the peripheral clock, as per the errata
+    volatile uint32_t dummy;
+    dummy = *(RCC_AHB1ENR);
+    dummy = *(RCC_AHB1ENR);
+
+    *GPIOA_MODER |= (1 << GPIO_MODER_MODER5);
+    
+    while(1)
+    {
+        *GPIOA_ODR ^= (1 << LED_PIN);
+        for (uint32_t i = 0; i < 1000000; i++);
     }
 
     return 0;
