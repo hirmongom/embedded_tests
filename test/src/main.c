@@ -48,8 +48,8 @@ int main(void) {
 
     // do two dummy reads after enabling the peripheral clock, as per the errata
     volatile uint32_t dummy;
-    dummy = *(RCC_AHB1ENR);
-    dummy = *(RCC_AHB1ENR);
+    dummy = *(RCC->AHB1ENR);
+    dummy = *(RCC->AHB1ENR);
 
     GPIOA->MODER |= (1 << 10);     // Set PA5 as output
 
