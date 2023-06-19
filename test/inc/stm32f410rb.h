@@ -50,17 +50,17 @@ typedef struct {
     __IO uint32_t CFGR;         // Clock configuration
     __IO uint32_t CIR;          // Clock interrupt
     __IO uint32_t AHB1RSTR;     // AHB1 peripheral reset
-    __I RESERVED1[2];
+    __I uint32_t RESERVED1[2];
     __IO uint32_t APB1RSTR;     // APB1 peripheral reset
     __IO uint32_t APB2RSTR;     // APB2 peripheral reset
-    __I RESERVED2;
+    __I uint32_t RESERVED2;
     __IO uint32_t AHB1ENR;      // AHB1 peripheral clock enable
-    __I RESERVED3[2];
+    __I uint32_t RESERVED3[2];
     __IO uint32_t APB1ENR;      // APB1 peripheral clock enable
     __IO uint32_t APB2ENR;      // APB2 peripheral clock enable
-    __I RESERVED4;
+    __I uint32_t RESERVED4;
     __IO uint32_t AHB1LPENR;    // AHB1 peripheral clock enable in low power mode
-    __I RESERVED5[2];
+    __I uint32_t RESERVED5[2];
     __IO uint32_t APB1LPENR;    // APB1 peripheral clock enable in low power mode
     __IO uint32_t APB2LPENR;    // APB2 peripheral clock enable in low power mode
     __I uint32_t RESERVED6;
