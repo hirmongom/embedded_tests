@@ -95,10 +95,11 @@ typedef struct {
 
 /********************* Peripheral Memory Map ********************/
 
-#define RCC_BASE_ADDR       0x40023800UL
-#define GPIOA_BASE_ADDR     0x40020000UL
-#define GPIOB_BASE_ADDR     0x40020400UL
-#define GPIOC_BASE_ADDR     0x40020800UL
+#define RCC_BASE_ADDR       (0x40023800UL)
+#define GPIOA_BASE_ADDR     (0x40020000UL)
+#define GPIOB_BASE_ADDR     (0x40020400UL)
+#define GPIOC_BASE_ADDR     (0x40020800UL)
+#define GPIOH_BASE_ADDR     (0x40021C00UL)
 
 
 /********************* Peripheral Declaration ********************/
@@ -108,5 +109,6 @@ typedef struct {
 #define GPIOA               ((GPIO_Type*) GPIOA_BASE_ADDR)
 #define GPIOB               ((GPIO_Type*) GPIOB_BASE_ADDR)
 #define GPIOC               ((GPIO_Type*) GPIOC_BASE_ADDR)
+#define GPIOH               ((GPIO_Type*) GPIOH_BASE_ADDR)
 
 #endif
