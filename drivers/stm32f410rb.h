@@ -7,11 +7,9 @@
  *              on the STM32F410RB microcontroller. It provides an interface for configuring
  *              and accessing the peripherals such as GPIO, RCC, etc.
  * 
- * @see         RM0401 Reference Manual, Page 135 for more information on GPIO configuration.
- * 
  * @author      Hiram Montejano Gómez
  * 
- * @date        Last Updated:   19/06/2023
+ * @date        Last Updated:   24/06/2023
  * 
  * @copyright   This file is part of the "STM32F10RB Microcontroller Applications" project.
  * 
