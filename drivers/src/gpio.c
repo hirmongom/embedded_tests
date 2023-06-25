@@ -93,15 +93,15 @@ int GPIO_Pin_Configure(GPIO_Port port, GPIO_PIN_Config *config) {
             gpioPort = GPIOH;
             break;
         default:
-            return 1;      // Wrong port
+            return 1;      // Invalid port
             break;
     }
 
     for (int i = 0; i < config->nPins; i++) {
-        gpioPort->MODER     |=  (config->mode   << (config->pins[i] * 2));    // Set mode
-        gpioPort->OTYPER    |=  (config->otype  << config->pins[i]);        // Set output type
-        gpioPort->OSPEEDR   |=  (config->ospeed << (config->pins[i] * 2));    // Set output speed
-        gpioPort->PUPDR     |=  (config->pull   << (config->pins[i] * 2));    // Set pull type
+        gpioPort->MODER     |=  (config->mode   << (config->pins[i] * 2));      // Set mode
+        gpioPort->OTYPER    |=  (config->otype  <<  config->pins[i]     );            // Set output type
+        gpioPort->OSPEEDR   |=  (config->ospeed << (config->pins[i] * 2));      // Set output speed
+        gpioPort->PUPDR     |=  (config->pull   << (config->pins[i] * 2));      // Set pull type
     }
     
     return 0;
