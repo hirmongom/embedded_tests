@@ -32,13 +32,20 @@
 int main(void) {
     
     RCC->AHB1ENR |= (1 << 0);       // Enable clock for GPIOA
-
-    GPIOA->MODER |= (1 << 10);     // Set PA5 as output
+    RCC->AHB1ENR |= (1 << 2);       // Enable clock for GPIOC
+    GPIOA->MODER |= (1 << 10);      // Set PA5 as output
+    GPIOC->MODER &= ~(1 << 26);     // Set PC13 as input (redundant)
+    GPIOC->PUPDR |= (2 << 26);      // PC13 pull-down
 
     // Loop
     while (1) {
         GPIOA->ODR ^= (1 << 5);  // Toggle LED (PA5)  
-        for (uint32_t i = 0; i < 1000000; i++);
+        for (uint32_t i = 0; i < 10000000; i++);
+        /*
+        while (GPIOC->IDR & (1 << 13)) {
+            GPIOA->ODR ^= (1 << 5);  // Toggle LED (PA5)  
+            for (uint32_t i = 0; i < 100000; i++);
+        }*/
     }
 
     return 0;
