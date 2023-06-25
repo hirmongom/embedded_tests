@@ -12,9 +12,12 @@
  * 
  * @warning     Untested
  * 
+ * @todo        Need higher abstraction
+ *              Doxygen comment blocks
+ * 
  * @author      Hiram Montejano Gómez
  * 
- * @date        Last Updated:   24/06/2023
+ * @date        Last Updated:   25/06/2023
  * 
  * @copyright   This file is part of the "STM32F10RB Microcontroller Applications" project.
  * 
@@ -34,50 +37,52 @@
  */
 
 #include <stdint.h>
+#include <stddef.h>
 
 typedef enum {
-    GPIO_PORT_A,
-    GPIO_PORT_B,
-    GPIO_PORT_C,
-    GPIO_PORT_H
-} GPIO_Port;
+  kPortA,
+  kPortB,
+  kPortC,
+  kPortH
+} GpioPort;
 
 typedef enum {
-    GPIO_MODE_INPUT,
-    GPIO_MODE_OUTPUT,
-    GPIO_MODE_ALTERNATE,
-    GPIO_MODE_ANALOG
-} GPIO_Mode;
+  kModeInput,
+  kModeOutput,
+  kModeAlternate,
+  kModeAnalog
+} GpioMode;
 
 typedef enum {
-    GPIO_OTYPE_PUSH_PULL,
-    GPIO_OTYPE_OPEN_DRAIN
-} GPIO_OutputType;
+  kOtypePushPull,
+  kOtypeOpenDrain
+} GpioOutputType;
 
 typedef enum {
-    GPIO_SPEED_LOW,
-    GPIO_SPEED_MEDIUM,
-    GPIO_SPEED_HIGH,
-    GPIO_SPEED_VERY_HIGH
-} GPIO_OutputSpeed;
+  kSpeedLow,
+  kSpeedMedium,
+  kSpeedHigh,
+  kSpeedVeryHigh
+} GpioOutputSpeed;
 
 typedef enum {
-    GPIO_PULL_NONE,
-    GPIO_PULL_UP,
-    GPIO_PULL_DOWN
-} GPIO_PullType;
+  kPullNone,
+  kPullUp,
+  kPullDown
+} GpioPullType;
 
 typedef struct {
-    uint8_t *pins;
-    uint8_t nPins;
-    GPIO_Mode mode;
-    GPIO_OutputType otype;
-    GPIO_OutputSpeed ospeed;
-    GPIO_PullType pull;
-} GPIO_Pin_Config;
+  uint8_t *pins;
+  uint8_t n_pins;
+  GpioMode mode;
+  GpioOutputType output_type;
+  GpioOutputSpeed output_speed;
+  GpioPullType pull_type;
+} GpioPinConfig;
 
-#define GPIO_PIN_CONFIG_DEFAULT     { .pins = NULL, .nPins = 0, .mode = 0, .otype = 0, .ospeed = 0, .pull = 0 }
+#define GPIO_PIN_CONFIG_DEFAULT     { .pins = NULL, .n_pins = 0, .mode = 0, .output_type = 0, .output_speed = 0, .pull_type = 0 }
 #define GPIO_MAX_PINS               16
 
-int GPIO_Init(GPIO_Port port);
-int GPIO_Pin_Configure(GPIO_Port port, GPIO_Pin_Config *config);
+int InitializeGpioPort(GpioPort port);
+int ConfigureGpioPin(GpioPort port, GpioPinConfig *config);
+int ToggleOutputGpioPin(GpioPort port, uint8_t pin);

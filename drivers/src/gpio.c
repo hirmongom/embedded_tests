@@ -12,9 +12,12 @@
  * 
  * @warning     Untested
  * 
+ * @todo        Manage errors POSIX-style
+ *              Function comment blocks
+ * 
  * @author      Hiram Montejano Gómez
  * 
- * @date        Last Updated:   24/06/2023
+ * @date        Last Updated:   25/06/2023
  * 
  * @copyright   This file is part of the "STM32F10RB Microcontroller Applications" project.
  * 
@@ -34,75 +37,99 @@
  */
 
 #include <stdint.h>
+#include <stddef.h>
 
 #include "gpio.h"
 #include "stm32f410rb.h"
 
-static uint8_t initializedPorts[4];
+static uint8_t initialized_ports[4];
 
-// TODO manage errors kinda like POSIX
 
-int GPIO_Init(GPIO_Port port) {
-    if (port >= 4) return 1;    // Invalid port
-    if (initializedPorts[port] == 1) return 1;  // Port already initialized
+int InitializeGpioPort(GpioPort port) {
+  if (port >= 4) return 1;    // Invalid port
+  if (initialized_ports[port] == 1) return 1;  // Port already initialized
 
-    switch (port) {
-        case GPIO_PORT_A:
-            RCC->AHB1ENR |= (1 << 0);
-            break;
-        case GPIO_PORT_B:
-            RCC->AHB1ENR |= (1 << 1);
-            break;
-        case GPIO_PORT_C:
-            RCC->AHB1ENR |= (1 << 2);
-            break;
-        case GPIO_PORT_H:
-            RCC->AHB1ENR |= (1 << 7);
-            break;
-        default:
-            return 1;   // Invalid port
-            break;
-    }
+  switch (port) {
+    case kPortA:
+      RCC->AHB1ENR |= (1 << 0);
+      break;
+    case kPortB:
+      RCC->AHB1ENR |= (1 << 1);
+      break;
+    case kPortC:
+      RCC->AHB1ENR |= (1 << 2);
+      break;
+    case kPortH:
+      RCC->AHB1ENR |= (1 << 7);
+      break;
+    default:
+      return 1;   // Invalid port
+      break;
+  }
 
-    // TODO make the delay more accurate
-    // Wait for clock stabilization
-    for (volatile uint32_t delay = 0; delay < 100000; ++delay) {
-        // Delay loop
-    }
+  // TODO make the delay more accurate
+  // Wait for clock stabilization
+  for (volatile uint32_t delay = 0; delay < 100000; ++delay) {
+      // Delay loop
+  }
 
-    initializedPorts[port] = 1;
-    return 0;
+  initialized_ports[port] = 1;
+  return 0;
 }
 
-int GPIO_Pin_Configure(GPIO_Port port, GPIO_PIN_Config *config) {
-    if (initializedPorts[port] == 0) return 1;      // Port is not initialized
-    if (config->pins == NULL) return 1;  // Invalid pins array
 
-    GPIO_Type *gpioPort;
-    switch (port) {
-        case GPIO_PORT_A:
-            gpioPort = GPIOA;
-            break;
-        case GPIO_PORT_B:
-            gpioPort = GPIOB;
-            break;
-        case GPIO_PORT_C:
-            gpioPort = GPIOC;
-            break;
-        case GPIO_PORT_H:
-            gpioPort = GPIOH;
-            break;
-        default:
-            return 1;      // Invalid port
-            break;
-    }
+int ConfigureGpioPin(GpioPort port, GpioPinConfig *config) {
+  if (initialized_ports[port] == 0) return 1;      // Port is not initialized
+  if (config->pins == NULL) return 1;  // Invalid pins array
 
-    for (int i = 0; i < config->nPins; i++) {
-        gpioPort->MODER     |=  (config->mode   << (config->pins[i] * 2));      // Set mode
-        gpioPort->OTYPER    |=  (config->otype  <<  config->pins[i]     );            // Set output type
-        gpioPort->OSPEEDR   |=  (config->ospeed << (config->pins[i] * 2));      // Set output speed
-        gpioPort->PUPDR     |=  (config->pull   << (config->pins[i] * 2));      // Set pull type
-    }
-    
-    return 0;
+  GPIO_Type *gpio_port;
+  switch (port) {
+    case kPortA:
+      gpio_port = GPIOA;
+      break;
+    case kPortB:
+      gpio_port = GPIOB;
+      break;
+    case kPortC:
+      gpio_port = GPIOC;
+      break;
+    case kPortH:
+      gpio_port = GPIOH;
+      break;
+    default:
+      return 1;      // Invalid port
+      break;
+  }
+
+  for (int i = 0; i < config->n_pins; i++) {
+    gpio_port->MODER     |=  (config->mode          << (config->pins[i] * 2));      // Set mode
+    gpio_port->OTYPER    |=  (config->output_type   <<  config->pins[i]     );      // Set output type
+    gpio_port->OSPEEDR   |=  (config->output_speed  << (config->pins[i] * 2));      // Set output speed
+    gpio_port->PUPDR     |=  (config->pull_type     << (config->pins[i] * 2));      // Set pull type
+  }
+  
+  return 0;
+}
+
+
+int ToggleOutputGpioPin(GpioPort port, uint8_t pin) {
+  // TODO not enough checks
+  if (initialized_ports[port] == 0) return 1; // Port not initialized
+
+  switch (port) {
+    case kPortA:
+      GPIOA->ODR ^= (1 << pin);
+      break;
+    case kPortB:
+      GPIOB->ODR ^= (1 << pin);
+      break;
+    case kPortC:
+      GPIOC->ODR ^= (1 << pin);
+      break;
+    case kPortH:
+      GPIOH->ODR ^= (1 << pin);
+      break;
+  }
+
+  return 0;
 }
