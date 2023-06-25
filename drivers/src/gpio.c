@@ -10,8 +10,6 @@
  * 
  * @note        This file will grow as I keep finding more needs and adding functionality
  * 
- * @warning     Untested
- * 
  * @todo        Manage errors POSIX-style
  *              Function comment blocks
  * 
