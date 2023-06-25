@@ -1,17 +1,10 @@
 /**
  * @file        main.c
  * 
- * @brief       LED Blinking Application
+ * @brief       Driver Test File
  *
- * @details     This file contains a simple program to blink an LED connected 
- *              to Pin PA5 of the STM32F10RB microcontroller.
- *              The led blinks rapidly while the user button is not pressed.
- *              If the user button is pressed, the blinking speed lowers until the
- *              button is released
+ * @details     This file contains a simple program to test the usage of my drivers library.
  * 
- * @note        This program utilizes the Nucleo board's built-in user LED and user button, 
- *              which are connected to PA5 and PC13, respectively.
- *
  * @author      Hiram Montejano Gómez
  * 
  * @date        Last Updated:   25/06/2023
