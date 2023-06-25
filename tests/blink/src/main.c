@@ -9,6 +9,9 @@
  *              If the user button is pressed, the blinking speed lowers until the
  *              button is released
  * 
+ * @note        This program utilizes the Nucleo board's built-in user LED and user button, 
+ *              which are connected to PA5 and PC13, respectively.
+ *
  * @author      Hiram Montejano Gómez
  * 
  * @date        Last Updated:   25/06/2023
