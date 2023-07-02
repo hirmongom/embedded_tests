@@ -8,11 +8,9 @@
  * 
  * @see         RM0401 Reference Manual, Page 135 for more information on GPIO configuration.
  * 
- * @note        This file will grow as I keep finding more needs and adding functionality
- * 
  * @author      Hiram Montejano Gómez
  * 
- * @date        Last Updated:   01/07/2023
+ * @date        Last Updated:   02/07/2023
  * 
  * @copyright   This file is part of the "STM32F10RB Microcontroller Applications" project.
  * 
@@ -30,3 +28,38 @@
  *              along with the "STM32F10RB Microcontroller Applications" project. If not, 
  *              see <http://www.gnu.org/licenses/>.
  */
+
+#include "stm32f410rb.h"
+
+typedef enum {
+  kModeInput,
+  kModeOutput,
+  kModeAlternate,
+  kModeAnalog
+} GpioMode;
+
+typedef enum {
+  kOtypePushPull,
+  kOtypeOpenDrain
+} GpioOutputType;
+
+typedef enum {
+  kSpeedLow,
+  kSpeedMedium,
+  kSpeedHigh,
+  kSpeedVeryHigh
+} GpioOutputSpeed;
+
+typedef enum {
+  kPullNone,
+  kPullUp,
+  kPullDown
+} GpioPullType;
+
+// TODO Configure port speed and such
+// TODO Separate setup functions for output, analog or alternate funciton config
+int gpioPinSetup(GPIO_Type *port, uint8_t pin, GpioMode mode);
+int gpioPinPullTypeSetup(GPIO_Type *port, uint8_t pin, GpioPullType type);
+int gpioPinRead(GPIO_Type *port, uint8_t pin, uint8_t *read);
+int gpioPinWrite(GPIO_Type *port, uint8_t pin, uint8_t value, uint8_t *old_value);
+int gpioPinToggle(GPIO_Type *port, uint8_t pin, uint8_t *old_value);

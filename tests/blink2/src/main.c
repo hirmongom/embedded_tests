@@ -26,23 +26,25 @@
  *              see <http://www.gnu.org/licenses/>.
  */
 
+#include <stdint.h>
+#include <stddef.h>
+#include "stm32f410rb.h"
 #include "gpio.h"
 
 int main(void) {
-  GpioPinConfig pin_config = GPIO_PIN_CONFIG_DEFAULT;
-  pin_config.pins = (uint8_t[]){5};
-  pin_config.n_pins = 1;
-  pin_config.mode = kModeOutput;
-  pin_config.output_type = kOtypePushPull;
-  pin_config.output_speed = kSpeedLow;
-  pin_config.pull_type = kPullNone;
-
-  InitializeGpioPort(kPortA);
-  ConfigureGpioPin(kPortA, &pin_config);
+  gpioPinSetup(GPIOA, 5, kModeOutput);
+  gpioPinSetup(GPIOC, 13, kModeInput);
+  uint8_t button_value;
 
   while (1) {
-      ToggleOutputGpioPin(kPortA, 5);
-      for (uint32_t i = 0; i < 100000; i++);
+    gpioPinToggle(GPIOA, 5, NULL);
+    for (uint32_t i = 0; i < 100000; i++);
+
+    gpioPinRead(GPIOC, 13, &button_value);
+    while (button_value) {
+      gpioPinToggle(GPIOA, 5, NULL);
+      for (uint32_t i = 0; i < 1000000; i++);
+      gpioPinRead(GPIOC, 13, &button_value);
+    }
   }
-  return 0;
 }

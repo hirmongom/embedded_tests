@@ -2,7 +2,7 @@ PROJECT_ROOT := ../
 
 CC = arm-none-eabi-gcc
 MCPU = cortex-m4
-CFLAGS = -c -I. -Iinclude -mcpu=$(MCPU) -mthumb -mfloat-abi=soft -std=gnu11 -Wall -Wextra -pedantic -O0
+CFLAGS = -c -Iinclude -mcpu=$(MCPU) -mthumb -mfloat-abi=soft -std=gnu11 -Wall -Wextra -pedantic -O0
 
 LIBRARY_OUTPUT := $(PROJECT_ROOT)/lib/libdrivers.a
 AR := arm-none-eabi-ar

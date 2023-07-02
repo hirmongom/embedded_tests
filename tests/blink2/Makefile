@@ -17,6 +17,7 @@ OBJECTS := $(patsubst src/%.c, build/obj/%.o, $(SOURCES))
 OBJDUMP = arm-none-eabi-objdump
 ODFLAGS = -t build/final.elf > build/map/final.map
 
+.PHONY: all
 all: build/final.elf
 
 build/obj/%.o: src/%.c | build/obj
