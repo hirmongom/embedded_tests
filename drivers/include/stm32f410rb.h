@@ -9,7 +9,7 @@
  * 
  * @author      Hiram Montejano Gómez
  * 
- * @date        Last Updated:   24/06/2023
+ * @date        Last Updated:   03/07/2023
  * 
  * @copyright   This file is part of the "STM32F10RB Microcontroller Applications" project.
  * 
@@ -73,6 +73,23 @@ typedef struct {
 } RCC_Type;
 
 
+/****************************** SYSCFG ******************************/
+/**
+ * @brief       SYSCFG register structure
+ */
+typedef struct {
+  __IO uint8_t MEMRMP;
+  __IO uint8_t PMC;
+  __IO uint8_t EXTICR1;
+  __IO uint8_t EXTICR2;
+  __IO uint8_t EXTICR3;
+  __IO uint8_t EXTICR4;
+  __IO uint8_t CFGR2;
+  __IO uint8_t CMPCR;
+  __IO uint8_t CFGR;
+} SYSCFG_Type;
+
+
 /****************************** GPIO ******************************/
 /**
  * @brief       GPIO register structure
@@ -94,6 +111,7 @@ typedef struct {
 /********************* Peripheral Memory Map ********************/
 
 #define RCC_BASE_ADDR       (0x40023800UL)
+#define SYSCFG_BASE_ADDR    (0x40013800UL)
 #define GPIOA_BASE_ADDR     (0x40020000UL)
 #define GPIOB_BASE_ADDR     (0x40020400UL)
 #define GPIOC_BASE_ADDR     (0x40020800UL)
@@ -103,7 +121,7 @@ typedef struct {
 /********************* Peripheral Declaration ********************/
 
 #define RCC                 ((RCC_Type*) RCC_BASE_ADDR)
-
+#define SYSCFG              ((SYSCFG_Type*) SYSCFG_BASE_ADDR)
 #define GPIOA               ((GPIO_Type*) GPIOA_BASE_ADDR)
 #define GPIOB               ((GPIO_Type*) GPIOB_BASE_ADDR)
 #define GPIOC               ((GPIO_Type*) GPIOC_BASE_ADDR)
