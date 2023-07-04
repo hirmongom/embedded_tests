@@ -9,7 +9,7 @@
  * 
  * @author      Hiram Montejano Gómez
  * 
- * @date        Last Updated:   03/07/2023
+ * @date        Last Updated:   04/07/2023
  * 
  * @copyright   This file is part of the "STM32F10RB Microcontroller Applications" project.
  * 
@@ -87,6 +87,20 @@ typedef struct {
 } SYSCFG_Type;
 
 
+/****************************** EXTI ******************************/
+/**
+ * @brief       EXTI register structure
+ */
+typedef struct {
+  __IO uint8_t IMR;
+  __IO uint8_t EMR;
+  __IO uint8_t RSTR;
+  __IO uint8_t FTSR;
+  __IO uint8_t SWIER;
+  __IO uint8_t PR;
+} EXTI_Type;
+
+
 /****************************** GPIO ******************************/
 /**
  * @brief       GPIO register structure
@@ -109,6 +123,7 @@ typedef struct {
 
 #define RCC_BASE_ADDR       (0x40023800UL)
 #define SYSCFG_BASE_ADDR    (0x40013800UL)
+#define EXTI_BASE_ADDR      (0x40013C00UL)
 #define GPIOA_BASE_ADDR     (0x40020000UL)
 #define GPIOB_BASE_ADDR     (0x40020400UL)
 #define GPIOC_BASE_ADDR     (0x40020800UL)
@@ -119,6 +134,7 @@ typedef struct {
 
 #define RCC                 ((RCC_Type*) RCC_BASE_ADDR)
 #define SYSCFG              ((SYSCFG_Type*) SYSCFG_BASE_ADDR)
+#define EXTI                ((EXTI_Type*) EXTI_BASE_ADDR)
 #define GPIOA               ((GPIO_Type*) GPIOA_BASE_ADDR)
 #define GPIOB               ((GPIO_Type*) GPIOB_BASE_ADDR)
 #define GPIOC               ((GPIO_Type*) GPIOC_BASE_ADDR)
