@@ -80,10 +80,7 @@ typedef struct {
 typedef struct {
   __IO uint8_t MEMRMP;
   __IO uint8_t PMC;
-  __IO uint8_t EXTICR1;
-  __IO uint8_t EXTICR2;
-  __IO uint8_t EXTICR3;
-  __IO uint8_t EXTICR4;
+  __IO uint8_t EXTICR[4];
   __IO uint8_t CFGR2;
   __IO uint8_t CMPCR;
   __IO uint8_t CFGR;
