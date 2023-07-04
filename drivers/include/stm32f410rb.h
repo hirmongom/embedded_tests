@@ -38,66 +38,33 @@
 #define     __IO    volatile             // Defines 'read / write' permissions
 
 
-/****************************** RCC ******************************/
-/**
- * @brief       RCC register structure
- */
-typedef struct {
-    __IO uint32_t CR;           // Clock control
-    __IO uint32_t PLLCFGR;      // PLL configuration
-    __IO uint32_t CFGR;         // Clock configuration
-    __IO uint32_t CIR;          // Clock interrupt
-    __IO uint32_t AHB1RSTR;     // AHB1 peripheral reset
-    __I uint32_t RESERVED1[3];
-    __IO uint32_t APB1RSTR;     // APB1 peripheral reset
-    __IO uint32_t APB2RSTR;     // APB2 peripheral reset
-    __I uint32_t RESERVED2[2];
-    __IO uint32_t AHB1ENR;      // AHB1 peripheral clock enable
-    __I uint32_t RESERVED3[3];
-    __IO uint32_t APB1ENR;      // APB1 peripheral clock enable
-    __IO uint32_t APB2ENR;      // APB2 peripheral clock enable
-    __I uint32_t RESERVED4[2];
-    __IO uint32_t AHB1LPENR;    // AHB1 peripheral clock enable in low power mode
-    __I uint32_t RESERVED5[3];
-    __IO uint32_t APB1LPENR;    // APB1 peripheral clock enable in low power mode
-    __IO uint32_t APB2LPENR;    // APB2 peripheral clock enable in low power mode
-    __I uint32_t RESERVED6[2];
-    __IO uint32_t BDCR;         // Backup domain control
-    __IO uint32_t CSR;          // Clock control & status
-    __I uint32_t RESERVED7[2];
-    __IO uint32_t SSCGR;        // Spread spectrum clock generation
-    __I uint32_t RESERVED8[2];
-    __IO uint32_t DCKCFGR;      // Dedicated Clocks Configuration
-    __I uint32_t RESERVED9;
-    __IO uint32_t DCKCFGR2;     // Dedicated Clocks Configuration 2
-} RCC_Type;
-
-
+// TODO missing comments
 /****************************** SYSCFG ******************************/
 /**
  * @brief       SYSCFG register structure
  */
 typedef struct {
-  __IO uint8_t MEMRMP;
-  __IO uint8_t PMC;
-  __IO uint8_t EXTICR[4];
-  __IO uint8_t CFGR2;
-  __IO uint8_t CMPCR;
-  __IO uint8_t CFGR;
+  __IO uint32_t MEMRMP;
+  __IO uint32_t PMC;
+  __IO uint32_t EXTICR[4];
+  __IO uint32_t CFGR2;
+  __IO uint32_t CMPCR;
+  __IO uint32_t CFGR;
 } SYSCFG_Type;
 
 
+// TODO missing comments
 /****************************** EXTI ******************************/
 /**
  * @brief       EXTI register structure
  */
 typedef struct {
-  __IO uint8_t IMR;
-  __IO uint8_t EMR;
-  __IO uint8_t RSTR;
-  __IO uint8_t FTSR;
-  __IO uint8_t SWIER;
-  __IO uint8_t PR;
+  __IO uint32_t IMR;
+  __IO uint32_t EMR;
+  __IO uint32_t RSTR;
+  __IO uint32_t FTSR;
+  __IO uint32_t SWIER;
+  __IO uint32_t PR;
 } EXTI_Type;
 
 
@@ -119,25 +86,84 @@ typedef struct {
 } GPIO_Type;
 
 
+/****************************** RCC ******************************/
+/**
+ * @brief       RCC register structure
+ */
+typedef struct {
+    __IO uint32_t CR;           // Clock control
+    __IO uint32_t PLLCFGR;      // PLL configuration
+    __IO uint32_t CFGR;         // Clock configuration
+    __IO uint32_t CIR;          // Clock interrupt
+    __IO uint32_t AHB1RSTR;     // AHB1 peripheral reset
+    __I  uint32_t RESERVED1[3];
+    __IO uint32_t APB1RSTR;     // APB1 peripheral reset
+    __IO uint32_t APB2RSTR;     // APB2 peripheral reset
+    __I  uint32_t RESERVED2[2];
+    __IO uint32_t AHB1ENR;      // AHB1 peripheral clock enable
+    __I  uint32_t RESERVED3[3];
+    __IO uint32_t APB1ENR;      // APB1 peripheral clock enable
+    __IO uint32_t APB2ENR;      // APB2 peripheral clock enable
+    __I  uint32_t RESERVED4[2];
+    __IO uint32_t AHB1LPENR;    // AHB1 peripheral clock enable in low power mode
+    __I  uint32_t RESERVED5[3];
+    __IO uint32_t APB1LPENR;    // APB1 peripheral clock enable in low power mode
+    __IO uint32_t APB2LPENR;    // APB2 peripheral clock enable in low power mode
+    __I  uint32_t RESERVED6[2];
+    __IO uint32_t BDCR;         // Backup domain control
+    __IO uint32_t CSR;          // Clock control & status
+    __I  uint32_t RESERVED7[2];
+    __IO uint32_t SSCGR;        // Spread spectrum clock generation
+    __I  uint32_t RESERVED8[2];
+    __IO uint32_t DCKCFGR;      // Dedicated Clocks Configuration
+    __I  uint32_t RESERVED9;
+    __IO uint32_t DCKCFGR2;     // Dedicated Clocks Configuration 2
+} RCC_Type;
+
+
+// TODO missing comments
+/****************************** NVIC ******************************/
+/**
+ * @brief       NVIC register structure
+ */
+typedef struct {
+  __IO uint32_t ISER[3];
+  __I  uint32_t RESERVED[5];
+  __IO uint32_t ICER[3];
+  __I  uint32_t RESERVED[5];
+  __IO uint32_t ISPR[3];
+  __I  uint32_t RESERVED[5];
+  __IO uint32_t ICPR[3];
+  __I  uint32_t RESERVED[5];
+  __IO uint32_t IABR[3];
+  __I  uint32_t RESERVED[5];
+  __IO uint32_t IPR[3];
+  __I  uint32_t RESERVED[5];
+  __O  uint32_t STIR;
+} NVIC_Type;
+
+
 /********************* Peripheral Memory Map ********************/
 
-#define RCC_BASE_ADDR       (0x40023800UL)
 #define SYSCFG_BASE_ADDR    (0x40013800UL)
 #define EXTI_BASE_ADDR      (0x40013C00UL)
 #define GPIOA_BASE_ADDR     (0x40020000UL)
 #define GPIOB_BASE_ADDR     (0x40020400UL)
 #define GPIOC_BASE_ADDR     (0x40020800UL)
 #define GPIOH_BASE_ADDR     (0x40021C00UL)
+#define RCC_BASE_ADDR       (0x40023800UL)
+#define NVIC_BASE_ADDR      (0xE000E100UL)
 
 
 /********************* Peripheral Declaration ********************/
 
-#define RCC                 ((RCC_Type*) RCC_BASE_ADDR)
 #define SYSCFG              ((SYSCFG_Type*) SYSCFG_BASE_ADDR)
 #define EXTI                ((EXTI_Type*) EXTI_BASE_ADDR)
 #define GPIOA               ((GPIO_Type*) GPIOA_BASE_ADDR)
 #define GPIOB               ((GPIO_Type*) GPIOB_BASE_ADDR)
 #define GPIOC               ((GPIO_Type*) GPIOC_BASE_ADDR)
 #define GPIOH               ((GPIO_Type*) GPIOH_BASE_ADDR)
+#define RCC                 ((RCC_Type*) RCC_BASE_ADDR)
+#define NVIC                ((NVIC_Type*) NVIC_BASE_ADDR)
 
 #endif
