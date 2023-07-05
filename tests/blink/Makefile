@@ -1,5 +1,5 @@
 PROJECT_ROOT := ../..
-DRIVERS_DIR := $(PROJECT_ROOT)/drivers
+DRIVERS_DIR := $(PROJECT_ROOT)/drivers/include
 STARTUP_DIR := $(PROJECT_ROOT)/startup
 
 CC = arm-none-eabi-gcc

@@ -35,6 +35,8 @@
 
 #include "stm32f410rb.h"
 
+void EXTI15_10_ISR(void);
+
 int main(void) {
     
     RCC->AHB1ENR |= (1 << 0);       // Enable clock for GPIOA
@@ -43,16 +45,31 @@ int main(void) {
     GPIOC->MODER &= ~(1 << 26);     // Set PC13 as input (redundant)
     GPIOC->PUPDR |= (2 << 26);      // PC13 pull-down
 
+    // EXTI line 13 for PC13
+    RCC->APB2ENR |= (1 << 14);    // Enable system configuration controller clock
+    SYSCFG->EXTICR[4] &= ~(0xF << 4); // Clear register
+    SYSCFG->EXTICR[4] |= (2 << 4);  // Select source input for the EXTI13
+    
+    EXTI->IMR |= (1 << 13); // Set pin in EXTI line as interrupt
+    EXTI->RTSR &= ~(1 << 13); // Enable rising edge trigger
+    EXTI->FTSR |= (1 << 13);
+    
+    /* INTERRUPT CONFIGURATION CRASHES BLINK */
+    NVIC->IPR[10] |= (0x3 << 4);
+    NVIC->ISER[1] |= (1 << 8);  // Enable interrupt
+    
     // Loop
     while (1) {
         GPIOA->ODR ^= (1 << 5);  // Toggle LED (PA5)  
-        for (uint32_t i = 0; i < 1000000; i++);
-        
-        while (GPIOC->IDR & (1 << 13)) {
-            GPIOA->ODR ^= (1 << 5);  // Toggle LED (PA5)  
-            for (uint32_t i = 0; i < 100000; i++);
-        }
+        for (uint32_t i = 0; i < 100000; i++);
     }
 
     return 0;
+}
+
+void EXTI15_10_ISR(void) {
+  if (EXTI->PR & (1 << 13)) {
+    EXTI->PR |= (1 << 13);
+    for (uint32_t i = 0; i < 10000000; i++);
+  }
 }

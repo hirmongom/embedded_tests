@@ -31,20 +31,26 @@
 #include "stm32f410rb.h"
 #include "gpio.h"
 
+void buttonHandler(void);
+
+uint8_t pSpeed = 0;
+
 int main(void) {
   gpioPinSetup(GPIOA, 5, kModeOutput);
   gpioPinSetup(GPIOC, 13, kModeInput);
-  uint8_t button_value;
+  gpioInterruptSet(GPIOC, 13, 1, 8, &buttonHandler);
+
+  uint32_t speed[] = {100000, 250000, 500000, 750000, 1000000};
 
   while (1) {
     gpioPinToggle(GPIOA, 5, NULL);
-    for (uint32_t i = 0; i < 100000; i++);
-
-    gpioPinRead(GPIOC, 13, &button_value);
-    while (button_value) {
-      gpioPinToggle(GPIOA, 5, NULL);
-      for (uint32_t i = 0; i < 1000000; i++);
-      gpioPinRead(GPIOC, 13, &button_value);
-    }
+    for (uint32_t i = 0; i < speed[pSpeed]; i++);
   }
+
+  return 0;
+}
+
+void buttonHandler(void) {
+  pSpeed ++;
+  pSpeed = pSpeed % 5;
 }
