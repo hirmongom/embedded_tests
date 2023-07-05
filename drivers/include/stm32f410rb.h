@@ -121,25 +121,24 @@ typedef struct {
 } RCC_Type;
 
 
-// TODO missing comments
 /****************************** NVIC ******************************/
 /**
  * @brief       NVIC register structure
  */
 typedef struct {
-  __IO uint32_t ISER[3];
+  __IO uint32_t ISER[3];        // Interrupt set-enable
   __I  uint32_t RESERVED[5];
-  __IO uint32_t ICER[3];
+  __IO uint32_t ICER[3];        // Interrupt clear-enable
   __I  uint32_t RESERVED[5];
-  __IO uint32_t ISPR[3];
+  __IO uint32_t ISPR[3];        // Interrupt set-pending
   __I  uint32_t RESERVED[5];
-  __IO uint32_t ICPR[3];
+  __IO uint32_t ICPR[3];        // Interrupt clear-pending
   __I  uint32_t RESERVED[5];
-  __IO uint32_t IABR[3];
+  __IO uint32_t IABR[3];        // Interrupt active bit
   __I  uint32_t RESERVED[5];
-  __IO uint32_t IPR[3];
+  __IO uint32_t IPR[60];        // Interrupt priority 
   __I  uint32_t RESERVED[5];
-  __O  uint32_t STIR;
+  __O  uint32_t STIR;           // Software trigger interrupt
 } NVIC_Type;
 
 
