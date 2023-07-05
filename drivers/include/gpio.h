@@ -63,3 +63,4 @@ int gpioPinPullTypeSetup(GPIO_Type *port, uint8_t pin, GpioPullType type);
 int gpioPinRead(GPIO_Type *port, uint8_t pin, uint8_t *read);
 int gpioPinWrite(GPIO_Type *port, uint8_t pin, uint8_t value, uint8_t *old_value);
 int gpioPinToggle(GPIO_Type *port, uint8_t pin, uint8_t *old_value);
+int gpioInterruptSet(GPIO_Type *port, uint8_t pin, uint8_t rising_edge, uint8_t priority, void (*handler)(void));
