@@ -61,7 +61,7 @@ typedef struct {
 typedef struct {
   __IO uint32_t IMR;
   __IO uint32_t EMR;
-  __IO uint32_t RSTR;
+  __IO uint32_t RTSR;
   __IO uint32_t FTSR;
   __IO uint32_t SWIER;
   __IO uint32_t PR;
@@ -127,17 +127,17 @@ typedef struct {
  */
 typedef struct {
   __IO uint32_t ISER[3];        // Interrupt set-enable
-  __I  uint32_t RESERVED[5];
+  __I  uint32_t RESERVED1[5];
   __IO uint32_t ICER[3];        // Interrupt clear-enable
-  __I  uint32_t RESERVED[5];
+  __I  uint32_t RESERVED2[5];
   __IO uint32_t ISPR[3];        // Interrupt set-pending
-  __I  uint32_t RESERVED[5];
+  __I  uint32_t RESERVED3[5];
   __IO uint32_t ICPR[3];        // Interrupt clear-pending
-  __I  uint32_t RESERVED[5];
+  __I  uint32_t RESERVED4[5];
   __IO uint32_t IABR[3];        // Interrupt active bit
-  __I  uint32_t RESERVED[5];
+  __I  uint32_t RESERVED5[5];
   __IO uint32_t IPR[60];        // Interrupt priority 
-  __I  uint32_t RESERVED[5];
+  __I  uint32_t RESERVED6[5];
   __O  uint32_t STIR;           // Software trigger interrupt
 } NVIC_Type;
 
