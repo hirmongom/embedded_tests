@@ -14,7 +14,7 @@
  *
  * @author      Hiram Montejano Gómez
  * 
- * @date        Last Updated:   25/06/2023
+ * @date        Last Updated:   05/07/2023
  * 
  * @copyright   This file is part of the "STM32F10RB Microcontroller Applications" project.
  * 
@@ -53,8 +53,8 @@ int main(void) {
     EXTI->IMR |= (1 << 13); // Set pin in EXTI line as interrupt
     EXTI->RTSR &= ~(1 << 13); // Enable rising edge trigger
     EXTI->FTSR |= (1 << 13);
-    
-    /* INTERRUPT CONFIGURATION CRASHES BLINK */
+
+    /* TODO INTERRUPT CONFIGURATION CRASHES BLINK */
     NVIC->IPR[10] |= (0x3 << 4);
     NVIC->ISER[1] |= (1 << 8);  // Enable interrupt
     
