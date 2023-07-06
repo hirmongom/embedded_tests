@@ -135,7 +135,7 @@ typedef struct {
   __I  uint32_t RESERVED4[24];
   __IO uint32_t IABR[8];        // 0x200 (R/W) Interrupt active bit
   __I  uint32_t RESERVED5[56];
-  __IO uint32_t IPR[240];       // 0x300 (R/W) Interrupt priority
+  __IO uint8_t IPR[240];       // 0x300 (R/W) Interrupt priority
   __I  uint32_t RESERVED6[644];
   __O  uint32_t STIR;           // 0xE00 (W) Software trigger interrupt
 } NVIC_Type;
