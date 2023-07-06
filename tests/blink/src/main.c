@@ -38,38 +38,39 @@
 void EXTI15_10_ISR(void);
 
 int main(void) {
-    
     RCC->AHB1ENR |= (1 << 0);       // Enable clock for GPIOA
     RCC->AHB1ENR |= (1 << 2);       // Enable clock for GPIOC
+
     GPIOA->MODER |= (1 << 10);      // Set PA5 as output
-    GPIOC->MODER &= ~(1 << 26);     // Set PC13 as input (redundant)
+    GPIOC->MODER &= ~(3 << 26);     // Set PC13 as input (redundant)
+    GPIOC->PUPDR &= ~(3 << 26);     // Reset
     GPIOC->PUPDR |= (2 << 26);      // PC13 pull-down
-
-    // EXTI line 13 for PC13
-    RCC->APB2ENR |= (1 << 14);    // Enable system configuration controller clock
-    SYSCFG->EXTICR[4] &= ~(0xF << 4); // Clear register
-    SYSCFG->EXTICR[4] |= (2 << 4);  // Select source input for the EXTI13
     
-    EXTI->IMR |= (1 << 13); // Set pin in EXTI line as interrupt
-    EXTI->RTSR &= ~(1 << 13); // Enable rising edge trigger
-    EXTI->FTSR |= (1 << 13);
+    // EXTI line 13 for PC13
+    RCC->APB2ENR |= (1 << 14);        // Enable system configuration controller clock
 
-    /* TODO INTERRUPT CONFIGURATION CRASHES BLINK */
-    NVIC->IPR[10] |= (0x3 << 4);
+    SYSCFG->EXTICR[4] &= ~(0xF << 4); // Clear register
+    SYSCFG->EXTICR[4] |= (2 << 4);    // Select source input for the EXTI13
+    
+    EXTI->IMR |= (1 << 13);     // Set pin in EXTI line as interrupt
+    EXTI->FTSR &= ~(1 << 13); 
+    EXTI->RTSR |= (1 << 13);    // Enable rising edge trigger
+
     NVIC->ISER[1] |= (1 << 8);  // Enable interrupt
+    NVIC->IPR[40] |= (1 << 4);  // Set priority
     
     // Loop
-    while (1) {
-        GPIOA->ODR ^= (1 << 5);  // Toggle LED (PA5)  
-        for (uint32_t i = 0; i < 100000; i++);
-    }
-
-    return 0;
+    while (1) {}
 }
 
+// TODO Interrupt kinda exectues constantly without me doing anything
 void EXTI15_10_ISR(void) {
   if (EXTI->PR & (1 << 13)) {
-    EXTI->PR |= (1 << 13);
-    for (uint32_t i = 0; i < 10000000; i++);
+    GPIOA->ODR ^= (1 << 5);   // Toggle LED (PA5)
+    for (int i = 0; i < 10000000; i++);
+    GPIOA->ODR ^= (1 << 5);   // Toggle LED (PA5)
+    for (int i = 0; i < 1000000; i++);
+    EXTI->PR |= (1 << 13);    // Clear flag
+    //EXTI->IMR &= ~(1 << 13);  // Mask interrupt
   }
 }
