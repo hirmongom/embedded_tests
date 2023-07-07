@@ -33,15 +33,7 @@
 #include "stm32f410rb.h"
 #include "gpio.h"
 
-
-extern void (*EXTI0_ISR)(void);
-extern void (*EXTI1_ISR)(void);
-extern void (*EXTI2_ISR)(void);
-extern void (*EXTI3_ISR)(void);
-extern void (*EXTI4_ISR)(void);
-extern void (*EXTI9_5_ISR)(void);
-extern void (*EXTI15_10_ISR)(void);
-
+static void (*gpio_isr_functions[16])(void);
 
 static inline void delay() {
   // TODO make the delay more accurate
@@ -132,7 +124,6 @@ int gpioInterruptSet(GPIO_Type *port, uint8_t pin, uint8_t rising_edge, uint8_t 
   if (priority < 7) return 1; // Cannot have more priority
 
   uint8_t exti_source_input;
-  uint8_t exti_line = pin / 4;
 
   if (port == GPIOA)
     exti_source_input = 0;
@@ -146,8 +137,8 @@ int gpioInterruptSet(GPIO_Type *port, uint8_t pin, uint8_t rising_edge, uint8_t 
     return 1; // Wrong port
 
   RCC->APB2ENR |= (1 << 14);    // Enable system configuration controller clock
-  SYSCFG->EXTICR[exti_line] &= ~(0xF << (pin % 4) * 4); // Clear register
-  SYSCFG->EXTICR[exti_line] |= (exti_source_input << (pin % 4) * 4);  // Select source input for the EXTIx
+  SYSCFG->EXTICR[pin / 4] &= ~(0xF << (pin % 4) * 4); // Clear register
+  SYSCFG->EXTICR[pin / 4] |= (exti_source_input << (pin % 4) * 4);  // Select source input for the EXTIx
   
   EXTI->IMR |= (1 << pin);  // Set pin in EXTI line as interrupt
   if (rising_edge == 1) {
@@ -159,41 +150,71 @@ int gpioInterruptSet(GPIO_Type *port, uint8_t pin, uint8_t rising_edge, uint8_t 
   }
 
   // Set priority and set-enable interrupt
-  if (exti_line <= 4) {
-    NVIC->IPR[(6 + exti_line) / 4] |= (priority << (((6 + exti_line) % 4) * 8));
+  if (pin <= 4) {
+    NVIC->IPR[6 + pin] |= (priority << 4);
     NVIC->ISER[0] |= (1 << (6 + pin));
-  } else if (exti_line <= 9) {
-    NVIC->IPR[5] |= (priority << 24);
+  } else if (pin <= 9) {
+    NVIC->IPR[23] |= (priority << 4);
     NVIC->ISER[0] |= (1 << 23);
   } else {
-    NVIC->IPR[10] |= (priority << 0);
+    NVIC->IPR[40] |= (priority << 4);
     NVIC->ISER[1] |= (1 << 8);
   }
 
-  switch (exti_line) {
-    case 0:
-      EXTI0_ISR = handler;
-      break;
-    case 1:
-      EXTI1_ISR = handler;
-      break;
-    case 2:
-      EXTI2_ISR = handler;
-      break;
-    case 3:
-      EXTI3_ISR = handler;
-      break;
-    case 4:
-      EXTI4_ISR = handler;
-      break;
-    default:
-      if (exti_line <= 9) {
-        EXTI9_5_ISR = handler;
-      } else {
-        EXTI15_10_ISR = handler;
-      }
-      break;
-  }
+  gpio_isr_functions[pin] = handler;
 
   return 0;
+}
+
+void EXTI0_ISR (void) {
+  if (EXTI->PR & (1 << 0)) {
+    gpio_isr_functions[0]();
+    EXTI->PR |= (1 << 0);    // Clear flag
+  }
+}
+
+void EXTI1_ISR (void) {
+  if (EXTI->PR & (1 << 1)) {
+    gpio_isr_functions[1]();
+    EXTI->PR |= (1 << 1);    // Clear flag
+  }
+}
+
+void EXTI2_ISR (void) {
+  if (EXTI->PR & (1 << 2)) {
+    gpio_isr_functions[2]();
+    EXTI->PR |= (1 << 2);    // Clear flag
+  }
+}
+
+void EXTI3_ISR (void) {
+  if (EXTI->PR & (1 << 3)) {
+    gpio_isr_functions[3]();
+    EXTI->PR |= (1 << 3);    // Clear flag
+  }
+}
+
+void EXTI4_ISR (void) {
+  if (EXTI->PR & (1 << 4)) {
+    gpio_isr_functions[4]();
+    EXTI->PR |= (1 << 4);    // Clear flag
+  }
+}
+
+void EXTI9_5_ISR (void) {
+  for (int i = 5; i <= 9; i++) {
+    if (EXTI->PR & (1 << i)) {
+      gpio_isr_functions[i]();
+      EXTI->PR |= (1 << i);
+    }
+  }
+}
+
+void EXTI15_10_ISR (void) {
+  for (int i = 10; i <= 15; i++) {
+    if (EXTI->PR & (1 << i)) {
+      gpio_isr_functions[i]();
+      EXTI->PR |= (1 << i);
+    }
+  }
 }
