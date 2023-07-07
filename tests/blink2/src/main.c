@@ -33,24 +33,20 @@
 
 void buttonHandler(void);
 
-uint8_t pSpeed = 0;
-
 int main(void) {
   gpioPinSetup(GPIOA, 5, kModeOutput);
   gpioPinSetup(GPIOC, 13, kModeInput);
-  gpioInterruptSet(GPIOC, 13, 1, 8, &buttonHandler);
+  gpioPinPullTypeSetup(GPIOC, 13, kPullDown);
+  gpioInterruptSet(GPIOC, 13, 1, 8, buttonHandler);
 
-  uint32_t speed[] = {100000, 250000, 500000, 750000, 1000000};
-
-  while (1) {
-    gpioPinToggle(GPIOA, 5, NULL);
-    for (uint32_t i = 0; i < speed[pSpeed]; i++);
-  }
-
-  return 0;
+  while (1) {}
 }
 
 void buttonHandler(void) {
-  pSpeed ++;
-  pSpeed = pSpeed % 5;
+  for (int i = 0; i < 10; i++) {
+    gpioPinToggle(GPIOA, 5, NULL);
+    for (int j = 0; j < 100000; j++);
+    gpioPinToggle(GPIOA, 5, NULL);
+    for (int j = 0; j < 100000; j++);
+  }
 }
