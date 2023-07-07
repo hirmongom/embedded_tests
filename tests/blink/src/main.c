@@ -35,9 +35,6 @@
 
 #include "stm32f410rb.h"
 
-void EXTI15_10_ISR(void);
-uint32_t interrupt_counter = 0;
-
 int main(void) {
     RCC->AHB1ENR |= (1 << 0);       // Enable clock for GPIOA
     RCC->AHB1ENR |= (1 << 2);       // Enable clock for GPIOC
