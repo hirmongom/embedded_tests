@@ -36,6 +36,7 @@
 #include "stm32f410rb.h"
 
 void EXTI15_10_ISR(void);
+uint32_t interrupt_counter = 0;
 
 int main(void) {
     RCC->AHB1ENR |= (1 << 0);       // Enable clock for GPIOA
@@ -44,15 +45,15 @@ int main(void) {
     GPIOA->MODER |= (1 << 10);      // Set PA5 as output
     GPIOC->MODER &= ~(3 << 26);     // Set PC13 as input (redundant)
     GPIOC->PUPDR &= ~(3 << 26);     // Reset
-    GPIOC->PUPDR |= (2 << 26);      // PC13 pull-down
+    GPIOC->PUPDR |= (1 << 26);      // PC13 pull-down
     
-    // EXTI line 13 for PC13
+    // EXTI line 13 for PC13 
     RCC->APB2ENR |= (1 << 14);        // Enable system configuration controller clock
 
-    SYSCFG->EXTICR[4] &= ~(0xF << 4); // Clear register
-    SYSCFG->EXTICR[4] |= (2 << 4);    // Select source input for the EXTI13
+    SYSCFG->EXTICR[3] &= ~(0xF << 4); // Clear register
+    SYSCFG->EXTICR[3] |= (2 << 4);    // Select source input for the EXTI13
     
-    EXTI->IMR |= (1 << 13);     // Set pin in EXTI line as interrupt
+    EXTI->IMR |= (1 << 13);     // Unmask pin in EXTI line
     EXTI->FTSR &= ~(1 << 13); 
     EXTI->RTSR |= (1 << 13);    // Enable rising edge trigger
 
@@ -63,14 +64,15 @@ int main(void) {
     while (1) {}
 }
 
-// TODO Interrupt kinda exectues constantly without me doing anything
+
 void EXTI15_10_ISR(void) {
   if (EXTI->PR & (1 << 13)) {
-    GPIOA->ODR ^= (1 << 5);   // Toggle LED (PA5)
-    for (int i = 0; i < 10000000; i++);
-    GPIOA->ODR ^= (1 << 5);   // Toggle LED (PA5)
-    for (int i = 0; i < 1000000; i++);
+    for (int i = 0; i < 10; i++) {
+      GPIOA->ODR ^= (1 << 5);   // Toggle LED (PA5)
+      for (int j = 0; j < 100000; j++);
+      GPIOA->ODR ^= (1 << 5);   // Toggle LED (PA5)
+      for (int j = 0; j < 100000; j++);
+    }
     EXTI->PR |= (1 << 13);    // Clear flag
-    //EXTI->IMR &= ~(1 << 13);  // Mask interrupt
   }
 }
