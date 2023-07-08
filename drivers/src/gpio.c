@@ -101,7 +101,14 @@ int gpioPinWrite(GPIO_Type *port, uint8_t pin, uint8_t value, uint8_t *old_value
   uint32_t pin_value = (port->IDR >> pin) & 0x01;
   *old_value = (uint8_t) pin_value;
 
-  port->ODR |= (value << pin);
+  if (value == 0) {
+    port->ODR &= ~(1 << pin);
+  } else if (value == 1) {
+    port->ODR |= (1 << pin);
+  } else {
+    return 1;   // Wrong value
+  }
+  
   return 0;
 }
 
@@ -116,7 +123,7 @@ int gpioPinToggle(GPIO_Type *port, uint8_t pin, uint8_t *old_value) {
   return 0;
 }
 
-// TODO prio cannot be lower than?
+// TODO prio cannot be lower than? I dont understand priorities
 /// @see PM0214 page 208
 int gpioInterruptSet(GPIO_Type *port, uint8_t pin, uint8_t rising_edge, uint8_t priority, void (*handler)(void)) {
   if (pin > 15) return 1; // Wrong pin
