@@ -71,9 +71,8 @@ SECTIONS {
     } > FLASH
 
     .data : {
-        . = ALIGN(4);
         _sdata = .;
-
+        KEEP(*(.errno))
         *(.data)
 
         . = ALIGN(4);
