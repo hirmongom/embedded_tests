@@ -33,6 +33,9 @@
 #include "stm32f410rb.h"
 #include "gpio.h"
 
+extern uint16_t errno;
+extern uint16_t errcode;
+
 static void (*gpio_isr_functions[16])(void);
 
 static inline void delay() {
@@ -41,8 +44,11 @@ static inline void delay() {
 }
 
 int gpioPinSetup(GPIO_Type *port, uint8_t pin, GpioMode mode) {
-  if (pin > 15) return 1; // Wrong pin
-  
+  if (pin > 15) {
+    errno = 1;  // GPIO error
+    errcode = 2;  // Wrong pin number
+    return 1;
+  }
   // Check if port is initializated, if not, initialize it
   if (port == GPIOA) {
     if (!(RCC->AHB1ENR & (1 << 0))) {
@@ -67,8 +73,11 @@ int gpioPinSetup(GPIO_Type *port, uint8_t pin, GpioMode mode) {
       delay();
     }
   }
-  else   
-    return 1; // Wrong port
+  else {
+    errno = 1;  // GPIO error
+    errcode = 1;  // Wrong GPIO port
+    return 1;
+  }
 
   port->MODER &= ~(3 << pin * 2); // Reset mode before overwritting with new one
   port->MODER |= (mode << pin * 2);
@@ -76,27 +85,39 @@ int gpioPinSetup(GPIO_Type *port, uint8_t pin, GpioMode mode) {
   return 0;
 }
 
+// TODO check correct port and if initialized
 int gpioPinPullTypeSetup(GPIO_Type *port, uint8_t pin, GpioPullType type) {
-  if (pin > 15) return 1; // Wrong pin
+  if (pin > 15) {
+    errno = 1;  // GPIO error
+    errcode = 2;  // Wrong pin number
+    return 1;
+  }
   
   port->PUPDR &= ~(3 << pin * 2);
   port->PUPDR |= (type << pin * 2);
   return 0;
 }
 
-
-// TODO should check if correct port or if it is initialized and its mode
+// TODO Check if correct port and if it is initialized and its mode
 int gpioPinRead(GPIO_Type *port, uint8_t pin, uint8_t *read) {
-  if (pin > 15) return 1; // Wrong pin
+  if (pin > 15) {
+    errno = 1;  // GPIO error
+    errcode = 2;  // Wrong pin number
+    return 1;
+  }
   
   uint32_t pin_value = (port->IDR >> pin) & 0x01;
   *read = (uint8_t) pin_value;
   return 0;
 }
 
-
+// TODO Check if correct port and if it is initialized and its mode
 int gpioPinWrite(GPIO_Type *port, uint8_t pin, uint8_t value, uint8_t *old_value) {
-  if (pin > 15) return 1; // Wrong pin
+  if (pin > 15) {
+    errno = 1;  // GPIO error
+    errcode = 2;  // Wrong pin number
+    return 1;
+  }
   
   uint32_t pin_value = (port->IDR >> pin) & 0x01;
   *old_value = (uint8_t) pin_value;
@@ -106,15 +127,21 @@ int gpioPinWrite(GPIO_Type *port, uint8_t pin, uint8_t value, uint8_t *old_value
   } else if (value == 1) {
     port->ODR |= (1 << pin);
   } else {
-    return 1;   // Wrong value
+    errno = 1;  // GPIO error
+    errcode = 5;  // Tried to write wrong value
+    return 1;
   }
   
   return 0;
 }
 
-
+// TODO Check if correct port and if it is initialized and its mode
 int gpioPinToggle(GPIO_Type *port, uint8_t pin, uint8_t *old_value) {
-  if (pin > 15) return 1; // Wrong pin
+  if (pin > 15) {
+    errno = 1;  // GPIO error
+    errcode = 2;  // Wrong pin number
+    return 1;
+  }
   
   uint32_t pin_value = (port->IDR >> pin) & 0x01;
   *old_value = (uint8_t) pin_value;
@@ -123,13 +150,25 @@ int gpioPinToggle(GPIO_Type *port, uint8_t pin, uint8_t *old_value) {
   return 0;
 }
 
-// TODO prio cannot be lower than? I dont understand priorities
+// TODO prio cannot be lower/higher than? I dont understand priorities
 /// @see PM0214 page 208
 int gpioInterruptSet(GPIO_Type *port, uint8_t pin, uint8_t rising_edge, uint8_t priority, void (*handler)(void)) {
-  if (pin > 15) return 1; // Wrong pin
-  if (rising_edge > 1) return 1;  // Can only be 0 or 1
-  if (priority < 7) return 1; // Cannot have more priority
-
+  if (pin > 15) {
+    errno = 1;  // GPIO error
+    errcode = 2;  // Wrong pin number
+    return 1;
+  }
+  if (rising_edge > 1) {
+    errno = 1;  // GPIO error
+    errcode = 6;  // Wrong value for trigger selection
+    return 1;  // Can only be 0 or 1
+  }
+  if (priority < 7) {
+    errno = 1;  // GPIO error
+    errcode = 7: // Wrong interrupt priority
+    return 1;
+  } 
+    
   uint8_t exti_source_input;
 
   if (port == GPIOA)
@@ -140,8 +179,11 @@ int gpioInterruptSet(GPIO_Type *port, uint8_t pin, uint8_t rising_edge, uint8_t 
     exti_source_input = 2;
   else if (port == GPIOH)
     exti_source_input = 7;
-  else   
-    return 1; // Wrong port
+  else {
+    errno = 1;  // GPIO error
+    errcode = 1;  // Wrong GPIO port
+    return 1;
+  }
 
   RCC->APB2ENR |= (1 << 14);    // Enable system configuration controller clock
   SYSCFG->EXTICR[pin / 4] &= ~(0xF << (pin % 4) * 4); // Clear register
