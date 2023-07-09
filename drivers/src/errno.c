@@ -42,7 +42,5 @@
 
 #include <stdint.h>
 
-__attribute__((section(".errno"))) struct ErrorCode {
-    uint16_t errorNumber;
-    uint16_t errorCode;
-} errno = {0, 0};
+__attribute__((section(".errno"))) uint16_t errno = 0;
+__attribute__((section(".errno"))) uint16_t errcode = 0;
