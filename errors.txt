@@ -1,0 +1,8 @@
+Error number 1 -> GPIO:
+    Error Code 1: Wrong port (must be GPIOx -> x = A, B, C, H)
+    Error Code 2: Wrong pin number (must be 0 .. 15)
+    Error Code 3: Uninitialized port
+    Error Code 4: GPIO has incompatible mode
+    Error Code 5: Tried to write wrong value (must be 0 or 1)
+    Error Code 6: Wrong value for interrupt trigger selection (must be 1->Rising edge, 0->Falling edge)
+    Error Code 7: Wrong value for interrupt priority
