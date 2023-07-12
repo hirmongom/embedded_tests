@@ -1,0 +1,3 @@
+- Document gpio.h
+- Document stm32f410rb.h propperly
+- Test behaviour of gpio interrupts with exti_isrs as static in gpio.c
