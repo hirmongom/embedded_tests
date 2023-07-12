@@ -1,5 +1,5 @@
 /**
- * @file        errno.c
+ * @file        err.c
  * 
  * @brief       Error Number and Error Code
  * 
@@ -21,7 +21,7 @@
  * 
  * @author      Hiram Montejano Gómez
  * 
- * @date        Last Updated:   09/07/2023
+ * @date        Last Updated:   12/07/2023
  * 
  * @copyright   This file is part of the "STM32F10RB Microcontroller Applications" project.
  * 
@@ -42,5 +42,28 @@
 
 #include <stdint.h>
 
-__attribute__((section(".errno"))) uint16_t errno = 0;
-__attribute__((section(".errno"))) uint16_t errcode = 0;
+
+/**
+ * @brief       Error number variable.
+ *
+ * @details     This variable holds the error number indicating the type of error that occurred.
+ *              It is used to provide error information or status in the application.
+ *              The value of `errnum` can be accessed and modified from different parts of the code.
+ *              Refer to the documentation or code references for specific usage information.
+ *
+ * @note        This variable is located in the ".err" section.
+ */
+__attribute__((section(".err"))) uint16_t errnum = 0;
+
+
+/**
+ * @brief       Error code variable.
+ *
+ * @details     This variable holds the error code providing additional information about the error.
+ *              It complements the `errnum` variable by providing more specific error details.
+ *              The value of `errcode` can be accessed and modified from different parts of the code.
+ *              Refer to the documentation or code references for specific usage information.
+ *
+ * @note        This variable is located in the ".err" section.
+ */
+__attribute__((section(".err"))) uint16_t errcode = 0;
