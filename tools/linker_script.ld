@@ -16,7 +16,8 @@
  * 
  *              The .data section contains initialized global and static variables that are copied
  *              from the FLASH to the SRAM during startup. It is placed in the SRAM but loaded from
- *              the FLASH memory.
+ *              the FLASH memory. It also contains the .err section which contains variables related
+ *              to error codes
  * 
  *              The .bss section contains uninitialized global and static variables that are
  *              zero-initialized during startup. It is placed in the SRAM.
@@ -72,7 +73,7 @@ SECTIONS {
 
     .data : {
         _sdata = .;
-        KEEP(*(.errno))
+        KEEP(*(.err))
         *(.data)
 
         . = ALIGN(4);
