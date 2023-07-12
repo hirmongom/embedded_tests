@@ -10,7 +10,7 @@
  * 
  * @author      Hiram Montejano Gómez
  * 
- * @date        Last Updated:   09/07/2023
+ * @date        Last Updated:   12/07/2023
  * 
  * @copyright   This file is part of the "STM32F10RB Microcontroller Applications" project.
  * 
@@ -29,26 +29,62 @@
  *              see <http://www.gnu.org/licenses/>.
  */
 
+
 #include <stdint.h>
 #include "stm32f410rb.h"
 #include "gpio.h"
 
-extern uint16_t errno;
+
+extern uint16_t errnum;
 extern uint16_t errcode;
 
+
+/**
+ * @brief       Array of function pointers to be executed when an interrupt occurs
+ */
 static void (*gpio_isr_functions[16])(void);
 
+
+/**
+ * @brief       Provides a delay function.
+ *
+ * @details     This function introduces a delay by executing an empty loop for a fixed number 
+ *              of iterations.
+ * 
+ * @todo        Make use of the RTC to provide a more accurate delay funciton
+ * @todo        Make the function usable in a util.c file
+ */
 static inline void delay() {
-  // TODO make the delay more accurate
   for (volatile uint32_t delay = 0; delay < 100000; ++delay) {}
 }
 
+
+/**
+ * @brief       Configures the mode of a GPIO pin.
+ * 
+ * @param       port Pointer to the GPIO port.
+ * @param       pin The pin number to configure.
+ * @param       mode The mode to set for the pin.
+ * 
+ * @return      0 if successful, otherwise returns 1 and sets variables errnum and errcode.
+ * 
+ * @details     This function configures the mode of a GPIO pin on the STM32F10RB microcontroller.
+ *              The pin number should be within the range 0-15. 
+ *              The GPIO port is checked for initialization, and if not initialized, it is enabled. 
+ *              The pin mode is then set according to the provided mode.
+ *              The mode parameter should be one of the values from the GpioMode enumeration.
+ *              Upon successful configuration, the function returns 0. Otherwise, 1 is returned and
+ *              variables errnum and errcode are set with the error code.
+ * 
+ * @todo        Add option to configure port speed
+ */
 int gpioPinSetup(GPIO_Type *port, uint8_t pin, GpioMode mode) {
   if (pin > 15) {
-    errno = 1;  // GPIO error
+    errnum = 1;  // GPIO error
     errcode = 2;  // Wrong pin number
     return 1;
   }
+
   // Check if port is initializated, if not, initialize it
   if (port == GPIOA) {
     if (!(RCC->AHB1ENR & (1 << 0))) {
@@ -74,7 +110,7 @@ int gpioPinSetup(GPIO_Type *port, uint8_t pin, GpioMode mode) {
     }
   }
   else {
-    errno = 1;  // GPIO error
+    errnum = 1;  // GPIO error
     errcode = 1;  // Wrong GPIO port
     return 1;
   }
@@ -85,10 +121,30 @@ int gpioPinSetup(GPIO_Type *port, uint8_t pin, GpioMode mode) {
   return 0;
 }
 
-// TODO check correct port and if initialized
+
+/**
+ * @brief       Configures the pull type of a GPIO pin.
+ *
+ * @param       port Pointer to the GPIO port.
+ * @param       pin The pin number to configure.
+ * @param       type The pull type to set for the pin.
+ * 
+ * @return      0 if successful, otherwise returns 1 and sets variables errnum and errcode.
+ * 
+ * @details     This function configures the pull type of a GPIO pin on the STM32F10RB 
+ *              microcontroller.
+ *              The function checks if the provided GPIO port is correct and initialized.
+ *              The pin number should be within the range 0-15. 
+ *              The pull type is then set according to the provided type, which should be one of 
+ *              the values from the GpioPullType enumeration.
+ *              Upon successful configuration, the function returns 0. Otherwise, 1 is returned and
+ *              variables errnum and errcode are set with the error code.
+ *
+ * @todo        Check if port is correct and if it is initializated
+ */
 int gpioPinPullTypeSetup(GPIO_Type *port, uint8_t pin, GpioPullType type) {
   if (pin > 15) {
-    errno = 1;  // GPIO error
+    errnum = 1;  // GPIO error
     errcode = 2;  // Wrong pin number
     return 1;
   }
@@ -98,10 +154,32 @@ int gpioPinPullTypeSetup(GPIO_Type *port, uint8_t pin, GpioPullType type) {
   return 0;
 }
 
-// TODO Check if correct port and if it is initialized and its mode
+
+/**
+ * @brief       Reads the value of a GPIO pin.
+ *
+ * @param       port Pointer to the GPIO port.
+ * @param       pin The pin number to read.
+ * @param       read Pointer to store the read value.
+ * 
+ * @return      0 if successful, otherwise returns 1 and sets variables errnum and errcode.
+ * 
+ * @details     This function reads the value of a GPIO pin on the STM32F10RB microcontroller.
+ *              The pin number should be within the range 0-15.
+ *              The function checks if the provided GPIO port is correct and initialized,
+ *              as well as the mode of the pin.
+ *              Upon successful read, the function stores the read value in the memory location
+ *              pointed to by the 'read' parameter.
+ *              The read value will be either 0 or 1, indicating the logic level of the pin.
+ *              If an error occurs, 1 is returned, and variables errnum and errcode are set with
+ *              the error code.
+ *
+ * @todo        Check if the GPIO port is correct and if it is initialized and in the appropriate 
+ *              mode.
+ */
 int gpioPinRead(GPIO_Type *port, uint8_t pin, uint8_t *read) {
   if (pin > 15) {
-    errno = 1;  // GPIO error
+    errnum = 1;  // GPIO error
     errcode = 2;  // Wrong pin number
     return 1;
   }
@@ -111,10 +189,35 @@ int gpioPinRead(GPIO_Type *port, uint8_t pin, uint8_t *read) {
   return 0;
 }
 
-// TODO Check if correct port and if it is initialized and its mode
+
+/**
+ * @brief       Writes a value to a GPIO pin.
+ *
+ * @param       port Pointer to the GPIO port.
+ * @param       pin The pin number to write to.
+ * @param       value The value to write (0 or 1).
+ * @param       old_value Pointer to store the previous pin value.
+ * 
+ * @return      0 if successful, otherwise returns 1 and sets variables errnum and errcode.
+ * 
+ * @details     This function writes a value (0 or 1) to a GPIO pin on the STM32F10RB 
+ *              microcontroller.
+ *              The pin number should be within the range 0-15.
+ *              The function checks if the provided GPIO port is correct and initialized,
+ *              as well as the mode of the pin.
+ *              The previous value of the pin is stored in the memory location pointed to by the 
+ *              'old_value' parameter.
+ *              If the 'value' parameter is 0, the pin is cleared (set to logic low).
+ *              If the 'value' parameter is 1, the pin is set (set to logic high).
+ *              If an error occurs, 1 is returned, and variables errnum and errcode are set with
+ *              the error code.
+ *
+ * @todo        Check if the GPIO port is correct and if it is initialized and in the appropriate 
+ *              mode.
+ */
 int gpioPinWrite(GPIO_Type *port, uint8_t pin, uint8_t value, uint8_t *old_value) {
   if (pin > 15) {
-    errno = 1;  // GPIO error
+    errnum = 1;  // GPIO error
     errcode = 2;  // Wrong pin number
     return 1;
   }
@@ -127,7 +230,7 @@ int gpioPinWrite(GPIO_Type *port, uint8_t pin, uint8_t value, uint8_t *old_value
   } else if (value == 1) {
     port->ODR |= (1 << pin);
   } else {
-    errno = 1;  // GPIO error
+    errnum = 1;  // GPIO error
     errcode = 5;  // Tried to write wrong value
     return 1;
   }
@@ -135,10 +238,32 @@ int gpioPinWrite(GPIO_Type *port, uint8_t pin, uint8_t value, uint8_t *old_value
   return 0;
 }
 
-// TODO Check if correct port and if it is initialized and its mode
+
+/**
+ * @brief       Toggles the value of a GPIO pin.
+ *
+ * @param       port Pointer to the GPIO port.
+ * @param       pin The pin number to toggle.
+ * @param       old_value Pointer to store the previous pin value.
+ * 
+ * @return      0 if successful, otherwise returns 1 and sets variables errnum and errcode.
+ * 
+ * @details     This function toggles the value of a GPIO pin on the STM32F10RB microcontroller.
+ *              The pin number should be within the range 0-15.
+ *              The function checks if the provided GPIO port is correct and initialized,
+ *              as well as the mode of the pin.
+ *              The previous value of the pin is stored in the memory location pointed to by the 
+ *              'old_value' parameter.
+ *              If the pin is currently low, it is toggled to high. If the pin is currently high,
+ *              it is toggled to low.
+ *              If an error occurs, 1 is returned, and variables errnum and errcode are set with
+ *              the error code.
+ *
+ * @todo        Check if the GPIO port is correct and if it is initialized and in the appropriate mode.
+ */
 int gpioPinToggle(GPIO_Type *port, uint8_t pin, uint8_t *old_value) {
   if (pin > 15) {
-    errno = 1;  // GPIO error
+    errnum = 1;  // GPIO error
     errcode = 2;  // Wrong pin number
     return 1;
   }
@@ -150,21 +275,48 @@ int gpioPinToggle(GPIO_Type *port, uint8_t pin, uint8_t *old_value) {
   return 0;
 }
 
-// TODO prio cannot be lower/higher than? I dont understand priorities
-/// @see PM0214 page 208
+
+/**
+ * @brief       Sets up an interrupt for a GPIO pin.
+ *
+ * @param       port Pointer to the GPIO port.
+ * @param       pin The pin number to set up the interrupt for.
+ * @param       rising_edge Set to 1 for rising edge trigger, 0 for falling edge trigger.
+ * @param       priority The interrupt priority level (between 7 and 15).
+ * @param       handler Pointer to the interrupt handler function.
+ * 
+ * @return      0 if successful, otherwise returns 1 and sets variables errnum and errcode.
+ * 
+ * @details     This function sets up an interrupt for a GPIO pin on the STM32F10RB microcontroller.
+ *              The pin number should be within the range 0-15.
+ *              The function checks if the provided GPIO port is correct and initialized.
+ *              It also validates the rising_edge and priority parameters.
+ *              The interrupt trigger type is set based on the rising_edge parameter,
+ *              with 1 indicating a rising edge trigger and 0 indicating a falling edge trigger.
+ *              The priority parameter sets the interrupt priority level, which should be between
+ *              7 and 15 (inclusive).
+ *              The handler parameter is a pointer to the interrupt handler function that will be 
+ *              executed when the interrupt occurs.
+ *              Upon successful setup, the function returns 0.
+ *              If an error occurs, 1 is returned, and variables errnum and errcode are set with
+ *              the appropriate error codes.
+ *
+ * @todo        Check if the GPIO port is correct and if it is initialized.
+ * @todo        Clarify the allowed range for the priority parameter and which value is higher prio
+ */
 int gpioInterruptSet(GPIO_Type *port, uint8_t pin, uint8_t rising_edge, uint8_t priority, void (*handler)(void)) {
   if (pin > 15) {
-    errno = 1;  // GPIO error
+    errnum = 1;  // GPIO error
     errcode = 2;  // Wrong pin number
     return 1;
   }
   if (rising_edge > 1) {
-    errno = 1;  // GPIO error
+    errnum = 1;  // GPIO error
     errcode = 6;  // Wrong value for trigger selection
     return 1;  // Can only be 0 or 1
   }
   if (priority < 7) {
-    errno = 1;  // GPIO error
+    errnum = 1;  // GPIO error
     errcode = 7: // Wrong interrupt priority
     return 1;
   } 
@@ -180,7 +332,7 @@ int gpioInterruptSet(GPIO_Type *port, uint8_t pin, uint8_t rising_edge, uint8_t 
   else if (port == GPIOH)
     exti_source_input = 7;
   else {
-    errno = 1;  // GPIO error
+    errnum = 1;  // GPIO error
     errcode = 1;  // Wrong GPIO port
     return 1;
   }
@@ -215,42 +367,97 @@ int gpioInterruptSet(GPIO_Type *port, uint8_t pin, uint8_t rising_edge, uint8_t 
   return 0;
 }
 
-void EXTI0_ISR (void) {
+
+/**
+ * @brief       Interrupt Service Routine for EXTI0.
+ *
+ * @details     This ISR is triggered when an interrupt occurs on EXTI line 0.
+ *              It calls the associated GPIO interrupt handler function stored in 
+ *              gpio_isr_functions[0].
+ *              After handling the interrupt, it clears the interrupt flag for EXTI line 0.
+ */
+static void EXTI0_ISR (void) {
   if (EXTI->PR & (1 << 0)) {
     gpio_isr_functions[0]();
     EXTI->PR |= (1 << 0);    // Clear flag
   }
 }
 
-void EXTI1_ISR (void) {
+
+/**
+ * @brief       Interrupt Service Routine for EXTI1.
+ *
+ * @details     This ISR is triggered when an interrupt occurs on EXTI line 1.
+ *              It calls the associated GPIO interrupt handler function stored in 
+ *              gpio_isr_functions[1].
+ *              After handling the interrupt, it clears the interrupt flag for EXTI line 1.
+ */
+static void EXTI1_ISR (void) {
   if (EXTI->PR & (1 << 1)) {
     gpio_isr_functions[1]();
     EXTI->PR |= (1 << 1);    // Clear flag
   }
 }
 
-void EXTI2_ISR (void) {
+
+/**
+ * @brief       Interrupt Service Routine for EXTI2.
+ *
+ * @details     This ISR is triggered when an interrupt occurs on EXTI line 2.
+ *              It calls the associated GPIO interrupt handler function stored in 
+ *              gpio_isr_functions[2].
+ *              After handling the interrupt, it clears the interrupt flag for EXTI line 2.
+ */
+static void EXTI2_ISR (void) {
   if (EXTI->PR & (1 << 2)) {
     gpio_isr_functions[2]();
     EXTI->PR |= (1 << 2);    // Clear flag
   }
 }
 
-void EXTI3_ISR (void) {
+
+/**
+ * @brief       Interrupt Service Routine for EXTI3.
+ *
+ * @details     This ISR is triggered when an interrupt occurs on EXTI line 3.
+ *              It calls the associated GPIO interrupt handler function stored in 
+ *              gpio_isr_functions[3].
+ *              After handling the interrupt, it clears the interrupt flag for EXTI line 3.
+ */
+static void EXTI3_ISR (void) {
   if (EXTI->PR & (1 << 3)) {
     gpio_isr_functions[3]();
     EXTI->PR |= (1 << 3);    // Clear flag
   }
 }
 
-void EXTI4_ISR (void) {
+
+/**
+ * @brief       Interrupt Service Routine for EXTI4.
+ *
+ * @details     This ISR is triggered when an interrupt occurs on EXTI line 4.
+ *              It calls the associated GPIO interrupt handler function stored in 
+ *              gpio_isr_functions[4].
+ *              After handling the interrupt, it clears the interrupt flag for EXTI line 4.
+ */
+static void EXTI4_ISR (void) {
   if (EXTI->PR & (1 << 4)) {
     gpio_isr_functions[4]();
     EXTI->PR |= (1 << 4);    // Clear flag
   }
 }
 
-void EXTI9_5_ISR (void) {
+
+/**
+ * @brief       Interrupt Service Routine for EXTI lines 5 to 9.
+ *
+ * @details     This ISR is triggered when an interrupt occurs on any of the EXTI lines 5 to 9.
+ *              It calls the associated GPIO interrupt handler function stored in 
+ *              gpio_isr_functions[i] for each triggered EXTI line.
+ *              After handling the interrupts, it clears the corresponding interrupt flags for 
+ *              EXTI lines 5 to 9.
+ */
+static void EXTI9_5_ISR (void) {
   for (int i = 5; i <= 9; i++) {
     if (EXTI->PR & (1 << i)) {
       gpio_isr_functions[i]();
@@ -259,7 +466,17 @@ void EXTI9_5_ISR (void) {
   }
 }
 
-void EXTI15_10_ISR (void) {
+
+/**
+ * @brief       Interrupt Service Routine for EXTI lines 10 to 15.
+ *
+ * @details     This ISR is triggered when an interrupt occurs on any of the EXTI lines 10 to 15.
+ *              It calls the associated GPIO interrupt handler function stored in 
+ *              gpio_isr_functions[i] for each triggered EXTI line.
+ *              After handling the interrupts, it clears the corresponding interrupt flags for 
+ *              EXTI lines 10 to 15.
+ */
+static void EXTI15_10_ISR (void) {
   for (int i = 10; i <= 15; i++) {
     if (EXTI->PR & (1 << i)) {
       gpio_isr_functions[i]();
