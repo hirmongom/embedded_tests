@@ -10,7 +10,11 @@
  * 
  * @author      Hiram Montejano Gómez
  * 
- * @date        Last Updated:   05/07/2023
+ * @date        Last Updated:   13/07/2023
+ * 
+ * @todo        Functions for Analog or Afsel
+ * @todo        Output type configuration
+ * @todo        Output speed configuration
  * 
  * @copyright   This file is part of the "STM32F10RB Microcontroller Applications" project.
  * 
@@ -56,11 +60,77 @@ typedef enum {
   kPullDown
 } GpioPullType;
 
-// TODO Configure port speed and such
-// TODO Separate setup functions for output, analog or alternate funciton config
+
+/**
+ * @brief       Configures the mode of a GPIO pin.
+ * 
+ * @param       port Pointer to the GPIO port. (Use GPIOx definitios from stm32f410rb.h)
+ * @param       pin The pin number to configure. (0 - 15)
+ * @param       mode The mode to set for the pin. (from GpioMode enum)
+ * 
+ * @return      0 if successful, otherwise returns 1 and sets variables errnum and errcode.
+ */
 int gpioPinSetup(GPIO_Type *port, uint8_t pin, GpioMode mode);
-int gpioPinPullTypeSetup(GPIO_Type *port, uint8_t pin, GpioPullType type);
+
+
+/**
+ * @brief       Configures the pull type of a GPIO pin.
+ *
+ * @param       port Pointer to the GPIO port. (Use GPIOx definitios from stm32f410rb.h)
+ * @param       pin The pin number to configure. (0 - 15)
+ * @param       pull_type The pull type to set for the pin. (from GpioPullType enum)
+ * 
+ * @return      0 if successful, otherwise returns 1 and sets variables errnum and errcode.
+ */
+int gpioPinPullTypeSetup(GPIO_Type *port, uint8_t pin, GpioPullType pull_type);
+
+
+/**
+ * @brief       Reads the value of a GPIO pin.
+ *
+ * @param       port Pointer to the GPIO port. (Use GPIOx definitios from stm32f410rb.h)
+ * @param       pin The pin number to read from. (0 - 15)
+ * @param       read Pointer to store the read value.
+ * 
+ * @return      0 if successful, otherwise returns 1 and sets variables errnum and errcode.
+ */
 int gpioPinRead(GPIO_Type *port, uint8_t pin, uint8_t *read);
+
+
+/**
+ * @brief       Writes a value to a GPIO pin.
+ *
+ * @param       port Pointer to the GPIO port. (Use GPIOx definitios from stm32f410rb.h)
+ * @param       pin The pin number to write to. (0 - 15)
+ * @param       value The value to write. (0 or 1)
+ * @param       old_value Pointer to store the previous pin value.
+ * 
+ * @return      0 if successful, otherwise returns 1 and sets variables errnum and errcode.
+ */
 int gpioPinWrite(GPIO_Type *port, uint8_t pin, uint8_t value, uint8_t *old_value);
+
+
+/**
+ * @brief       Toggles the value of a GPIO pin.
+ *
+ * @param       port Pointer to the GPIO port. (Use GPIOx definitios from stm32f410rb.h)
+ * @param       pin The pin number to toggle. (0 - 15)
+ * @param       old_value Pointer to store the previous pin value.
+ * 
+ * @return      0 if successful, otherwise returns 1 and sets variables errnum and errcode.
+ */
 int gpioPinToggle(GPIO_Type *port, uint8_t pin, uint8_t *old_value);
+
+
+/**
+ * @brief       Sets up an interrupt for a GPIO pin.
+ *
+ * @param       port Pointer to the GPIO port. (Use GPIOx definitios from stm32f410rb.h)
+ * @param       pin The pin number to set up the interrupt for. (0 - 15)
+ * @param       rising_edge Set to 1 for rising edge trigger, 0 for falling edge trigger. (0 or 1)
+ * @param       priority The interrupt priority level (between 7 and 15).
+ * @param       handler Pointer to the interrupt handler function.
+ * 
+ * @return      0 if successful, otherwise returns 1 and sets variables errnum and errcode.
+ */
 int gpioInterruptSet(GPIO_Type *port, uint8_t pin, uint8_t rising_edge, uint8_t priority, void (*handler)(void));

@@ -10,7 +10,7 @@
  * 
  * @author      Hiram Montejano Gómez
  * 
- * @date        Last Updated:   12/07/2023
+ * @date        Last Updated:   13/07/2023
  * 
  * @copyright   This file is part of the "STM32F10RB Microcontroller Applications" project.
  * 
@@ -60,14 +60,6 @@ static inline void delay() {
 
 
 /**
- * @brief       Configures the mode of a GPIO pin.
- * 
- * @param       port Pointer to the GPIO port.
- * @param       pin The pin number to configure.
- * @param       mode The mode to set for the pin.
- * 
- * @return      0 if successful, otherwise returns 1 and sets variables errnum and errcode.
- * 
  * @details     This function configures the mode of a GPIO pin on the STM32F10RB microcontroller.
  *              The pin number should be within the range 0-15. 
  *              The GPIO port is checked for initialization, and if not initialized, it is enabled. 
@@ -123,14 +115,6 @@ int gpioPinSetup(GPIO_Type *port, uint8_t pin, GpioMode mode) {
 
 
 /**
- * @brief       Configures the pull type of a GPIO pin.
- *
- * @param       port Pointer to the GPIO port.
- * @param       pin The pin number to configure.
- * @param       type The pull type to set for the pin.
- * 
- * @return      0 if successful, otherwise returns 1 and sets variables errnum and errcode.
- * 
  * @details     This function configures the pull type of a GPIO pin on the STM32F10RB 
  *              microcontroller.
  *              The function checks if the provided GPIO port is correct and initialized.
@@ -142,7 +126,7 @@ int gpioPinSetup(GPIO_Type *port, uint8_t pin, GpioMode mode) {
  *
  * @todo        Check if port is correct and if it is initializated
  */
-int gpioPinPullTypeSetup(GPIO_Type *port, uint8_t pin, GpioPullType type) {
+int gpioPinPullTypeSetup(GPIO_Type *port, uint8_t pin, GpioPullType pull_type) {
   if (pin > 15) {
     errnum = 1;  // GPIO error
     errcode = 2;  // Wrong pin number
@@ -150,20 +134,12 @@ int gpioPinPullTypeSetup(GPIO_Type *port, uint8_t pin, GpioPullType type) {
   }
   
   port->PUPDR &= ~(3 << pin * 2);
-  port->PUPDR |= (type << pin * 2);
+  port->PUPDR |= (pull_type << pin * 2);
   return 0;
 }
 
 
 /**
- * @brief       Reads the value of a GPIO pin.
- *
- * @param       port Pointer to the GPIO port.
- * @param       pin The pin number to read.
- * @param       read Pointer to store the read value.
- * 
- * @return      0 if successful, otherwise returns 1 and sets variables errnum and errcode.
- * 
  * @details     This function reads the value of a GPIO pin on the STM32F10RB microcontroller.
  *              The pin number should be within the range 0-15.
  *              The function checks if the provided GPIO port is correct and initialized,
@@ -191,15 +167,6 @@ int gpioPinRead(GPIO_Type *port, uint8_t pin, uint8_t *read) {
 
 
 /**
- * @brief       Writes a value to a GPIO pin.
- *
- * @param       port Pointer to the GPIO port.
- * @param       pin The pin number to write to.
- * @param       value The value to write (0 or 1).
- * @param       old_value Pointer to store the previous pin value.
- * 
- * @return      0 if successful, otherwise returns 1 and sets variables errnum and errcode.
- * 
  * @details     This function writes a value (0 or 1) to a GPIO pin on the STM32F10RB 
  *              microcontroller.
  *              The pin number should be within the range 0-15.
@@ -240,14 +207,6 @@ int gpioPinWrite(GPIO_Type *port, uint8_t pin, uint8_t value, uint8_t *old_value
 
 
 /**
- * @brief       Toggles the value of a GPIO pin.
- *
- * @param       port Pointer to the GPIO port.
- * @param       pin The pin number to toggle.
- * @param       old_value Pointer to store the previous pin value.
- * 
- * @return      0 if successful, otherwise returns 1 and sets variables errnum and errcode.
- * 
  * @details     This function toggles the value of a GPIO pin on the STM32F10RB microcontroller.
  *              The pin number should be within the range 0-15.
  *              The function checks if the provided GPIO port is correct and initialized,
@@ -277,16 +236,6 @@ int gpioPinToggle(GPIO_Type *port, uint8_t pin, uint8_t *old_value) {
 
 
 /**
- * @brief       Sets up an interrupt for a GPIO pin.
- *
- * @param       port Pointer to the GPIO port.
- * @param       pin The pin number to set up the interrupt for.
- * @param       rising_edge Set to 1 for rising edge trigger, 0 for falling edge trigger.
- * @param       priority The interrupt priority level (between 7 and 15).
- * @param       handler Pointer to the interrupt handler function.
- * 
- * @return      0 if successful, otherwise returns 1 and sets variables errnum and errcode.
- * 
  * @details     This function sets up an interrupt for a GPIO pin on the STM32F10RB microcontroller.
  *              The pin number should be within the range 0-15.
  *              The function checks if the provided GPIO port is correct and initialized.
