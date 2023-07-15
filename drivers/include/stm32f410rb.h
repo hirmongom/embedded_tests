@@ -1,4 +1,4 @@
-/**
+/***************************************************************************************************
  * @file        stm32f410rb.h
  * 
  * @brief       Header file for STM32F410RB microcontroller peripherals.

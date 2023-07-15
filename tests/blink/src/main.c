@@ -1,4 +1,4 @@
-/**
+/***************************************************************************************************
  * @file        main.c
  * 
  * @brief       LED Blinking Application
@@ -14,7 +14,7 @@
  *
  * @author      Hiram Montejano Gómez
  * 
- * @date        Last Updated:   07/07/2023
+ * @date        Last Updated:   15/07/2023
  * 
  * @copyright   This file is part of the "STM32F10RB Microcontroller Applications" project.
  * 
