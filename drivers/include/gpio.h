@@ -33,6 +33,10 @@
  *              see <http://www.gnu.org/licenses/>.
  */
 
+#ifndef GPIO_H
+#define GPIO_H
+
+
 #include "stm32f410rb.h"
 
 
@@ -162,3 +166,5 @@ int gpioPinToggle(GPIO_Type *port, uint8_t pin, uint8_t *old_value);
  * @return      0 if successful, otherwise returns 1 and sets variables errnum and errcode.
  */
 int gpioInterruptSet(GPIO_Type *port, uint8_t pin, uint8_t rising_edge, uint8_t priority, void (*handler)(void));
+
+#endif
