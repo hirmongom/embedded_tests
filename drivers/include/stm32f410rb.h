@@ -6,10 +6,10 @@
  * @details     This file contains the structures and definitions for various peripherals
  *              on the STM32F410RB microcontroller. It provides an interface for configuring
  *              and accessing the peripherals such as GPIO, RCC, etc.
- * 
+ * ¬
  * @author      Hiram Montejano Gómez
  * 
- * @date        Last Updated:   06/07/2023
+ * @date        Last Updated:   15/07/2023
  * 
  * @copyright   This file is part of the "STM32F10RB Microcontroller Applications" project.
  * 
@@ -31,113 +31,138 @@
 #ifndef STM32F410RB_H
 #define STM32F410RB_H
 
+
 #include <stdint.h>
 
-#define     __I     volatile const       // Defines 'read only' permissions
-#define     __O     volatile             // Defines 'write only' permissions
-#define     __IO    volatile             // Defines 'read / write' permissions
 
-
-/****************************** SYSCFG ******************************/
 /**
+ * @defgroup    ACESS_MODIFIERS Access Modifiers
+ * 
+ * @{
+ */
+
+/** @brief      Defines 'read only' permissions */
+#define     __I     volatile const
+
+/** @brief      Defines 'wwrite only' permissions */
+#define     __O     volatile
+
+/** @brief      Defines 'read/write' permissions */
+#define     __IO    volatile
+
+/** @} */
+
+
+/***************************************************************************************************
  * @brief       SYSCFG register structure
+ *
+ * @details     This structure represents the SYSCFG register block, which contains
+ *              configuration and control registers for various system functions.
  */
 typedef struct {
-  __IO uint32_t MEMRMP;         // 0x00 (R/W) Memory remap
-  __IO uint32_t PMC;            // 0x04 (R/W) Peripheral mode configuration
-  __IO uint32_t EXTICR[4];      // 0x08-0x14 (R/W) External interrupt configuration [1..4]
+  __IO uint32_t MEMRMP;         /**< 0x00 (R/W) Memory remap */
+  __IO uint32_t PMC;            /**< 0x04 (R/W) Peripheral mode configuration */
+  __IO uint32_t EXTICR[4];      /**< 0x08-0x14 (R/W) External interrupt configuration [1..4] */
   __I  uint32_t RESERVED;
-  __IO uint32_t CFGR2;          // 0x1C (R/W) Configuration register 2
-  __IO uint32_t CMPCR;          // 0x20 (R/W) Compensation cell control
-  __IO uint32_t CFGR;           // 0x24 (R/W) Configuration register
+  __IO uint32_t CFGR2;          /**< 0x1C (R/W) Configuration register 2 */
+  __IO uint32_t CMPCR;          /**< 0x20 (R/W) Compensation cell control */
+  __IO uint32_t CFGR;           /**< 0x24 (R/W) Configuration register */
 } SYSCFG_Type;
 
 
-/****************************** EXTI ******************************/
-/**
+/***************************************************************************************************
  * @brief       EXTI register structure
+ *
+ * @details     This structure represents the EXTI register block, which is responsible for
+ *              configuring and controlling the external interrupts.
  */
 typedef struct {
-  __IO uint32_t IMR;            // 0x00 (R/W) Interrupt mask
-  __IO uint32_t EMR;            // 0x04 (R/W) Event mask
-  __IO uint32_t RTSR;           // 0x08 (R/W) Rising trigger selection
-  __IO uint32_t FTSR;           // 0x0C (R/W) Falling trigger selection
-  __IO uint32_t SWIER;          // 0x10 (R/W) Software interrupt event
-  __IO uint32_t PR;             // 0x14 (R/W) Pending
+  __IO uint32_t IMR;            /**< 0x00 (R/W) Interrupt mask */
+  __IO uint32_t EMR;            /**< 0x04 (R/W) Event mask */
+  __IO uint32_t RTSR;           /**< 0x08 (R/W) Rising trigger selection */
+  __IO uint32_t FTSR;           /**< 0x0C (R/W) Falling trigger selection */
+  __IO uint32_t SWIER;          /**< 0x10 (R/W) Software interrupt event */
+  __IO uint32_t PR;             /**< 0x14 (R/W) Pending */
 } EXTI_Type;
 
 
-/****************************** GPIO ******************************/
-/**
+/***************************************************************************************************
  * @brief       GPIO register structure
+ *
+ * @details     This structure represents the GPIO register block, which contains
+ *              configuration and control registers for the General Purpose Input/Output pins.
  */
 typedef struct {
-  __IO    uint32_t MODER;       // 0x00 (R/W) Mode
-  __IO    uint32_t OTYPER;      // 0x04 (R/W) Output type
-  __IO    uint32_t OSPEEDR;     // 0x08 (R/W) Output speed
-  __IO    uint32_t PUPDR;       // 0x0C (R/W) Pull-up/pull-down
-  __I     uint32_t IDR;         // 0x10 (R) Input data
-  __IO     uint32_t ODR;        // 0x14 (R/W) Output data
-  __IO    uint32_t BSRR;        // 0x18 (R/W) Bit set/reset
-  __IO    uint32_t LCKR;        // 0x1C (R/W) Configuration lock
-  __IO    uint32_t AFRL;        // 0x20 (R/W) Alternate function low
-  __IO    uint32_t AFRH;        // 0x24 (R/W) Alternate function high
+  __IO    uint32_t MODER;       /**< 0x00 (R/W) Mode */
+  __IO    uint32_t OTYPER;      /**< 0x04 (R/W) Output type */
+  __IO    uint32_t OSPEEDR;     /**< 0x08 (R/W) Output speed */
+  __IO    uint32_t PUPDR;       /**< 0x0C (R/W) Pull-up/pull-down */
+  __I     uint32_t IDR;         /**< 0x10 (R) Input data */
+  __IO     uint32_t ODR;        /**< 0x14 (R/W) Output data */
+  __IO    uint32_t BSRR;        /**< 0x18 (R/W) Bit set/reset */
+  __IO    uint32_t LCKR;        /**< 0x1C (R/W) Configuration lock */
+  __IO    uint32_t AFRL;        /**< 0x20 (R/W) Alternate function low */
+  __IO    uint32_t AFRH;        /**< 0x24 (R/W) Alternate function high */
 } GPIO_Type;
 
 
-/****************************** RCC ******************************/
-/**
+/***************************************************************************************************
  * @brief       RCC register structure
+ *
+ * @details     This structure represents the RCC register block, which contains
+ *              configuration and control registers for the Reset and Clock Control.
  */
 typedef struct {
-  __IO uint32_t CR;             // 0x00 (R/W) Clock control
-  __IO uint32_t PLLCFGR;        // 0x04 (R/W) PLL configuration
-  __IO uint32_t CFGR;           // 0x08 (R/W) Clock configuration
-  __IO uint32_t CIR;            // 0x0C (R/W) Clock interrupt
-  __IO uint32_t AHB1RSTR;       // 0x10 (R/W) AHB1 peripheral reset
+  __IO uint32_t CR;             /**< 0x00 (R/W) Clock control */
+  __IO uint32_t PLLCFGR;        /**< 0x04 (R/W) PLL configuration */
+  __IO uint32_t CFGR;           /**< 0x08 (R/W) Clock configuration */
+  __IO uint32_t CIR;            /**< 0x0C (R/W) Clock interrupt */
+  __IO uint32_t AHB1RSTR;       /**< 0x10 (R/W) AHB1 peripheral reset */
   __I  uint32_t RESERVED1[3];
-  __IO uint32_t APB1RSTR;       // 0x20 (R/W) APB1 peripheral reset
-  __IO uint32_t APB2RSTR;       // 0x24 (R/W) APB2 peripheral reset
+  __IO uint32_t APB1RSTR;       /**< 0x20 (R/W) APB1 peripheral reset */
+  __IO uint32_t APB2RSTR;       /**< 0x24 (R/W) APB2 peripheral reset */
   __I  uint32_t RESERVED2[2];
-  __IO uint32_t AHB1ENR;        // 0x30 (R/W) AHB1 peripheral clock enable
+  __IO uint32_t AHB1ENR;        /**< 0x30 (R/W) AHB1 peripheral clock enable */
   __I  uint32_t RESERVED3[3];
-  __IO uint32_t APB1ENR;        // 0x40 (R/W) APB1 peripheral clock enable
-  __IO uint32_t APB2ENR;        // 0x44 (R/W) APB2 peripheral clock enable
+  __IO uint32_t APB1ENR;        /**< 0x40 (R/W) APB1 peripheral clock enable */
+  __IO uint32_t APB2ENR;        /**< 0x44 (R/W) APB2 peripheral clock enable */
   __I  uint32_t RESERVED4[2];
-  __IO uint32_t AHB1LPENR;      // 0x50 (R/W) AHB1 peripheral clock enable in low power mode
+  __IO uint32_t AHB1LPENR;      /**< 0x50 (R/W) AHB1 peripheral clock enable in low power mode */
   __I  uint32_t RESERVED5[3];
-  __IO uint32_t APB1LPENR;      // 0x60 (R/W) APB1 peripheral clock enable in low power mode
-  __IO uint32_t APB2LPENR;      // 0x64 (R/W) APB2 peripheral clock enable in low power mode
+  __IO uint32_t APB1LPENR;      /**< 0x60 (R/W) APB1 peripheral clock enable in low power mode */
+  __IO uint32_t APB2LPENR;      /**< 0x64 (R/W) APB2 peripheral clock enable in low power mode */
   __I  uint32_t RESERVED6[2];
-  __IO uint32_t BDCR;           // 0x70 (R/W) Backup domain control
-  __IO uint32_t CSR;            // 0x74 (R/W) Clock control & status
+  __IO uint32_t BDCR;           /**< 0x70 (R/W) Backup domain control */
+  __IO uint32_t CSR;            /**< 0x74 (R/W) Clock control & status */
   __I  uint32_t RESERVED7[2];
-  __IO uint32_t SSCGR;          // 0x80 (R/W) Spread spectrum clock generation
+  __IO uint32_t SSCGR;          /**< 0x80 (R/W) Spread spectrum clock generation */
   __I  uint32_t RESERVED8[2];
-  __IO uint32_t DCKCFGR;        // 0x8C (R/W) Dedicated Clocks Configuration
+  __IO uint32_t DCKCFGR;        /**< 0x8C (R/W) Dedicated Clocks Configuration */
   __I  uint32_t RESERVED9;
-  __IO uint32_t DCKCFGR2;       // 0x94 (R/W) Dedicated Clocks Configuration 2
+  __IO uint32_t DCKCFGR2;       /**< 0x94 (R/W) Dedicated Clocks Configuration 2 */
 } RCC_Type;
 
 
-/****************************** NVIC ******************************/
-/**
+/***************************************************************************************************
  * @brief       NVIC register structure
+ *
+ * @details     This structure represents the NVIC register block, which contains
+ *              configuration and control registers for the Nested Vectored Interrupt Controller.
  */
 typedef struct {
-  __IO uint32_t ISER[8];        // 0x000 (R/W) Interrupt set-enable
+  __IO uint32_t ISER[8];        /**< 0x000 (R/W) Interrupt set-enable */
   __I  uint32_t RESERVED1[24];
-  __IO uint32_t ICER[8];        // 0x080 (R/W) Interrupt clear-enable
+  __IO uint32_t ICER[8];        /**< 0x080 (R/W) Interrupt clear-enable */
   __I  uint32_t RESERVED2[24];
-  __IO uint32_t ISPR[8];        // 0x100 (R/W) Interrupt set-pending
+  __IO uint32_t ISPR[8];        /**< 0x100 (R/W) Interrupt set-pending */
   __I  uint32_t RESERVED3[24];
-  __IO uint32_t ICPR[8];        // 0x180 (R/W) Interrupt clear-pending
+  __IO uint32_t ICPR[8];        /**< 0x180 (R/W) Interrupt clear-pending */
   __I  uint32_t RESERVED4[24];
-  __IO uint32_t IABR[8];        // 0x200 (R/W) Interrupt active bit
+  __IO uint32_t IABR[8];        /**< 0x200 (R/W) Interrupt active bit */
   __I  uint32_t RESERVED5[56];
-  __IO uint8_t IPR[240];       // 0x300 (R/W) Interrupt priority
+  __IO uint8_t IPR[240];        /**< 0x300 (R/W) Interrupt priority */
   __I  uint32_t RESERVED6[644];
-  __O  uint32_t STIR;           // 0xE00 (W) Software trigger interrupt
+  __O  uint32_t STIR;           /**< 0xE00 (W) Software trigger interrupt */
 } NVIC_Type;
 
 
