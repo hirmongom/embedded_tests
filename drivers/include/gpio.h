@@ -1,4 +1,4 @@
-/**
+/***************************************************************************************************
  * @file        gpio.h
  * 
  * @brief       Header file for GPIO peripheral driver.
@@ -10,7 +10,7 @@
  * 
  * @author      Hiram Montejano Gómez
  * 
- * @date        Last Updated:   13/07/2023
+ * @date        Last Updated:   15/07/2023
  * 
  * @todo        Functions for Analog or Afsel
  * @todo        Output type configuration
@@ -35,33 +35,61 @@
 
 #include "stm32f410rb.h"
 
+
+/***************************************************************************************************
+ * @brief       GPIO mode options.
+ *
+ * @details     This enumeration defines the available modes for GPIO pins.
+ *              The modes determine the general purpose and behavior of the pins.
+ */
 typedef enum {
-  kModeInput,
-  kModeOutput,
-  kModeAlternate,
-  kModeAnalog
+  kModeInput,          /**< Input mode. */
+  kModeOutput,         /**< Output mode. */
+  kModeAlternate,      /**< Alternate function mode. */
+  kModeAnalog          /**< Analog mode. */
 } GpioMode;
 
+
+/***************************************************************************************************
+ * @brief       GPIO output type options.
+ *
+ * @details     This enumeration defines the available output types for GPIO pins.
+ *              The output types determine the behavior of the pins when driving an output signal.
+ */
 typedef enum {
-  kOtypePushPull,
-  kOtypeOpenDrain
+  kOtypePushPull,      /**< Push-pull output type. */
+  kOtypeOpenDrain      /**< Open-drain output type. */
 } GpioOutputType;
 
+
+/***************************************************************************************************
+ * @brief       GPIO output speed options.
+ *
+ * @details     This enumeration defines the available output speed options for GPIO pins.
+ *              The output speed determines the slew rate of the pins when driving an output signal.
+ */
 typedef enum {
-  kSpeedLow,
-  kSpeedMedium,
-  kSpeedHigh,
-  kSpeedVeryHigh
+  kSpeedLow,           /**< Low output speed. */
+  kSpeedMedium,        /**< Medium output speed. */
+  kSpeedHigh,          /**< High output speed. */
+  kSpeedVeryHigh       /**< Very high output speed. */
 } GpioOutputSpeed;
 
+
+/***************************************************************************************************
+ * @brief       GPIO pull type options.
+ *
+ * @details     This enumeration defines the available pull types for GPIO pins.
+ *              The pull types determine the internal resistor configuration of the pins.
+ */
 typedef enum {
-  kPullNone,
-  kPullUp,
-  kPullDown
+  kPullNone,           /**< No pull-up/pull-down. */
+  kPullUp,             /**< Pull-up resistor enabled. */
+  kPullDown            /**< Pull-down resistor enabled. */
 } GpioPullType;
 
 
-/**
+/***************************************************************************************************
  * @brief       Configures the mode of a GPIO pin.
  * 
  * @param       port Pointer to the GPIO port. (Use GPIOx definitios from stm32f410rb.h)
@@ -73,7 +101,7 @@ typedef enum {
 int gpioPinSetup(GPIO_Type *port, uint8_t pin, GpioMode mode);
 
 
-/**
+/***************************************************************************************************
  * @brief       Configures the pull type of a GPIO pin.
  *
  * @param       port Pointer to the GPIO port. (Use GPIOx definitios from stm32f410rb.h)
@@ -85,7 +113,7 @@ int gpioPinSetup(GPIO_Type *port, uint8_t pin, GpioMode mode);
 int gpioPinPullTypeSetup(GPIO_Type *port, uint8_t pin, GpioPullType pull_type);
 
 
-/**
+/***************************************************************************************************
  * @brief       Reads the value of a GPIO pin.
  *
  * @param       port Pointer to the GPIO port. (Use GPIOx definitios from stm32f410rb.h)
@@ -97,7 +125,7 @@ int gpioPinPullTypeSetup(GPIO_Type *port, uint8_t pin, GpioPullType pull_type);
 int gpioPinRead(GPIO_Type *port, uint8_t pin, uint8_t *read);
 
 
-/**
+/***************************************************************************************************
  * @brief       Writes a value to a GPIO pin.
  *
  * @param       port Pointer to the GPIO port. (Use GPIOx definitios from stm32f410rb.h)
@@ -110,7 +138,7 @@ int gpioPinRead(GPIO_Type *port, uint8_t pin, uint8_t *read);
 int gpioPinWrite(GPIO_Type *port, uint8_t pin, uint8_t value, uint8_t *old_value);
 
 
-/**
+/***************************************************************************************************
  * @brief       Toggles the value of a GPIO pin.
  *
  * @param       port Pointer to the GPIO port. (Use GPIOx definitios from stm32f410rb.h)
@@ -122,7 +150,7 @@ int gpioPinWrite(GPIO_Type *port, uint8_t pin, uint8_t value, uint8_t *old_value
 int gpioPinToggle(GPIO_Type *port, uint8_t pin, uint8_t *old_value);
 
 
-/**
+/***************************************************************************************************
  * @brief       Sets up an interrupt for a GPIO pin.
  *
  * @param       port Pointer to the GPIO port. (Use GPIOx definitios from stm32f410rb.h)
