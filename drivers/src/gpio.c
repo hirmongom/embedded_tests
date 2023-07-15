@@ -1,4 +1,4 @@
-/**
+/***************************************************************************************************
  * @file        gpio.c
  * 
  * @brief       Source file for GPIO peripheral driver.
@@ -10,7 +10,7 @@
  * 
  * @author      Hiram Montejano Gómez
  * 
- * @date        Last Updated:   13/07/2023
+ * @date        Last Updated:   15/07/2023
  * 
  * @copyright   This file is part of the "STM32F10RB Microcontroller Applications" project.
  * 
@@ -39,13 +39,13 @@ extern uint16_t errnum;
 extern uint16_t errcode;
 
 
-/**
+/***************************************************************************************************
  * @brief       Array of function pointers to be executed when an interrupt occurs
  */
 static void (*gpio_isr_functions[16])(void);
 
 
-/**
+/***************************************************************************************************
  * @brief       Provides a delay function.
  *
  * @details     This function introduces a delay by executing an empty loop for a fixed number 
@@ -59,7 +59,7 @@ static inline void delay() {
 }
 
 
-/**
+/***************************************************************************************************
  * @details     This function configures the mode of a GPIO pin on the STM32F10RB microcontroller.
  *              The pin number should be within the range 0-15. 
  *              The GPIO port is checked for initialization, and if not initialized, it is enabled. 
@@ -114,7 +114,7 @@ int gpioPinSetup(GPIO_Type *port, uint8_t pin, GpioMode mode) {
 }
 
 
-/**
+/***************************************************************************************************
  * @details     This function configures the pull type of a GPIO pin on the STM32F10RB 
  *              microcontroller.
  *              The function checks if the provided GPIO port is correct and initialized.
@@ -139,7 +139,7 @@ int gpioPinPullTypeSetup(GPIO_Type *port, uint8_t pin, GpioPullType pull_type) {
 }
 
 
-/**
+/***************************************************************************************************
  * @details     This function reads the value of a GPIO pin on the STM32F10RB microcontroller.
  *              The pin number should be within the range 0-15.
  *              The function checks if the provided GPIO port is correct and initialized,
@@ -166,7 +166,7 @@ int gpioPinRead(GPIO_Type *port, uint8_t pin, uint8_t *read) {
 }
 
 
-/**
+/***************************************************************************************************
  * @details     This function writes a value (0 or 1) to a GPIO pin on the STM32F10RB 
  *              microcontroller.
  *              The pin number should be within the range 0-15.
@@ -206,7 +206,7 @@ int gpioPinWrite(GPIO_Type *port, uint8_t pin, uint8_t value, uint8_t *old_value
 }
 
 
-/**
+/***************************************************************************************************
  * @details     This function toggles the value of a GPIO pin on the STM32F10RB microcontroller.
  *              The pin number should be within the range 0-15.
  *              The function checks if the provided GPIO port is correct and initialized,
@@ -235,7 +235,7 @@ int gpioPinToggle(GPIO_Type *port, uint8_t pin, uint8_t *old_value) {
 }
 
 
-/**
+/***************************************************************************************************
  * @details     This function sets up an interrupt for a GPIO pin on the STM32F10RB microcontroller.
  *              The pin number should be within the range 0-15.
  *              The function checks if the provided GPIO port is correct and initialized.
@@ -317,7 +317,7 @@ int gpioInterruptSet(GPIO_Type *port, uint8_t pin, uint8_t rising_edge, uint8_t 
 }
 
 
-/**
+/***************************************************************************************************
  * @brief       Interrupt Service Routine for EXTI0.
  *
  * @details     This ISR is triggered when an interrupt occurs on EXTI line 0.
@@ -333,7 +333,7 @@ static void EXTI0_ISR (void) {
 }
 
 
-/**
+/***************************************************************************************************
  * @brief       Interrupt Service Routine for EXTI1.
  *
  * @details     This ISR is triggered when an interrupt occurs on EXTI line 1.
@@ -349,7 +349,7 @@ static void EXTI1_ISR (void) {
 }
 
 
-/**
+/***************************************************************************************************
  * @brief       Interrupt Service Routine for EXTI2.
  *
  * @details     This ISR is triggered when an interrupt occurs on EXTI line 2.
@@ -365,7 +365,7 @@ static void EXTI2_ISR (void) {
 }
 
 
-/**
+/***************************************************************************************************
  * @brief       Interrupt Service Routine for EXTI3.
  *
  * @details     This ISR is triggered when an interrupt occurs on EXTI line 3.
@@ -381,7 +381,7 @@ static void EXTI3_ISR (void) {
 }
 
 
-/**
+/***************************************************************************************************
  * @brief       Interrupt Service Routine for EXTI4.
  *
  * @details     This ISR is triggered when an interrupt occurs on EXTI line 4.
@@ -397,7 +397,7 @@ static void EXTI4_ISR (void) {
 }
 
 
-/**
+/***************************************************************************************************
  * @brief       Interrupt Service Routine for EXTI lines 5 to 9.
  *
  * @details     This ISR is triggered when an interrupt occurs on any of the EXTI lines 5 to 9.
@@ -416,7 +416,7 @@ static void EXTI9_5_ISR (void) {
 }
 
 
-/**
+/***************************************************************************************************
  * @brief       Interrupt Service Routine for EXTI lines 10 to 15.
  *
  * @details     This ISR is triggered when an interrupt occurs on any of the EXTI lines 10 to 15.

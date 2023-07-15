@@ -1,4 +1,4 @@
-/**
+/***************************************************************************************************
  * @file        err.c
  * 
  * @brief       Error Number and Error Code
@@ -21,7 +21,7 @@
  * 
  * @author      Hiram Montejano Gómez
  * 
- * @date        Last Updated:   12/07/2023
+ * @date        Last Updated:   15/07/2023
  * 
  * @copyright   This file is part of the "STM32F10RB Microcontroller Applications" project.
  * 
@@ -43,7 +43,7 @@
 #include <stdint.h>
 
 
-/**
+/***************************************************************************************************
  * @brief       Error number variable.
  *
  * @details     This variable holds the error number indicating the type of error that occurred.
@@ -56,7 +56,7 @@
 __attribute__((section(".err"))) uint16_t errnum = 0;
 
 
-/**
+/***************************************************************************************************
  * @brief       Error code variable.
  *
  * @details     This variable holds the error code providing additional information about the error.
