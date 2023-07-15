@@ -1,0 +1,441 @@
+\hypertarget{gpio_8c_source}{}\doxysection{gpio.\+c}
+\label{gpio_8c_source}\index{drivers/src/gpio.c@{drivers/src/gpio.c}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00001}00001 \textcolor{comment}{/***************************************************************************************************}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00002}00002 \textcolor{comment}{ * @file        gpio.c}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00003}00003 \textcolor{comment}{ * }}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00004}00004 \textcolor{comment}{ * @brief       Source file for GPIO peripheral driver.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00005}00005 \textcolor{comment}{ * }}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00006}00006 \textcolor{comment}{ * @details     This file implements the functions for configuring and controlling GPIO pins}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00007}00007 \textcolor{comment}{ *              on the STM32F10RB microcontroller.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00008}00008 \textcolor{comment}{ * }}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00009}00009 \textcolor{comment}{ * @see         RM0401 Reference Manual, Page 135 for more information on GPIO configuration.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00010}00010 \textcolor{comment}{ * }}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00011}00011 \textcolor{comment}{ * @author      Hiram Montejano Gómez}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00012}00012 \textcolor{comment}{ * }}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00013}00013 \textcolor{comment}{ * @date        Last Updated:   15/07/2023}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00014}00014 \textcolor{comment}{ * }}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00015}00015 \textcolor{comment}{ * @copyright   This file is part of the "{}STM32F10RB Microcontroller Applications"{} project.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00016}00016 \textcolor{comment}{ * }}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00017}00017 \textcolor{comment}{ *              Every file is free software: you can redistribute it and/or modify}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00018}00018 \textcolor{comment}{ *              it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00019}00019 \textcolor{comment}{ *              the Free Software Foundation, either version 3 of the License, or}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00020}00020 \textcolor{comment}{ *              (at your option) any later version.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00021}00021 \textcolor{comment}{ * }}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00022}00022 \textcolor{comment}{ *              These files are distributed in the hope that they will be useful,}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00023}00023 \textcolor{comment}{ *              but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00024}00024 \textcolor{comment}{ *              MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00025}00025 \textcolor{comment}{ *              GNU General Public License for more details.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00026}00026 \textcolor{comment}{ * }}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00027}00027 \textcolor{comment}{ *              You should have received a copy of the GNU General Public License}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00028}00028 \textcolor{comment}{ *              along with the "{}STM32F10RB Microcontroller Applications"{} project. If not, }}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00029}00029 \textcolor{comment}{ *              see <http://www.gnu.org/licenses/>.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00030}00030 \textcolor{comment}{ */}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00031}00031 }
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00032}00032 }
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00033}00033 \textcolor{preprocessor}{\#include <stdint.h>}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00034}00034 \textcolor{preprocessor}{\#include "{}stm32f410rb.h"{}}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00035}00035 \textcolor{preprocessor}{\#include "{}gpio.h"{}}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00036}00036 }
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00037}00037 }
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00038}00038 \textcolor{keyword}{extern} uint16\_t errnum;}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00039}00039 \textcolor{keyword}{extern} uint16\_t errcode;}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00040}00040 }
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00041}00041 }
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00042}00042 \textcolor{comment}{/***************************************************************************************************}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00043}00043 \textcolor{comment}{ * @brief       Array of function pointers to be executed when an interrupt occurs}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00044}00044 \textcolor{comment}{ */}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00045}00045 \textcolor{keyword}{static} void (*gpio\_isr\_functions[16])(void);}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00046}00046 }
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00047}00047 }
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00048}00048 \textcolor{comment}{/***************************************************************************************************}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00049}00049 \textcolor{comment}{ * @brief       Provides a delay function.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00050}00050 \textcolor{comment}{ *}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00051}00051 \textcolor{comment}{ * @details     This function introduces a delay by executing an empty loop for a fixed number }}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00052}00052 \textcolor{comment}{ *              of iterations.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00053}00053 \textcolor{comment}{ * }}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00054}00054 \textcolor{comment}{ * @todo        Make use of the RTC to provide a more accurate delay funciton}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00055}00055 \textcolor{comment}{ * @todo        Make the function usable in a util.c file}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00056}00056 \textcolor{comment}{ */}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00057}00057 \textcolor{keyword}{static} \textcolor{keyword}{inline} \textcolor{keywordtype}{void} delay() \{}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00058}00058   \textcolor{keywordflow}{for} (\textcolor{keyword}{volatile} uint32\_t delay = 0; delay < 100000; ++delay) \{\}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00059}00059 \}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00060}00060 }
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00061}00061 }
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00062}00062 \textcolor{comment}{/***************************************************************************************************}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00063}00063 \textcolor{comment}{ * @details     This function configures the mode of a GPIO pin on the STM32F10RB microcontroller.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00064}00064 \textcolor{comment}{ *              The pin number should be within the range 0-\/15. }}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00065}00065 \textcolor{comment}{ *              The GPIO port is checked for initialization, and if not initialized, it is enabled. }}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00066}00066 \textcolor{comment}{ *              The pin mode is then set according to the provided mode.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00067}00067 \textcolor{comment}{ *              The mode parameter should be one of the values from the GpioMode enumeration.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00068}00068 \textcolor{comment}{ *              Upon successful configuration, the function returns 0. Otherwise, 1 is returned and}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00069}00069 \textcolor{comment}{ *              variables errnum and errcode are set with the error code.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00070}00070 \textcolor{comment}{ * }}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00071}00071 \textcolor{comment}{ * @todo        Add option to configure port speed}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00072}00072 \textcolor{comment}{ */}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00073}00073 \textcolor{keywordtype}{int} gpioPinSetup(\mbox{\hyperlink{structGPIO__Type}{GPIO\_Type}} *port, uint8\_t pin, GpioMode mode) \{}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00074}00074   \textcolor{keywordflow}{if} (pin > 15) \{}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00075}00075     errnum = 1;  \textcolor{comment}{// GPIO error}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00076}00076     errcode = 2;  \textcolor{comment}{// Wrong pin number}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00077}00077     \textcolor{keywordflow}{return} 1;}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00078}00078   \}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00079}00079 }
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00080}00080   \textcolor{comment}{// Check if port is initializated, if not, initialize it}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00081}00081   \textcolor{keywordflow}{if} (port == GPIOA) \{}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00082}00082     \textcolor{keywordflow}{if} (!(RCC-\/>AHB1ENR \& (1 << 0))) \{}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00083}00083       RCC-\/>AHB1ENR |= (1 << 0);}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00084}00084       delay();}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00085}00085     \}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00086}00086   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (port == GPIOB) \{}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00087}00087     \textcolor{keywordflow}{if} (!(RCC-\/>AHB1ENR \& (1 << 1))) \{}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00088}00088       RCC-\/>AHB1ENR |= (1 << 1);}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00089}00089       delay();}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00090}00090     \} }
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00091}00091   \}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00092}00092   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (port == GPIOC) \{}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00093}00093     \textcolor{keywordflow}{if} (!(RCC-\/>AHB1ENR \& (1 << 2))) \{}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00094}00094       RCC-\/>AHB1ENR |= (1 << 2);}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00095}00095       delay();}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00096}00096     \}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00097}00097   \}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00098}00098   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (port == GPIOH) \{}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00099}00099     \textcolor{keywordflow}{if} (!(RCC-\/>AHB1ENR \& (1 << 7))) \{}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00100}00100       RCC-\/>AHB1ENR |= (1 << 7);}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00101}00101       delay();}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00102}00102     \}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00103}00103   \}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00104}00104   \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00105}00105     errnum = 1;  \textcolor{comment}{// GPIO error}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00106}00106     errcode = 1;  \textcolor{comment}{// Wrong GPIO port}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00107}00107     \textcolor{keywordflow}{return} 1;}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00108}00108   \}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00109}00109 }
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00110}00110   port-\/>\mbox{\hyperlink{structGPIO__Type_a1e4ff7ca2e618e255c9079e524444fa9}{MODER}} \&= \string~(3 << pin * 2); \textcolor{comment}{// Reset mode before overwritting with new one}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00111}00111   port-\/>\mbox{\hyperlink{structGPIO__Type_a1e4ff7ca2e618e255c9079e524444fa9}{MODER}} |= (mode << pin * 2);}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00112}00112 }
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00113}00113   \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00114}00114 \}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00115}00115 }
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00116}00116 }
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00117}00117 \textcolor{comment}{/***************************************************************************************************}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00118}00118 \textcolor{comment}{ * @details     This function configures the pull type of a GPIO pin on the STM32F10RB }}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00119}00119 \textcolor{comment}{ *              microcontroller.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00120}00120 \textcolor{comment}{ *              The function checks if the provided GPIO port is correct and initialized.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00121}00121 \textcolor{comment}{ *              The pin number should be within the range 0-\/15. }}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00122}00122 \textcolor{comment}{ *              The pull type is then set according to the provided type, which should be one of }}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00123}00123 \textcolor{comment}{ *              the values from the GpioPullType enumeration.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00124}00124 \textcolor{comment}{ *              Upon successful configuration, the function returns 0. Otherwise, 1 is returned and}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00125}00125 \textcolor{comment}{ *              variables errnum and errcode are set with the error code.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00126}00126 \textcolor{comment}{ *}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00127}00127 \textcolor{comment}{ * @todo        Check if port is correct and if it is initializated}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00128}00128 \textcolor{comment}{ */}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00129}00129 \textcolor{keywordtype}{int} gpioPinPullTypeSetup(\mbox{\hyperlink{structGPIO__Type}{GPIO\_Type}} *port, uint8\_t pin, GpioPullType pull\_type) \{}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00130}00130   \textcolor{keywordflow}{if} (pin > 15) \{}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00131}00131     errnum = 1;  \textcolor{comment}{// GPIO error}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00132}00132     errcode = 2;  \textcolor{comment}{// Wrong pin number}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00133}00133     \textcolor{keywordflow}{return} 1;}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00134}00134   \}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00135}00135   }
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00136}00136   port-\/>\mbox{\hyperlink{structGPIO__Type_a618881b88a3b1aeb222ef63b95a479a3}{PUPDR}} \&= \string~(3 << pin * 2);}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00137}00137   port-\/>\mbox{\hyperlink{structGPIO__Type_a618881b88a3b1aeb222ef63b95a479a3}{PUPDR}} |= (pull\_type << pin * 2);}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00138}00138   \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00139}00139 \}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00140}00140 }
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00141}00141 }
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00142}00142 \textcolor{comment}{/***************************************************************************************************}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00143}00143 \textcolor{comment}{ * @details     This function reads the value of a GPIO pin on the STM32F10RB microcontroller.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00144}00144 \textcolor{comment}{ *              The pin number should be within the range 0-\/15.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00145}00145 \textcolor{comment}{ *              The function checks if the provided GPIO port is correct and initialized,}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00146}00146 \textcolor{comment}{ *              as well as the mode of the pin.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00147}00147 \textcolor{comment}{ *              Upon successful read, the function stores the read value in the memory location}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00148}00148 \textcolor{comment}{ *              pointed to by the 'read' parameter.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00149}00149 \textcolor{comment}{ *              The read value will be either 0 or 1, indicating the logic level of the pin.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00150}00150 \textcolor{comment}{ *              If an error occurs, 1 is returned, and variables errnum and errcode are set with}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00151}00151 \textcolor{comment}{ *              the error code.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00152}00152 \textcolor{comment}{ *}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00153}00153 \textcolor{comment}{ * @todo        Check if the GPIO port is correct and if it is initialized and in the appropriate }}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00154}00154 \textcolor{comment}{ *              mode.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00155}00155 \textcolor{comment}{ */}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00156}00156 \textcolor{keywordtype}{int} gpioPinRead(\mbox{\hyperlink{structGPIO__Type}{GPIO\_Type}} *port, uint8\_t pin, uint8\_t *read) \{}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00157}00157   \textcolor{keywordflow}{if} (pin > 15) \{}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00158}00158     errnum = 1;  \textcolor{comment}{// GPIO error}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00159}00159     errcode = 2;  \textcolor{comment}{// Wrong pin number}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00160}00160     \textcolor{keywordflow}{return} 1;}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00161}00161   \}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00162}00162   }
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00163}00163   uint32\_t pin\_value = (port-\/>\mbox{\hyperlink{structGPIO__Type_a7202422c37d73e011c41fa0ced908176}{IDR}} >> pin) \& 0x01;}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00164}00164   *read = (uint8\_t) pin\_value;}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00165}00165   \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00166}00166 \}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00167}00167 }
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00168}00168 }
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00169}00169 \textcolor{comment}{/***************************************************************************************************}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00170}00170 \textcolor{comment}{ * @details     This function writes a value (0 or 1) to a GPIO pin on the STM32F10RB }}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00171}00171 \textcolor{comment}{ *              microcontroller.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00172}00172 \textcolor{comment}{ *              The pin number should be within the range 0-\/15.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00173}00173 \textcolor{comment}{ *              The function checks if the provided GPIO port is correct and initialized,}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00174}00174 \textcolor{comment}{ *              as well as the mode of the pin.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00175}00175 \textcolor{comment}{ *              The previous value of the pin is stored in the memory location pointed to by the }}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00176}00176 \textcolor{comment}{ *              'old\_value' parameter.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00177}00177 \textcolor{comment}{ *              If the 'value' parameter is 0, the pin is cleared (set to logic low).}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00178}00178 \textcolor{comment}{ *              If the 'value' parameter is 1, the pin is set (set to logic high).}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00179}00179 \textcolor{comment}{ *              If an error occurs, 1 is returned, and variables errnum and errcode are set with}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00180}00180 \textcolor{comment}{ *              the error code.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00181}00181 \textcolor{comment}{ *}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00182}00182 \textcolor{comment}{ * @todo        Check if the GPIO port is correct and if it is initialized and in the appropriate }}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00183}00183 \textcolor{comment}{ *              mode.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00184}00184 \textcolor{comment}{ */}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00185}00185 \textcolor{keywordtype}{int} gpioPinWrite(\mbox{\hyperlink{structGPIO__Type}{GPIO\_Type}} *port, uint8\_t pin, uint8\_t value, uint8\_t *old\_value) \{}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00186}00186   \textcolor{keywordflow}{if} (pin > 15) \{}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00187}00187     errnum = 1;  \textcolor{comment}{// GPIO error}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00188}00188     errcode = 2;  \textcolor{comment}{// Wrong pin number}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00189}00189     \textcolor{keywordflow}{return} 1;}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00190}00190   \}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00191}00191   }
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00192}00192   uint32\_t pin\_value = (port-\/>\mbox{\hyperlink{structGPIO__Type_a7202422c37d73e011c41fa0ced908176}{IDR}} >> pin) \& 0x01;}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00193}00193   *old\_value = (uint8\_t) pin\_value;}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00194}00194 }
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00195}00195   \textcolor{keywordflow}{if} (value == 0) \{}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00196}00196     port-\/>\mbox{\hyperlink{structGPIO__Type_a35e605626c6b8e326521b903727e1734}{ODR}} \&= \string~(1 << pin);}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00197}00197   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (value == 1) \{}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00198}00198     port-\/>\mbox{\hyperlink{structGPIO__Type_a35e605626c6b8e326521b903727e1734}{ODR}} |= (1 << pin);}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00199}00199   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00200}00200     errnum = 1;  \textcolor{comment}{// GPIO error}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00201}00201     errcode = 5;  \textcolor{comment}{// Tried to write wrong value}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00202}00202     \textcolor{keywordflow}{return} 1;}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00203}00203   \}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00204}00204   }
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00205}00205   \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00206}00206 \}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00207}00207 }
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00208}00208 }
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00209}00209 \textcolor{comment}{/***************************************************************************************************}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00210}00210 \textcolor{comment}{ * @details     This function toggles the value of a GPIO pin on the STM32F10RB microcontroller.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00211}00211 \textcolor{comment}{ *              The pin number should be within the range 0-\/15.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00212}00212 \textcolor{comment}{ *              The function checks if the provided GPIO port is correct and initialized,}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00213}00213 \textcolor{comment}{ *              as well as the mode of the pin.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00214}00214 \textcolor{comment}{ *              The previous value of the pin is stored in the memory location pointed to by the }}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00215}00215 \textcolor{comment}{ *              'old\_value' parameter.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00216}00216 \textcolor{comment}{ *              If the pin is currently low, it is toggled to high. If the pin is currently high,}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00217}00217 \textcolor{comment}{ *              it is toggled to low.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00218}00218 \textcolor{comment}{ *              If an error occurs, 1 is returned, and variables errnum and errcode are set with}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00219}00219 \textcolor{comment}{ *              the error code.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00220}00220 \textcolor{comment}{ *}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00221}00221 \textcolor{comment}{ * @todo        Check if the GPIO port is correct and if it is initialized and in the appropriate mode.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00222}00222 \textcolor{comment}{ */}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00223}00223 \textcolor{keywordtype}{int} gpioPinToggle(\mbox{\hyperlink{structGPIO__Type}{GPIO\_Type}} *port, uint8\_t pin, uint8\_t *old\_value) \{}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00224}00224   \textcolor{keywordflow}{if} (pin > 15) \{}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00225}00225     errnum = 1;  \textcolor{comment}{// GPIO error}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00226}00226     errcode = 2;  \textcolor{comment}{// Wrong pin number}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00227}00227     \textcolor{keywordflow}{return} 1;}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00228}00228   \}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00229}00229   }
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00230}00230   uint32\_t pin\_value = (port-\/>\mbox{\hyperlink{structGPIO__Type_a7202422c37d73e011c41fa0ced908176}{IDR}} >> pin) \& 0x01;}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00231}00231   *old\_value = (uint8\_t) pin\_value;}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00232}00232 }
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00233}00233   port-\/>\mbox{\hyperlink{structGPIO__Type_a35e605626c6b8e326521b903727e1734}{ODR}} \string^= (1 << pin);}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00234}00234   \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00235}00235 \}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00236}00236 }
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00237}00237 }
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00238}00238 \textcolor{comment}{/***************************************************************************************************}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00239}00239 \textcolor{comment}{ * @details     This function sets up an interrupt for a GPIO pin on the STM32F10RB microcontroller.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00240}00240 \textcolor{comment}{ *              The pin number should be within the range 0-\/15.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00241}00241 \textcolor{comment}{ *              The function checks if the provided GPIO port is correct and initialized.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00242}00242 \textcolor{comment}{ *              It also validates the rising\_edge and priority parameters.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00243}00243 \textcolor{comment}{ *              The interrupt trigger type is set based on the rising\_edge parameter,}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00244}00244 \textcolor{comment}{ *              with 1 indicating a rising edge trigger and 0 indicating a falling edge trigger.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00245}00245 \textcolor{comment}{ *              The priority parameter sets the interrupt priority level, which should be between}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00246}00246 \textcolor{comment}{ *              7 and 15 (inclusive).}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00247}00247 \textcolor{comment}{ *              The handler parameter is a pointer to the interrupt handler function that will be }}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00248}00248 \textcolor{comment}{ *              executed when the interrupt occurs.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00249}00249 \textcolor{comment}{ *              Upon successful setup, the function returns 0.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00250}00250 \textcolor{comment}{ *              If an error occurs, 1 is returned, and variables errnum and errcode are set with}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00251}00251 \textcolor{comment}{ *              the appropriate error codes.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00252}00252 \textcolor{comment}{ *}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00253}00253 \textcolor{comment}{ * @todo        Check if the GPIO port is correct and if it is initialized.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00254}00254 \textcolor{comment}{ * @todo        Clarify the allowed range for the priority parameter and which value is higher prio}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00255}00255 \textcolor{comment}{ */}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00256}00256 \textcolor{keywordtype}{int} gpioInterruptSet(\mbox{\hyperlink{structGPIO__Type}{GPIO\_Type}} *port, uint8\_t pin, uint8\_t rising\_edge, uint8\_t priority, \textcolor{keywordtype}{void} (*handler)(\textcolor{keywordtype}{void})) \{}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00257}00257   \textcolor{keywordflow}{if} (pin > 15) \{}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00258}00258     errnum = 1;  \textcolor{comment}{// GPIO error}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00259}00259     errcode = 2;  \textcolor{comment}{// Wrong pin number}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00260}00260     \textcolor{keywordflow}{return} 1;}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00261}00261   \}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00262}00262   \textcolor{keywordflow}{if} (rising\_edge > 1) \{}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00263}00263     errnum = 1;  \textcolor{comment}{// GPIO error}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00264}00264     errcode = 6;  \textcolor{comment}{// Wrong value for trigger selection}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00265}00265     \textcolor{keywordflow}{return} 1;  \textcolor{comment}{// Can only be 0 or 1}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00266}00266   \}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00267}00267   \textcolor{keywordflow}{if} (priority < 7) \{}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00268}00268     errnum = 1;  \textcolor{comment}{// GPIO error}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00269}00269     errcode = 7: \textcolor{comment}{// Wrong interrupt priority}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00270}00270     \textcolor{keywordflow}{return} 1;}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00271}00271   \} }
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00272}00272     }
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00273}00273   uint8\_t exti\_source\_input;}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00274}00274 }
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00275}00275   \textcolor{keywordflow}{if} (port == GPIOA)}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00276}00276     exti\_source\_input = 0;}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00277}00277   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (port == GPIOB)}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00278}00278     exti\_source\_input = 1;}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00279}00279   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (port == GPIOC)}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00280}00280     exti\_source\_input = 2;}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00281}00281   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (port == GPIOH)}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00282}00282     exti\_source\_input = 7;}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00283}00283   \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00284}00284     errnum = 1;  \textcolor{comment}{// GPIO error}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00285}00285     errcode = 1;  \textcolor{comment}{// Wrong GPIO port}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00286}00286     \textcolor{keywordflow}{return} 1;}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00287}00287   \}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00288}00288 }
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00289}00289   RCC-\/>APB2ENR |= (1 << 14);    \textcolor{comment}{// Enable system configuration controller clock}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00290}00290   SYSCFG-\/>EXTICR[pin / 4] \&= \string~(0xF << (pin \% 4) * 4); \textcolor{comment}{// Clear register}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00291}00291   SYSCFG-\/>EXTICR[pin / 4] |= (exti\_source\_input << (pin \% 4) * 4);  \textcolor{comment}{// Select source input for the EXTIx}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00292}00292   }
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00293}00293   EXTI-\/>IMR |= (1 << pin);  \textcolor{comment}{// Set pin in EXTI line as interrupt}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00294}00294   \textcolor{keywordflow}{if} (rising\_edge == 1) \{}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00295}00295     EXTI-\/>RTSR |= (1 << pin); \textcolor{comment}{// Enable rising edge trigger}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00296}00296     EXTI-\/>FTSR \&= \string~(1 << pin);  \textcolor{comment}{// Disable falling edge trigger}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00297}00297   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00298}00298     EXTI-\/>RTSR \&= \string~(1 << pin);  \textcolor{comment}{// Disable rising edge trigger}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00299}00299     EXTI-\/>FTSR |= (1 << pin); \textcolor{comment}{// Enable falling edge trigger}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00300}00300   \}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00301}00301 }
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00302}00302   \textcolor{comment}{// Set priority and set-\/enable interrupt}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00303}00303   \textcolor{keywordflow}{if} (pin <= 4) \{}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00304}00304     NVIC-\/>IPR[6 + pin] |= (priority << 4);}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00305}00305     NVIC-\/>ISER[0] |= (1 << (6 + pin));}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00306}00306   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (pin <= 9) \{}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00307}00307     NVIC-\/>IPR[23] |= (priority << 4);}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00308}00308     NVIC-\/>ISER[0] |= (1 << 23);}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00309}00309   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00310}00310     NVIC-\/>IPR[40] |= (priority << 4);}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00311}00311     NVIC-\/>ISER[1] |= (1 << 8);}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00312}00312   \}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00313}00313 }
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00314}00314   gpio\_isr\_functions[pin] = handler;}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00315}00315 }
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00316}00316   \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00317}00317 \}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00318}00318 }
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00319}00319 }
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00320}00320 \textcolor{comment}{/***************************************************************************************************}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00321}00321 \textcolor{comment}{ * @brief       Interrupt Service Routine for EXTI0.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00322}00322 \textcolor{comment}{ *}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00323}00323 \textcolor{comment}{ * @details     This ISR is triggered when an interrupt occurs on EXTI line 0.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00324}00324 \textcolor{comment}{ *              It calls the associated GPIO interrupt handler function stored in }}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00325}00325 \textcolor{comment}{ *              gpio\_isr\_functions[0].}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00326}00326 \textcolor{comment}{ *              After handling the interrupt, it clears the interrupt flag for EXTI line 0.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00327}00327 \textcolor{comment}{ */}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00328}00328 \textcolor{keyword}{static} \textcolor{keywordtype}{void} EXTI0\_ISR (\textcolor{keywordtype}{void}) \{}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00329}00329   \textcolor{keywordflow}{if} (EXTI-\/>PR \& (1 << 0)) \{}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00330}00330     gpio\_isr\_functions[0]();}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00331}00331     EXTI-\/>PR |= (1 << 0);    \textcolor{comment}{// Clear flag}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00332}00332   \}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00333}00333 \}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00334}00334 }
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00335}00335 }
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00336}00336 \textcolor{comment}{/***************************************************************************************************}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00337}00337 \textcolor{comment}{ * @brief       Interrupt Service Routine for EXTI1.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00338}00338 \textcolor{comment}{ *}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00339}00339 \textcolor{comment}{ * @details     This ISR is triggered when an interrupt occurs on EXTI line 1.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00340}00340 \textcolor{comment}{ *              It calls the associated GPIO interrupt handler function stored in }}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00341}00341 \textcolor{comment}{ *              gpio\_isr\_functions[1].}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00342}00342 \textcolor{comment}{ *              After handling the interrupt, it clears the interrupt flag for EXTI line 1.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00343}00343 \textcolor{comment}{ */}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00344}00344 \textcolor{keyword}{static} \textcolor{keywordtype}{void} EXTI1\_ISR (\textcolor{keywordtype}{void}) \{}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00345}00345   \textcolor{keywordflow}{if} (EXTI-\/>PR \& (1 << 1)) \{}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00346}00346     gpio\_isr\_functions[1]();}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00347}00347     EXTI-\/>PR |= (1 << 1);    \textcolor{comment}{// Clear flag}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00348}00348   \}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00349}00349 \}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00350}00350 }
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00351}00351 }
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00352}00352 \textcolor{comment}{/***************************************************************************************************}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00353}00353 \textcolor{comment}{ * @brief       Interrupt Service Routine for EXTI2.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00354}00354 \textcolor{comment}{ *}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00355}00355 \textcolor{comment}{ * @details     This ISR is triggered when an interrupt occurs on EXTI line 2.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00356}00356 \textcolor{comment}{ *              It calls the associated GPIO interrupt handler function stored in }}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00357}00357 \textcolor{comment}{ *              gpio\_isr\_functions[2].}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00358}00358 \textcolor{comment}{ *              After handling the interrupt, it clears the interrupt flag for EXTI line 2.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00359}00359 \textcolor{comment}{ */}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00360}00360 \textcolor{keyword}{static} \textcolor{keywordtype}{void} EXTI2\_ISR (\textcolor{keywordtype}{void}) \{}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00361}00361   \textcolor{keywordflow}{if} (EXTI-\/>PR \& (1 << 2)) \{}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00362}00362     gpio\_isr\_functions[2]();}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00363}00363     EXTI-\/>PR |= (1 << 2);    \textcolor{comment}{// Clear flag}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00364}00364   \}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00365}00365 \}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00366}00366 }
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00367}00367 }
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00368}00368 \textcolor{comment}{/***************************************************************************************************}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00369}00369 \textcolor{comment}{ * @brief       Interrupt Service Routine for EXTI3.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00370}00370 \textcolor{comment}{ *}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00371}00371 \textcolor{comment}{ * @details     This ISR is triggered when an interrupt occurs on EXTI line 3.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00372}00372 \textcolor{comment}{ *              It calls the associated GPIO interrupt handler function stored in }}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00373}00373 \textcolor{comment}{ *              gpio\_isr\_functions[3].}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00374}00374 \textcolor{comment}{ *              After handling the interrupt, it clears the interrupt flag for EXTI line 3.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00375}00375 \textcolor{comment}{ */}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00376}00376 \textcolor{keyword}{static} \textcolor{keywordtype}{void} EXTI3\_ISR (\textcolor{keywordtype}{void}) \{}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00377}00377   \textcolor{keywordflow}{if} (EXTI-\/>PR \& (1 << 3)) \{}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00378}00378     gpio\_isr\_functions[3]();}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00379}00379     EXTI-\/>PR |= (1 << 3);    \textcolor{comment}{// Clear flag}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00380}00380   \}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00381}00381 \}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00382}00382 }
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00383}00383 }
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00384}00384 \textcolor{comment}{/***************************************************************************************************}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00385}00385 \textcolor{comment}{ * @brief       Interrupt Service Routine for EXTI4.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00386}00386 \textcolor{comment}{ *}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00387}00387 \textcolor{comment}{ * @details     This ISR is triggered when an interrupt occurs on EXTI line 4.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00388}00388 \textcolor{comment}{ *              It calls the associated GPIO interrupt handler function stored in }}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00389}00389 \textcolor{comment}{ *              gpio\_isr\_functions[4].}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00390}00390 \textcolor{comment}{ *              After handling the interrupt, it clears the interrupt flag for EXTI line 4.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00391}00391 \textcolor{comment}{ */}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00392}00392 \textcolor{keyword}{static} \textcolor{keywordtype}{void} EXTI4\_ISR (\textcolor{keywordtype}{void}) \{}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00393}00393   \textcolor{keywordflow}{if} (EXTI-\/>PR \& (1 << 4)) \{}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00394}00394     gpio\_isr\_functions[4]();}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00395}00395     EXTI-\/>PR |= (1 << 4);    \textcolor{comment}{// Clear flag}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00396}00396   \}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00397}00397 \}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00398}00398 }
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00399}00399 }
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00400}00400 \textcolor{comment}{/***************************************************************************************************}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00401}00401 \textcolor{comment}{ * @brief       Interrupt Service Routine for EXTI lines 5 to 9.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00402}00402 \textcolor{comment}{ *}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00403}00403 \textcolor{comment}{ * @details     This ISR is triggered when an interrupt occurs on any of the EXTI lines 5 to 9.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00404}00404 \textcolor{comment}{ *              It calls the associated GPIO interrupt handler function stored in }}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00405}00405 \textcolor{comment}{ *              gpio\_isr\_functions[i] for each triggered EXTI line.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00406}00406 \textcolor{comment}{ *              After handling the interrupts, it clears the corresponding interrupt flags for }}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00407}00407 \textcolor{comment}{ *              EXTI lines 5 to 9.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00408}00408 \textcolor{comment}{ */}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00409}00409 \textcolor{keyword}{static} \textcolor{keywordtype}{void} EXTI9\_5\_ISR (\textcolor{keywordtype}{void}) \{}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00410}00410   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 5; i <= 9; i++) \{}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00411}00411     \textcolor{keywordflow}{if} (EXTI-\/>PR \& (1 << i)) \{}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00412}00412       gpio\_isr\_functions[i]();}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00413}00413       EXTI-\/>PR |= (1 << i);}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00414}00414     \}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00415}00415   \}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00416}00416 \}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00417}00417 }
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00418}00418 }
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00419}00419 \textcolor{comment}{/***************************************************************************************************}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00420}00420 \textcolor{comment}{ * @brief       Interrupt Service Routine for EXTI lines 10 to 15.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00421}00421 \textcolor{comment}{ *}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00422}00422 \textcolor{comment}{ * @details     This ISR is triggered when an interrupt occurs on any of the EXTI lines 10 to 15.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00423}00423 \textcolor{comment}{ *              It calls the associated GPIO interrupt handler function stored in }}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00424}00424 \textcolor{comment}{ *              gpio\_isr\_functions[i] for each triggered EXTI line.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00425}00425 \textcolor{comment}{ *              After handling the interrupts, it clears the corresponding interrupt flags for }}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00426}00426 \textcolor{comment}{ *              EXTI lines 10 to 15.}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00427}00427 \textcolor{comment}{ */}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00428}00428 \textcolor{keyword}{static} \textcolor{keywordtype}{void} EXTI15\_10\_ISR (\textcolor{keywordtype}{void}) \{}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00429}00429   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 10; i <= 15; i++) \{}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00430}00430     \textcolor{keywordflow}{if} (EXTI-\/>PR \& (1 << i)) \{}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00431}00431       gpio\_isr\_functions[i]();}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00432}00432       EXTI-\/>PR |= (1 << i);}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00433}00433     \}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00434}00434   \}}
+\DoxyCodeLine{\Hypertarget{gpio_8c_source_l00435}00435 \}}
+
+\end{DoxyCode}

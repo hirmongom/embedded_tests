@@ -1,0 +1,176 @@
+\hypertarget{gpio_8h_source}{}\doxysection{gpio.\+h}
+\label{gpio_8h_source}\index{drivers/include/gpio.h@{drivers/include/gpio.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00001}00001 \textcolor{comment}{/***************************************************************************************************}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00002}00002 \textcolor{comment}{ * @file        gpio.h}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00003}00003 \textcolor{comment}{ * }}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00004}00004 \textcolor{comment}{ * @brief       Header file for GPIO peripheral driver.}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00005}00005 \textcolor{comment}{ * }}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00006}00006 \textcolor{comment}{ * @details     This file provides the necessary definitions and functions for configuring }}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00007}00007 \textcolor{comment}{ *              and controlling GPIO pins on the STM32F10RB microcontroller.}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00008}00008 \textcolor{comment}{ * }}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00009}00009 \textcolor{comment}{ * @see         RM0401 Reference Manual, Page 135 for more information on GPIO configuration.}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00010}00010 \textcolor{comment}{ * }}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00011}00011 \textcolor{comment}{ * @author      Hiram Montejano Gómez}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00012}00012 \textcolor{comment}{ * }}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00013}00013 \textcolor{comment}{ * @date        Last Updated:   15/07/2023}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00014}00014 \textcolor{comment}{ * }}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00015}00015 \textcolor{comment}{ * @todo        Functions for Analog or Afsel}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00016}00016 \textcolor{comment}{ * @todo        Output type configuration}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00017}00017 \textcolor{comment}{ * @todo        Output speed configuration}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00018}00018 \textcolor{comment}{ * }}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00019}00019 \textcolor{comment}{ * @copyright   This file is part of the "{}STM32F10RB Microcontroller Applications"{} project.}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00020}00020 \textcolor{comment}{ * }}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00021}00021 \textcolor{comment}{ *              Every file is free software: you can redistribute it and/or modify}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00022}00022 \textcolor{comment}{ *              it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00023}00023 \textcolor{comment}{ *              the Free Software Foundation, either version 3 of the License, or}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00024}00024 \textcolor{comment}{ *              (at your option) any later version.}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00025}00025 \textcolor{comment}{ * }}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00026}00026 \textcolor{comment}{ *              These files are distributed in the hope that they will be useful,}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00027}00027 \textcolor{comment}{ *              but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00028}00028 \textcolor{comment}{ *              MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00029}00029 \textcolor{comment}{ *              GNU General Public License for more details.}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00030}00030 \textcolor{comment}{ * }}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00031}00031 \textcolor{comment}{ *              You should have received a copy of the GNU General Public License}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00032}00032 \textcolor{comment}{ *              along with the "{}STM32F10RB Microcontroller Applications"{} project. If not, }}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00033}00033 \textcolor{comment}{ *              see <http://www.gnu.org/licenses/>.}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00034}00034 \textcolor{comment}{ */}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00035}00035 }
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00036}00036 \textcolor{preprocessor}{\#ifndef GPIO\_H}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00037}00037 \textcolor{preprocessor}{\#define GPIO\_H}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00038}00038 }
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00039}00039 }
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00040}00040 \textcolor{preprocessor}{\#include "{}stm32f410rb.h"{}}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00041}00041 }
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00042}00042 }
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00043}00043 \textcolor{comment}{/***************************************************************************************************}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00044}00044 \textcolor{comment}{ * @brief       GPIO mode options.}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00045}00045 \textcolor{comment}{ *}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00046}00046 \textcolor{comment}{ * @details     This enumeration defines the available modes for GPIO pins.}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00047}00047 \textcolor{comment}{ *              The modes determine the general purpose and behavior of the pins.}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00048}00048 \textcolor{comment}{ */}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00049}00049 \textcolor{keyword}{typedef} \textcolor{keyword}{enum} \{}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00050}00050   kModeInput,          }
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00051}00051   kModeOutput,         }
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00052}00052   kModeAlternate,      }
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00053}00053   kModeAnalog          }
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00054}00054 \} GpioMode;}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00055}00055 }
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00056}00056 }
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00057}00057 \textcolor{comment}{/***************************************************************************************************}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00058}00058 \textcolor{comment}{ * @brief       GPIO output type options.}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00059}00059 \textcolor{comment}{ *}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00060}00060 \textcolor{comment}{ * @details     This enumeration defines the available output types for GPIO pins.}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00061}00061 \textcolor{comment}{ *              The output types determine the behavior of the pins when driving an output signal.}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00062}00062 \textcolor{comment}{ */}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00063}00063 \textcolor{keyword}{typedef} \textcolor{keyword}{enum} \{}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00064}00064   kOtypePushPull,      }
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00065}00065   kOtypeOpenDrain      }
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00066}00066 \} GpioOutputType;}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00067}00067 }
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00068}00068 }
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00069}00069 \textcolor{comment}{/***************************************************************************************************}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00070}00070 \textcolor{comment}{ * @brief       GPIO output speed options.}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00071}00071 \textcolor{comment}{ *}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00072}00072 \textcolor{comment}{ * @details     This enumeration defines the available output speed options for GPIO pins.}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00073}00073 \textcolor{comment}{ *              The output speed determines the slew rate of the pins when driving an output signal.}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00074}00074 \textcolor{comment}{ */}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00075}00075 \textcolor{keyword}{typedef} \textcolor{keyword}{enum} \{}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00076}00076   kSpeedLow,           }
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00077}00077   kSpeedMedium,        }
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00078}00078   kSpeedHigh,          }
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00079}00079   kSpeedVeryHigh       }
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00080}00080 \} GpioOutputSpeed;}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00081}00081 }
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00082}00082 }
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00083}00083 \textcolor{comment}{/***************************************************************************************************}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00084}00084 \textcolor{comment}{ * @brief       GPIO pull type options.}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00085}00085 \textcolor{comment}{ *}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00086}00086 \textcolor{comment}{ * @details     This enumeration defines the available pull types for GPIO pins.}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00087}00087 \textcolor{comment}{ *              The pull types determine the internal resistor configuration of the pins.}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00088}00088 \textcolor{comment}{ */}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00089}00089 \textcolor{keyword}{typedef} \textcolor{keyword}{enum} \{}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00090}00090   kPullNone,           }
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00091}00091   kPullUp,             }
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00092}00092   kPullDown            }
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00093}00093 \} GpioPullType;}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00094}00094 }
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00095}00095 }
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00096}00096 \textcolor{comment}{/***************************************************************************************************}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00097}00097 \textcolor{comment}{ * @brief       Configures the mode of a GPIO pin.}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00098}00098 \textcolor{comment}{ * }}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00099}00099 \textcolor{comment}{ * @param       port Pointer to the GPIO port. (Use GPIOx definitios from stm32f410rb.h)}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00100}00100 \textcolor{comment}{ * @param       pin The pin number to configure. (0 -\/ 15)}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00101}00101 \textcolor{comment}{ * @param       mode The mode to set for the pin. (from GpioMode enum)}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00102}00102 \textcolor{comment}{ * }}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00103}00103 \textcolor{comment}{ * @return      0 if successful, otherwise returns 1 and sets variables errnum and errcode.}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00104}00104 \textcolor{comment}{ */}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00105}00105 \textcolor{keywordtype}{int} gpioPinSetup(\mbox{\hyperlink{structGPIO__Type}{GPIO\_Type}} *port, uint8\_t pin, GpioMode mode);}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00106}00106 }
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00107}00107 }
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00108}00108 \textcolor{comment}{/***************************************************************************************************}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00109}00109 \textcolor{comment}{ * @brief       Configures the pull type of a GPIO pin.}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00110}00110 \textcolor{comment}{ *}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00111}00111 \textcolor{comment}{ * @param       port Pointer to the GPIO port. (Use GPIOx definitios from stm32f410rb.h)}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00112}00112 \textcolor{comment}{ * @param       pin The pin number to configure. (0 -\/ 15)}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00113}00113 \textcolor{comment}{ * @param       pull\_type The pull type to set for the pin. (from GpioPullType enum)}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00114}00114 \textcolor{comment}{ * }}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00115}00115 \textcolor{comment}{ * @return      0 if successful, otherwise returns 1 and sets variables errnum and errcode.}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00116}00116 \textcolor{comment}{ */}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00117}00117 \textcolor{keywordtype}{int} gpioPinPullTypeSetup(\mbox{\hyperlink{structGPIO__Type}{GPIO\_Type}} *port, uint8\_t pin, GpioPullType pull\_type);}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00118}00118 }
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00119}00119 }
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00120}00120 \textcolor{comment}{/***************************************************************************************************}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00121}00121 \textcolor{comment}{ * @brief       Reads the value of a GPIO pin.}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00122}00122 \textcolor{comment}{ *}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00123}00123 \textcolor{comment}{ * @param       port Pointer to the GPIO port. (Use GPIOx definitios from stm32f410rb.h)}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00124}00124 \textcolor{comment}{ * @param       pin The pin number to read from. (0 -\/ 15)}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00125}00125 \textcolor{comment}{ * @param       read Pointer to store the read value.}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00126}00126 \textcolor{comment}{ * }}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00127}00127 \textcolor{comment}{ * @return      0 if successful, otherwise returns 1 and sets variables errnum and errcode.}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00128}00128 \textcolor{comment}{ */}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00129}00129 \textcolor{keywordtype}{int} gpioPinRead(\mbox{\hyperlink{structGPIO__Type}{GPIO\_Type}} *port, uint8\_t pin, uint8\_t *read);}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00130}00130 }
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00131}00131 }
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00132}00132 \textcolor{comment}{/***************************************************************************************************}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00133}00133 \textcolor{comment}{ * @brief       Writes a value to a GPIO pin.}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00134}00134 \textcolor{comment}{ *}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00135}00135 \textcolor{comment}{ * @param       port Pointer to the GPIO port. (Use GPIOx definitios from stm32f410rb.h)}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00136}00136 \textcolor{comment}{ * @param       pin The pin number to write to. (0 -\/ 15)}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00137}00137 \textcolor{comment}{ * @param       value The value to write. (0 or 1)}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00138}00138 \textcolor{comment}{ * @param       old\_value Pointer to store the previous pin value.}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00139}00139 \textcolor{comment}{ * }}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00140}00140 \textcolor{comment}{ * @return      0 if successful, otherwise returns 1 and sets variables errnum and errcode.}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00141}00141 \textcolor{comment}{ */}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00142}00142 \textcolor{keywordtype}{int} gpioPinWrite(\mbox{\hyperlink{structGPIO__Type}{GPIO\_Type}} *port, uint8\_t pin, uint8\_t value, uint8\_t *old\_value);}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00143}00143 }
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00144}00144 }
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00145}00145 \textcolor{comment}{/***************************************************************************************************}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00146}00146 \textcolor{comment}{ * @brief       Toggles the value of a GPIO pin.}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00147}00147 \textcolor{comment}{ *}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00148}00148 \textcolor{comment}{ * @param       port Pointer to the GPIO port. (Use GPIOx definitios from stm32f410rb.h)}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00149}00149 \textcolor{comment}{ * @param       pin The pin number to toggle. (0 -\/ 15)}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00150}00150 \textcolor{comment}{ * @param       old\_value Pointer to store the previous pin value.}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00151}00151 \textcolor{comment}{ * }}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00152}00152 \textcolor{comment}{ * @return      0 if successful, otherwise returns 1 and sets variables errnum and errcode.}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00153}00153 \textcolor{comment}{ */}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00154}00154 \textcolor{keywordtype}{int} gpioPinToggle(\mbox{\hyperlink{structGPIO__Type}{GPIO\_Type}} *port, uint8\_t pin, uint8\_t *old\_value);}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00155}00155 }
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00156}00156 }
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00157}00157 \textcolor{comment}{/***************************************************************************************************}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00158}00158 \textcolor{comment}{ * @brief       Sets up an interrupt for a GPIO pin.}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00159}00159 \textcolor{comment}{ *}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00160}00160 \textcolor{comment}{ * @param       port Pointer to the GPIO port. (Use GPIOx definitios from stm32f410rb.h)}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00161}00161 \textcolor{comment}{ * @param       pin The pin number to set up the interrupt for. (0 -\/ 15)}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00162}00162 \textcolor{comment}{ * @param       rising\_edge Set to 1 for rising edge trigger, 0 for falling edge trigger. (0 or 1)}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00163}00163 \textcolor{comment}{ * @param       priority The interrupt priority level (between 7 and 15).}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00164}00164 \textcolor{comment}{ * @param       handler Pointer to the interrupt handler function.}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00165}00165 \textcolor{comment}{ * }}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00166}00166 \textcolor{comment}{ * @return      0 if successful, otherwise returns 1 and sets variables errnum and errcode.}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00167}00167 \textcolor{comment}{ */}}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00168}00168 \textcolor{keywordtype}{int} gpioInterruptSet(\mbox{\hyperlink{structGPIO__Type}{GPIO\_Type}} *port, uint8\_t pin, uint8\_t rising\_edge, uint8\_t priority, \textcolor{keywordtype}{void} (*handler)(\textcolor{keywordtype}{void}));}
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00169}00169 }
+\DoxyCodeLine{\Hypertarget{gpio_8h_source_l00170}00170 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}
