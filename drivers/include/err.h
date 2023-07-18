@@ -1,5 +1,5 @@
 /***************************************************************************************************
- * @file        err.c
+ * @file        err.h
  * 
  * @brief       Error Number and Error Code
  * 
@@ -36,7 +36,47 @@
 
 
 #include <stdint.h>
-#include "err.h"
 
-__attribute__((section(".err"))) uint16_t errnum = 0;
-__attribute__((section(".err"))) uint16_t errcode = 0;
+
+/**
+ * @defgroup    errors err.h
+ */
+
+
+/**
+ * @defgroup    errvar Error Variables
+ * @ingroup     errors
+ */
+
+/***************************************************************************************************
+ * @var         uint16_t errnum
+ * 
+ * @brief       Error number variable.
+ *
+ * @details     This variable holds the error number indicating the type of error that occurred.
+ *              It is used to provide error information or status in the application.
+ *              The value of `errnum` can be accessed and modified from different parts of the code.
+ *              Refer to the documentation or code references for specific usage information.
+ *
+ * @note        This variable is located in the ".err" section.
+ * 
+ * @ingroup     errvar
+ */
+uint16_t errnum;
+
+
+/***************************************************************************************************
+ * @var         uint16_t errcode
+ * 
+ * @brief       Error code variable.
+ *
+ * @details     This variable holds the error code providing additional information about the error.
+ *              It complements the `errnum` variable by providing more specific error details.
+ *              The value of `errcode` can be accessed and modified from different parts of the code.
+ *              Refer to the documentation or code references for specific usage information.
+ *
+ * @note        This variable is located in the ".err" section.
+ * 
+ * @ingroup     errvar
+ */
+uint16_t errcode;

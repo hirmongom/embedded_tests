@@ -10,7 +10,7 @@
  * 
  * @author      Hiram Montejano Gómez
  * 
- * @date        Last Updated:   15/07/2023
+ * @date        Last Updated:   18/07/2023
  * 
  * @copyright   This file is part of the "STM32F10RB Microcontroller Applications" project.
  * 
@@ -33,10 +33,7 @@
 #include <stdint.h>
 #include "stm32f410rb.h"
 #include "gpio.h"
-
-
-extern uint16_t errnum;
-extern uint16_t errcode;
+#include "err.h"
 
 
 /***************************************************************************************************
