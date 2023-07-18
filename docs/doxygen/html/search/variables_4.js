@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['emr_0',['EMR',['../d4/dc4/structEXTI__Type.html#a5f6a744c608cfb18d1268a6ee78d23f5',1,'EXTI_Type']]],
-  ['exticr_1',['EXTICR',['../d3/d0b/structSYSCFG__Type.html#a09c01997903fe88bb7c7e1e681ef2b04',1,'SYSCFG_Type']]]
+  ['dckcfgr_0',['DCKCFGR',['../d1/dc5/structRCC__Type.html#a8a8441e23dab77d949e089ed2edc573a',1,'RCC_Type']]],
+  ['dckcfgr2_1',['DCKCFGR2',['../d1/dc5/structRCC__Type.html#aa48d2ddd5f9ee0e60f111c4e5419ab66',1,'RCC_Type']]]
 ];

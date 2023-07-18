@@ -1,0 +1,160 @@
+\hypertarget{stm32f410rb_8h}{}\doxysection{drivers/include/stm32f410rb.h File Reference}
+\label{stm32f410rb_8h}\index{drivers/include/stm32f410rb.h@{drivers/include/stm32f410rb.h}}
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+Include dependency graph for stm32f410rb.\+h\+:
+% FIG 0
+This graph shows which files directly or indirectly include this file\+:
+% FIG 1
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structSYSCFG__Type}{SYSCFG\+\_\+\+Type}}
+\item 
+struct \mbox{\hyperlink{structEXTI__Type}{EXTI\+\_\+\+Type}}
+\item 
+struct \mbox{\hyperlink{structGPIO__Type}{GPIO\+\_\+\+Type}}
+\item 
+struct \mbox{\hyperlink{structRCC__Type}{RCC\+\_\+\+Type}}
+\item 
+struct \mbox{\hyperlink{structNVIC__Type}{NVIC\+\_\+\+Type}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{group__ACESS__MODIFIERS_gaf63697ed9952cc71e1225efe205f6cd3}{\+\_\+\+\_\+I}}~volatile const
+\begin{DoxyCompactList}\small\item\em Defines \textquotesingle{}read only\textquotesingle{} permissions. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{group__ACESS__MODIFIERS_ga7e25d9380f9ef903923964322e71f2f6}{\+\_\+\+\_\+O}}~volatile
+\begin{DoxyCompactList}\small\item\em Defines \textquotesingle{}wwrite only\textquotesingle{} permissions. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{group__ACESS__MODIFIERS_gaec43007d9998a0a0e01faede4133d6be}{\+\_\+\+\_\+\+IO}}~volatile
+\begin{DoxyCompactList}\small\item\em Defines \textquotesingle{}read/write\textquotesingle{} permissions. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{stm32f410rb_8h_a178af247859ffadcac6dc6ca09105a19}{SYSCFG\+\_\+\+BASE\+\_\+\+ADDR}}~(0x40013800\+UL)
+\item 
+\#define \mbox{\hyperlink{stm32f410rb_8h_aa34dbd8b8960cf53983854f03af4cb5a}{EXTI\+\_\+\+BASE\+\_\+\+ADDR}}~(0x40013\+C00\+UL)
+\item 
+\#define \mbox{\hyperlink{stm32f410rb_8h_a312c4a0ecb7f7df814b6dc660acff0e1}{GPIOA\+\_\+\+BASE\+\_\+\+ADDR}}~(0x40020000\+UL)
+\item 
+\#define \mbox{\hyperlink{stm32f410rb_8h_a93393583ac13481b25732f754b300efd}{GPIOB\+\_\+\+BASE\+\_\+\+ADDR}}~(0x40020400\+UL)
+\item 
+\#define \mbox{\hyperlink{stm32f410rb_8h_a92e9aec75c825d01a0d4c5ebe9a09e38}{GPIOC\+\_\+\+BASE\+\_\+\+ADDR}}~(0x40020800\+UL)
+\item 
+\#define \mbox{\hyperlink{stm32f410rb_8h_a03ec8a869ee6f256c882978a71fa5ffa}{GPIOH\+\_\+\+BASE\+\_\+\+ADDR}}~(0x40021\+C00\+UL)
+\item 
+\#define \mbox{\hyperlink{stm32f410rb_8h_aa918567a93fe95a5e24ba45dcbb89afa}{RCC\+\_\+\+BASE\+\_\+\+ADDR}}~(0x40023800\+UL)
+\item 
+\#define \mbox{\hyperlink{stm32f410rb_8h_a425ec323753362f97c4b9ad5d31ad2c9}{NVIC\+\_\+\+BASE\+\_\+\+ADDR}}~(0x\+E000\+E100\+UL)
+\item 
+\#define \mbox{\hyperlink{stm32f410rb_8h_a3c833fe1c486cb62250ccbca32899cb8}{SYSCFG}}~((\mbox{\hyperlink{structSYSCFG__Type}{SYSCFG\+\_\+\+Type}}$\ast$) \mbox{\hyperlink{stm32f410rb_8h_a178af247859ffadcac6dc6ca09105a19}{SYSCFG\+\_\+\+BASE\+\_\+\+ADDR}})
+\item 
+\#define \mbox{\hyperlink{stm32f410rb_8h_a9189e770cd9b63dadd36683eb9843cac}{EXTI}}~((\mbox{\hyperlink{structEXTI__Type}{EXTI\+\_\+\+Type}}$\ast$)   \mbox{\hyperlink{stm32f410rb_8h_aa34dbd8b8960cf53983854f03af4cb5a}{EXTI\+\_\+\+BASE\+\_\+\+ADDR}})
+\item 
+\#define \mbox{\hyperlink{stm32f410rb_8h_ac485358099728ddae050db37924dd6b7}{GPIOA}}~((\mbox{\hyperlink{structGPIO__Type}{GPIO\+\_\+\+Type}}$\ast$)   \mbox{\hyperlink{stm32f410rb_8h_a312c4a0ecb7f7df814b6dc660acff0e1}{GPIOA\+\_\+\+BASE\+\_\+\+ADDR}})
+\item 
+\#define \mbox{\hyperlink{stm32f410rb_8h_a68b66ac73be4c836db878a42e1fea3cd}{GPIOB}}~((\mbox{\hyperlink{structGPIO__Type}{GPIO\+\_\+\+Type}}$\ast$)   \mbox{\hyperlink{stm32f410rb_8h_a93393583ac13481b25732f754b300efd}{GPIOB\+\_\+\+BASE\+\_\+\+ADDR}})
+\item 
+\#define \mbox{\hyperlink{stm32f410rb_8h_a2dca03332d620196ba943bc2346eaa08}{GPIOC}}~((\mbox{\hyperlink{structGPIO__Type}{GPIO\+\_\+\+Type}}$\ast$)   \mbox{\hyperlink{stm32f410rb_8h_a92e9aec75c825d01a0d4c5ebe9a09e38}{GPIOC\+\_\+\+BASE\+\_\+\+ADDR}})
+\item 
+\#define \mbox{\hyperlink{stm32f410rb_8h_adeacbb43ae86c879945afe98c679b285}{GPIOH}}~((\mbox{\hyperlink{structGPIO__Type}{GPIO\+\_\+\+Type}}$\ast$)   \mbox{\hyperlink{stm32f410rb_8h_a03ec8a869ee6f256c882978a71fa5ffa}{GPIOH\+\_\+\+BASE\+\_\+\+ADDR}})
+\item 
+\#define \mbox{\hyperlink{stm32f410rb_8h_a74944438a086975793d26ae48d5882d4}{RCC}}~((\mbox{\hyperlink{structRCC__Type}{RCC\+\_\+\+Type}}$\ast$)    \mbox{\hyperlink{stm32f410rb_8h_aa918567a93fe95a5e24ba45dcbb89afa}{RCC\+\_\+\+BASE\+\_\+\+ADDR}})
+\item 
+\#define \mbox{\hyperlink{stm32f410rb_8h_ac8e97e8ce56ae9f57da1363a937f8a17}{NVIC}}~((\mbox{\hyperlink{structNVIC__Type}{NVIC\+\_\+\+Type}}$\ast$)   \mbox{\hyperlink{stm32f410rb_8h_a425ec323753362f97c4b9ad5d31ad2c9}{NVIC\+\_\+\+BASE\+\_\+\+ADDR}})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{stm32f410rb_8h_a9189e770cd9b63dadd36683eb9843cac}\label{stm32f410rb_8h_a9189e770cd9b63dadd36683eb9843cac}} 
+\index{stm32f410rb.h@{stm32f410rb.h}!EXTI@{EXTI}}
+\index{EXTI@{EXTI}!stm32f410rb.h@{stm32f410rb.h}}
+\doxysubsubsection{\texorpdfstring{EXTI}{EXTI}}
+{\footnotesize\ttfamily \#define EXTI~((\mbox{\hyperlink{structEXTI__Type}{EXTI\+\_\+\+Type}}$\ast$)   \mbox{\hyperlink{stm32f410rb_8h_aa34dbd8b8960cf53983854f03af4cb5a}{EXTI\+\_\+\+BASE\+\_\+\+ADDR}})}
+
+\mbox{\Hypertarget{stm32f410rb_8h_aa34dbd8b8960cf53983854f03af4cb5a}\label{stm32f410rb_8h_aa34dbd8b8960cf53983854f03af4cb5a}} 
+\index{stm32f410rb.h@{stm32f410rb.h}!EXTI\_BASE\_ADDR@{EXTI\_BASE\_ADDR}}
+\index{EXTI\_BASE\_ADDR@{EXTI\_BASE\_ADDR}!stm32f410rb.h@{stm32f410rb.h}}
+\doxysubsubsection{\texorpdfstring{EXTI\_BASE\_ADDR}{EXTI\_BASE\_ADDR}}
+{\footnotesize\ttfamily \#define EXTI\+\_\+\+BASE\+\_\+\+ADDR~(0x40013\+C00\+UL)}
+
+\mbox{\Hypertarget{stm32f410rb_8h_ac485358099728ddae050db37924dd6b7}\label{stm32f410rb_8h_ac485358099728ddae050db37924dd6b7}} 
+\index{stm32f410rb.h@{stm32f410rb.h}!GPIOA@{GPIOA}}
+\index{GPIOA@{GPIOA}!stm32f410rb.h@{stm32f410rb.h}}
+\doxysubsubsection{\texorpdfstring{GPIOA}{GPIOA}}
+{\footnotesize\ttfamily \#define GPIOA~((\mbox{\hyperlink{structGPIO__Type}{GPIO\+\_\+\+Type}}$\ast$)   \mbox{\hyperlink{stm32f410rb_8h_a312c4a0ecb7f7df814b6dc660acff0e1}{GPIOA\+\_\+\+BASE\+\_\+\+ADDR}})}
+
+\mbox{\Hypertarget{stm32f410rb_8h_a312c4a0ecb7f7df814b6dc660acff0e1}\label{stm32f410rb_8h_a312c4a0ecb7f7df814b6dc660acff0e1}} 
+\index{stm32f410rb.h@{stm32f410rb.h}!GPIOA\_BASE\_ADDR@{GPIOA\_BASE\_ADDR}}
+\index{GPIOA\_BASE\_ADDR@{GPIOA\_BASE\_ADDR}!stm32f410rb.h@{stm32f410rb.h}}
+\doxysubsubsection{\texorpdfstring{GPIOA\_BASE\_ADDR}{GPIOA\_BASE\_ADDR}}
+{\footnotesize\ttfamily \#define GPIOA\+\_\+\+BASE\+\_\+\+ADDR~(0x40020000\+UL)}
+
+\mbox{\Hypertarget{stm32f410rb_8h_a68b66ac73be4c836db878a42e1fea3cd}\label{stm32f410rb_8h_a68b66ac73be4c836db878a42e1fea3cd}} 
+\index{stm32f410rb.h@{stm32f410rb.h}!GPIOB@{GPIOB}}
+\index{GPIOB@{GPIOB}!stm32f410rb.h@{stm32f410rb.h}}
+\doxysubsubsection{\texorpdfstring{GPIOB}{GPIOB}}
+{\footnotesize\ttfamily \#define GPIOB~((\mbox{\hyperlink{structGPIO__Type}{GPIO\+\_\+\+Type}}$\ast$)   \mbox{\hyperlink{stm32f410rb_8h_a93393583ac13481b25732f754b300efd}{GPIOB\+\_\+\+BASE\+\_\+\+ADDR}})}
+
+\mbox{\Hypertarget{stm32f410rb_8h_a93393583ac13481b25732f754b300efd}\label{stm32f410rb_8h_a93393583ac13481b25732f754b300efd}} 
+\index{stm32f410rb.h@{stm32f410rb.h}!GPIOB\_BASE\_ADDR@{GPIOB\_BASE\_ADDR}}
+\index{GPIOB\_BASE\_ADDR@{GPIOB\_BASE\_ADDR}!stm32f410rb.h@{stm32f410rb.h}}
+\doxysubsubsection{\texorpdfstring{GPIOB\_BASE\_ADDR}{GPIOB\_BASE\_ADDR}}
+{\footnotesize\ttfamily \#define GPIOB\+\_\+\+BASE\+\_\+\+ADDR~(0x40020400\+UL)}
+
+\mbox{\Hypertarget{stm32f410rb_8h_a2dca03332d620196ba943bc2346eaa08}\label{stm32f410rb_8h_a2dca03332d620196ba943bc2346eaa08}} 
+\index{stm32f410rb.h@{stm32f410rb.h}!GPIOC@{GPIOC}}
+\index{GPIOC@{GPIOC}!stm32f410rb.h@{stm32f410rb.h}}
+\doxysubsubsection{\texorpdfstring{GPIOC}{GPIOC}}
+{\footnotesize\ttfamily \#define GPIOC~((\mbox{\hyperlink{structGPIO__Type}{GPIO\+\_\+\+Type}}$\ast$)   \mbox{\hyperlink{stm32f410rb_8h_a92e9aec75c825d01a0d4c5ebe9a09e38}{GPIOC\+\_\+\+BASE\+\_\+\+ADDR}})}
+
+\mbox{\Hypertarget{stm32f410rb_8h_a92e9aec75c825d01a0d4c5ebe9a09e38}\label{stm32f410rb_8h_a92e9aec75c825d01a0d4c5ebe9a09e38}} 
+\index{stm32f410rb.h@{stm32f410rb.h}!GPIOC\_BASE\_ADDR@{GPIOC\_BASE\_ADDR}}
+\index{GPIOC\_BASE\_ADDR@{GPIOC\_BASE\_ADDR}!stm32f410rb.h@{stm32f410rb.h}}
+\doxysubsubsection{\texorpdfstring{GPIOC\_BASE\_ADDR}{GPIOC\_BASE\_ADDR}}
+{\footnotesize\ttfamily \#define GPIOC\+\_\+\+BASE\+\_\+\+ADDR~(0x40020800\+UL)}
+
+\mbox{\Hypertarget{stm32f410rb_8h_adeacbb43ae86c879945afe98c679b285}\label{stm32f410rb_8h_adeacbb43ae86c879945afe98c679b285}} 
+\index{stm32f410rb.h@{stm32f410rb.h}!GPIOH@{GPIOH}}
+\index{GPIOH@{GPIOH}!stm32f410rb.h@{stm32f410rb.h}}
+\doxysubsubsection{\texorpdfstring{GPIOH}{GPIOH}}
+{\footnotesize\ttfamily \#define GPIOH~((\mbox{\hyperlink{structGPIO__Type}{GPIO\+\_\+\+Type}}$\ast$)   \mbox{\hyperlink{stm32f410rb_8h_a03ec8a869ee6f256c882978a71fa5ffa}{GPIOH\+\_\+\+BASE\+\_\+\+ADDR}})}
+
+\mbox{\Hypertarget{stm32f410rb_8h_a03ec8a869ee6f256c882978a71fa5ffa}\label{stm32f410rb_8h_a03ec8a869ee6f256c882978a71fa5ffa}} 
+\index{stm32f410rb.h@{stm32f410rb.h}!GPIOH\_BASE\_ADDR@{GPIOH\_BASE\_ADDR}}
+\index{GPIOH\_BASE\_ADDR@{GPIOH\_BASE\_ADDR}!stm32f410rb.h@{stm32f410rb.h}}
+\doxysubsubsection{\texorpdfstring{GPIOH\_BASE\_ADDR}{GPIOH\_BASE\_ADDR}}
+{\footnotesize\ttfamily \#define GPIOH\+\_\+\+BASE\+\_\+\+ADDR~(0x40021\+C00\+UL)}
+
+\mbox{\Hypertarget{stm32f410rb_8h_ac8e97e8ce56ae9f57da1363a937f8a17}\label{stm32f410rb_8h_ac8e97e8ce56ae9f57da1363a937f8a17}} 
+\index{stm32f410rb.h@{stm32f410rb.h}!NVIC@{NVIC}}
+\index{NVIC@{NVIC}!stm32f410rb.h@{stm32f410rb.h}}
+\doxysubsubsection{\texorpdfstring{NVIC}{NVIC}}
+{\footnotesize\ttfamily \#define NVIC~((\mbox{\hyperlink{structNVIC__Type}{NVIC\+\_\+\+Type}}$\ast$)   \mbox{\hyperlink{stm32f410rb_8h_a425ec323753362f97c4b9ad5d31ad2c9}{NVIC\+\_\+\+BASE\+\_\+\+ADDR}})}
+
+\mbox{\Hypertarget{stm32f410rb_8h_a425ec323753362f97c4b9ad5d31ad2c9}\label{stm32f410rb_8h_a425ec323753362f97c4b9ad5d31ad2c9}} 
+\index{stm32f410rb.h@{stm32f410rb.h}!NVIC\_BASE\_ADDR@{NVIC\_BASE\_ADDR}}
+\index{NVIC\_BASE\_ADDR@{NVIC\_BASE\_ADDR}!stm32f410rb.h@{stm32f410rb.h}}
+\doxysubsubsection{\texorpdfstring{NVIC\_BASE\_ADDR}{NVIC\_BASE\_ADDR}}
+{\footnotesize\ttfamily \#define NVIC\+\_\+\+BASE\+\_\+\+ADDR~(0x\+E000\+E100\+UL)}
+
+\mbox{\Hypertarget{stm32f410rb_8h_a74944438a086975793d26ae48d5882d4}\label{stm32f410rb_8h_a74944438a086975793d26ae48d5882d4}} 
+\index{stm32f410rb.h@{stm32f410rb.h}!RCC@{RCC}}
+\index{RCC@{RCC}!stm32f410rb.h@{stm32f410rb.h}}
+\doxysubsubsection{\texorpdfstring{RCC}{RCC}}
+{\footnotesize\ttfamily \#define RCC~((\mbox{\hyperlink{structRCC__Type}{RCC\+\_\+\+Type}}$\ast$)    \mbox{\hyperlink{stm32f410rb_8h_aa918567a93fe95a5e24ba45dcbb89afa}{RCC\+\_\+\+BASE\+\_\+\+ADDR}})}
+
+\mbox{\Hypertarget{stm32f410rb_8h_aa918567a93fe95a5e24ba45dcbb89afa}\label{stm32f410rb_8h_aa918567a93fe95a5e24ba45dcbb89afa}} 
+\index{stm32f410rb.h@{stm32f410rb.h}!RCC\_BASE\_ADDR@{RCC\_BASE\_ADDR}}
+\index{RCC\_BASE\_ADDR@{RCC\_BASE\_ADDR}!stm32f410rb.h@{stm32f410rb.h}}
+\doxysubsubsection{\texorpdfstring{RCC\_BASE\_ADDR}{RCC\_BASE\_ADDR}}
+{\footnotesize\ttfamily \#define RCC\+\_\+\+BASE\+\_\+\+ADDR~(0x40023800\+UL)}
+
+\mbox{\Hypertarget{stm32f410rb_8h_a3c833fe1c486cb62250ccbca32899cb8}\label{stm32f410rb_8h_a3c833fe1c486cb62250ccbca32899cb8}} 
+\index{stm32f410rb.h@{stm32f410rb.h}!SYSCFG@{SYSCFG}}
+\index{SYSCFG@{SYSCFG}!stm32f410rb.h@{stm32f410rb.h}}
+\doxysubsubsection{\texorpdfstring{SYSCFG}{SYSCFG}}
+{\footnotesize\ttfamily \#define SYSCFG~((\mbox{\hyperlink{structSYSCFG__Type}{SYSCFG\+\_\+\+Type}}$\ast$) \mbox{\hyperlink{stm32f410rb_8h_a178af247859ffadcac6dc6ca09105a19}{SYSCFG\+\_\+\+BASE\+\_\+\+ADDR}})}
+
+\mbox{\Hypertarget{stm32f410rb_8h_a178af247859ffadcac6dc6ca09105a19}\label{stm32f410rb_8h_a178af247859ffadcac6dc6ca09105a19}} 
+\index{stm32f410rb.h@{stm32f410rb.h}!SYSCFG\_BASE\_ADDR@{SYSCFG\_BASE\_ADDR}}
+\index{SYSCFG\_BASE\_ADDR@{SYSCFG\_BASE\_ADDR}!stm32f410rb.h@{stm32f410rb.h}}
+\doxysubsubsection{\texorpdfstring{SYSCFG\_BASE\_ADDR}{SYSCFG\_BASE\_ADDR}}
+{\footnotesize\ttfamily \#define SYSCFG\+\_\+\+BASE\+\_\+\+ADDR~(0x40013800\+UL)}
+

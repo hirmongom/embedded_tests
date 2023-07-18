@@ -1,14 +1,8 @@
 var searchData=
 [
-  ['afrh_0',['AFRH',['../d9/d01/structGPIO__Type.html#a3615db4876c6c33b55d852c3f41da64f',1,'GPIO_Type']]],
-  ['afrl_1',['AFRL',['../d9/d01/structGPIO__Type.html#a648cae9fe60d992c978fcc042af269ee',1,'GPIO_Type']]],
-  ['ahb1enr_2',['AHB1ENR',['../d1/dc5/structRCC__Type.html#a51b6760f6731e80ec77ec7f2ba6b300b',1,'RCC_Type']]],
-  ['ahb1lpenr_3',['AHB1LPENR',['../d1/dc5/structRCC__Type.html#aceb7cc7ac7cf2959c9d6aee0d0ef6094',1,'RCC_Type']]],
-  ['ahb1rstr_4',['AHB1RSTR',['../d1/dc5/structRCC__Type.html#ab4e77adb8d35e5f4a7c9f8d921ca26ed',1,'RCC_Type']]],
-  ['apb1enr_5',['APB1ENR',['../d1/dc5/structRCC__Type.html#a4ebfbec666e5fe565a559a59f8da7fae',1,'RCC_Type']]],
-  ['apb1lpenr_6',['APB1LPENR',['../d1/dc5/structRCC__Type.html#a912caa5cea7d1adf00498fc768d37b5e',1,'RCC_Type']]],
-  ['apb1rstr_7',['APB1RSTR',['../d1/dc5/structRCC__Type.html#a703460a9346a3ae189650852052d0fc0',1,'RCC_Type']]],
-  ['apb2enr_8',['APB2ENR',['../d1/dc5/structRCC__Type.html#addce15bda7760628c4ce315c5cc1d3b1',1,'RCC_Type']]],
-  ['apb2lpenr_9',['APB2LPENR',['../d1/dc5/structRCC__Type.html#a9fe97e5ac3051da7a4bfc365cbe1e803',1,'RCC_Type']]],
-  ['apb2rstr_10',['APB2RSTR',['../d1/dc5/structRCC__Type.html#a8e400d6b14b7564ddc3bfa559f4f84da',1,'RCC_Type']]]
+  ['_5febss_0',['_ebss',['../d3/df1/startup_8c.html#a580f44faf8ff886796f2114d0de12c77',1,'startup.c']]],
+  ['_5fedata_1',['_edata',['../d3/df1/startup_8c.html#a1fc4a71c31f5b048d3b1b7b2d10684d1',1,'startup.c']]],
+  ['_5fetext_2',['_etext',['../d3/df1/startup_8c.html#abba93927cdaa2d32967cfc724f47cf8f',1,'startup.c']]],
+  ['_5fsbss_3',['_sbss',['../d3/df1/startup_8c.html#adcc3ae1cacdf95ad88f01dd26f589175',1,'startup.c']]],
+  ['_5fsdata_4',['_sdata',['../d3/df1/startup_8c.html#a61687bc10bffbfec9c6fd33bddff3094',1,'startup.c']]]
 ];

@@ -1,0 +1,38 @@
+\hypertarget{src_2main_8c}{}\doxysection{tests/blink/src/main.c File Reference}
+\label{src_2main_8c}\index{tests/blink/src/main.c@{tests/blink/src/main.c}}
+{\ttfamily \#include \char`\"{}stm32f410rb.\+h\char`\"{}}\newline
+Include dependency graph for main.\+c\+:
+% FIG 0
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{src_2main_8c_a840291bc02cba5474a4cb46a9b9566fe}{main}} (void)
+\begin{DoxyCompactList}\small\item\em Main function. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{src_2main_8c_a48031f1e66d554417a62a2163e7f6aee}{EXTI15\+\_\+10\+\_\+\+ISR}} (void)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{src_2main_8c_a48031f1e66d554417a62a2163e7f6aee}\label{src_2main_8c_a48031f1e66d554417a62a2163e7f6aee}} 
+\index{main.c@{main.c}!EXTI15\_10\_ISR@{EXTI15\_10\_ISR}}
+\index{EXTI15\_10\_ISR@{EXTI15\_10\_ISR}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{EXTI15\_10\_ISR()}{EXTI15\_10\_ISR()}}
+{\footnotesize\ttfamily void EXTI15\+\_\+10\+\_\+\+ISR (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+% FIG 1
+\mbox{\Hypertarget{src_2main_8c_a840291bc02cba5474a4cb46a9b9566fe}\label{src_2main_8c_a840291bc02cba5474a4cb46a9b9566fe}} 
+\index{main.c@{main.c}!main@{main}}
+\index{main@{main}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Main function. 
+
+This is the entry point of the program. It is called after the reset sequence and performs necessary initialization before calling the user-\/defined main function.
+
+\begin{DoxyReturn}{Returns}
+Integer value representing the exit status of the program. 
+\end{DoxyReturn}

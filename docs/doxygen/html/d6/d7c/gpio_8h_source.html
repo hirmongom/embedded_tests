@@ -5,14 +5,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.5"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>STM32F410RB Microcontroller: drivers/include/gpio.h Source File</title>
+<title>STM32F10RB Microcontroller: drivers/include/gpio.h Source File</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
-<link href="../../navtree.css" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="../../resize.js"></script>
-<script type="text/javascript" src="../../navtreedata.js"></script>
-<script type="text/javascript" src="../../navtree.js"></script>
 <link href="../../search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../search/searchdata.js"></script>
 <script type="text/javascript" src="../../search/search.js"></script>
@@ -25,9 +21,8 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">STM32F410RB Microcontroller
+   <div id="projectname">STM32F10RB Microcontroller
    </div>
-   <div id="projectbrief">Project for the STM32F410RB for my own educational purposes</div>
   </td>
  </tr>
  </tbody>
@@ -51,23 +46,6 @@ $(function() {
 /* @license-end */
 </script>
 <div id="main-nav"></div>
-</div><!-- top -->
-<div id="side-nav" class="ui-resizable side-nav-resizable">
-  <div id="nav-tree">
-    <div id="nav-tree-contents">
-      <div id="nav-sync" class="sync"></div>
-    </div>
-  </div>
-  <div id="splitbar" style="-moz-user-select:none;" 
-       class="ui-resizable-handle">
-  </div>
-</div>
-<script type="text/javascript">
-/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('d6/d7c/gpio_8h_source.html','../../'); initResizable(); });
-/* @license-end */
-</script>
-<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -89,11 +67,16 @@ $(document).ready(function(){initNavTree('d6/d7c/gpio_8h_source.html','../../');
 </div>
 </div>
 
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="../../dir_14bc92f4b96c8519b376567118ac28b3.html">drivers</a></li><li class="navelem"><a class="el" href="../../dir_ee023d43c33bfccc31aa50a48a76892b.html">include</a></li>  </ul>
+</div>
+</div><!-- top -->
 <div class="header">
   <div class="headertitle"><div class="title">gpio.h</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/***************************************************************************************************</span></div>
+<a href="../../d6/d7c/gpio_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/***************************************************************************************************</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment"> * @file        gpio.h</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment"> * </span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment"> * @brief       Header file for GPIO peripheral driver.</span></div>
@@ -132,7 +115,7 @@ $(document).ready(function(){initNavTree('d6/d7c/gpio_8h_source.html','../../');
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="preprocessor">#define GPIO_H</span></div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="preprocessor">#include &quot;stm32f410rb.h&quot;</span></div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="preprocessor">#include &quot;<a class="code" href="../../d2/d27/stm32f410rb_8h.html">stm32f410rb.h</a>&quot;</span></div>
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
 <div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="comment">/***************************************************************************************************</span></div>
@@ -141,12 +124,12 @@ $(document).ready(function(){initNavTree('d6/d7c/gpio_8h_source.html','../../');
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span><span class="comment"> * @details     This enumeration defines the available modes for GPIO pins.</span></div>
 <div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><span class="comment"> *              The modes determine the general purpose and behavior of the pins.</span></div>
 <div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span><span class="keyword">typedef</span> <span class="keyword">enum</span> {</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>  kModeInput,          </div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>  kModeOutput,         </div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>  kModeAlternate,      </div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>  kModeAnalog          </div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>} GpioMode;</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno"><a class="line" href="../../d6/d7c/gpio_8h.html#a270cd8106146c63974f6b77328b86649">   49</a></span><span class="keyword">typedef</span> <span class="keyword">enum</span> {</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno"><a class="line" href="../../d6/d7c/gpio_8h.html#a270cd8106146c63974f6b77328b86649a192cbd847f3a21c2e50af71e88cad5f1">   50</a></span>  <a class="code hl_enumvalue" href="../../d6/d7c/gpio_8h.html#a270cd8106146c63974f6b77328b86649a192cbd847f3a21c2e50af71e88cad5f1">kModeInput</a>,          </div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno"><a class="line" href="../../d6/d7c/gpio_8h.html#a270cd8106146c63974f6b77328b86649a6ed4f8cea039a2f4b46e741aa1cef338">   51</a></span>  <a class="code hl_enumvalue" href="../../d6/d7c/gpio_8h.html#a270cd8106146c63974f6b77328b86649a6ed4f8cea039a2f4b46e741aa1cef338">kModeOutput</a>,         </div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno"><a class="line" href="../../d6/d7c/gpio_8h.html#a270cd8106146c63974f6b77328b86649a3d3e88d890da4fac1306a27e27fda0e5">   52</a></span>  <a class="code hl_enumvalue" href="../../d6/d7c/gpio_8h.html#a270cd8106146c63974f6b77328b86649a3d3e88d890da4fac1306a27e27fda0e5">kModeAlternate</a>,      </div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>  <a class="code hl_enumvalue" href="../../d6/d7c/gpio_8h.html#a270cd8106146c63974f6b77328b86649a167d5c15d891c9df7abb0838eab2c5ae">kModeAnalog</a>          </div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="../../d6/d7c/gpio_8h.html#a270cd8106146c63974f6b77328b86649a167d5c15d891c9df7abb0838eab2c5ae">   54</a></span>} <a class="code hl_enumeration" href="../../d6/d7c/gpio_8h.html#a270cd8106146c63974f6b77328b86649">GpioMode</a>;</div>
 <div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
 <div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
 <div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="comment">/***************************************************************************************************</span></div>
@@ -155,10 +138,10 @@ $(document).ready(function(){initNavTree('d6/d7c/gpio_8h_source.html','../../');
 <div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span><span class="comment"> * @details     This enumeration defines the available output types for GPIO pins.</span></div>
 <div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span><span class="comment"> *              The output types determine the behavior of the pins when driving an output signal.</span></div>
 <div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span><span class="keyword">typedef</span> <span class="keyword">enum</span> {</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>  kOtypePushPull,      </div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>  kOtypeOpenDrain      </div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>} GpioOutputType;</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno"><a class="line" href="../../d6/d7c/gpio_8h.html#adda225378cc13988e92e7863f5e4f265">   63</a></span><span class="keyword">typedef</span> <span class="keyword">enum</span> {</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno"><a class="line" href="../../d6/d7c/gpio_8h.html#adda225378cc13988e92e7863f5e4f265a4da31d482fb6176782b41e12ca43dd3a">   64</a></span>  <a class="code hl_enumvalue" href="../../d6/d7c/gpio_8h.html#adda225378cc13988e92e7863f5e4f265a4da31d482fb6176782b41e12ca43dd3a">kOtypePushPull</a>,      </div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>  <a class="code hl_enumvalue" href="../../d6/d7c/gpio_8h.html#adda225378cc13988e92e7863f5e4f265a88803c8fbef8c6b886d5f98db06978e0">kOtypeOpenDrain</a>      </div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno"><a class="line" href="../../d6/d7c/gpio_8h.html#adda225378cc13988e92e7863f5e4f265a88803c8fbef8c6b886d5f98db06978e0">   66</a></span>} <a class="code hl_enumeration" href="../../d6/d7c/gpio_8h.html#adda225378cc13988e92e7863f5e4f265">GpioOutputType</a>;</div>
 <div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
 <div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
 <div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span><span class="comment">/***************************************************************************************************</span></div>
@@ -167,12 +150,12 @@ $(document).ready(function(){initNavTree('d6/d7c/gpio_8h_source.html','../../');
 <div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span><span class="comment"> * @details     This enumeration defines the available output speed options for GPIO pins.</span></div>
 <div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span><span class="comment"> *              The output speed determines the slew rate of the pins when driving an output signal.</span></div>
 <div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span><span class="keyword">typedef</span> <span class="keyword">enum</span> {</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>  kSpeedLow,           </div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>  kSpeedMedium,        </div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>  kSpeedHigh,          </div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>  kSpeedVeryHigh       </div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>} GpioOutputSpeed;</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno"><a class="line" href="../../d6/d7c/gpio_8h.html#a44d446c8456aa403f5acc5225a68f9cd">   75</a></span><span class="keyword">typedef</span> <span class="keyword">enum</span> {</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno"><a class="line" href="../../d6/d7c/gpio_8h.html#a44d446c8456aa403f5acc5225a68f9cda69adca63e05af2f5b9051df93b3ca1c5">   76</a></span>  <a class="code hl_enumvalue" href="../../d6/d7c/gpio_8h.html#a44d446c8456aa403f5acc5225a68f9cda69adca63e05af2f5b9051df93b3ca1c5">kSpeedLow</a>,           </div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno"><a class="line" href="../../d6/d7c/gpio_8h.html#a44d446c8456aa403f5acc5225a68f9cdad00df142f40430b23cb2d013941a6b71">   77</a></span>  <a class="code hl_enumvalue" href="../../d6/d7c/gpio_8h.html#a44d446c8456aa403f5acc5225a68f9cdad00df142f40430b23cb2d013941a6b71">kSpeedMedium</a>,        </div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno"><a class="line" href="../../d6/d7c/gpio_8h.html#a44d446c8456aa403f5acc5225a68f9cda382b4e2b9a7961f373481ae0437e05eb">   78</a></span>  <a class="code hl_enumvalue" href="../../d6/d7c/gpio_8h.html#a44d446c8456aa403f5acc5225a68f9cda382b4e2b9a7961f373481ae0437e05eb">kSpeedHigh</a>,          </div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>  <a class="code hl_enumvalue" href="../../d6/d7c/gpio_8h.html#a44d446c8456aa403f5acc5225a68f9cda245e06a1a7b35ed590d82b57d04347c6">kSpeedVeryHigh</a>       </div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno"><a class="line" href="../../d6/d7c/gpio_8h.html#a44d446c8456aa403f5acc5225a68f9cda245e06a1a7b35ed590d82b57d04347c6">   80</a></span>} <a class="code hl_enumeration" href="../../d6/d7c/gpio_8h.html#a44d446c8456aa403f5acc5225a68f9cd">GpioOutputSpeed</a>;</div>
 <div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span> </div>
 <div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span> </div>
 <div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span><span class="comment">/***************************************************************************************************</span></div>
@@ -181,11 +164,11 @@ $(document).ready(function(){initNavTree('d6/d7c/gpio_8h_source.html','../../');
 <div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span><span class="comment"> * @details     This enumeration defines the available pull types for GPIO pins.</span></div>
 <div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span><span class="comment"> *              The pull types determine the internal resistor configuration of the pins.</span></div>
 <div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span><span class="keyword">typedef</span> <span class="keyword">enum</span> {</div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>  kPullNone,           </div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>  kPullUp,             </div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>  kPullDown            </div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>} GpioPullType;</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno"><a class="line" href="../../d6/d7c/gpio_8h.html#abe63dafb245e051f118900fc06880e80">   89</a></span><span class="keyword">typedef</span> <span class="keyword">enum</span> {</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno"><a class="line" href="../../d6/d7c/gpio_8h.html#abe63dafb245e051f118900fc06880e80a20c7a1b50e198f5ccdf819a4c8d1758e">   90</a></span>  <a class="code hl_enumvalue" href="../../d6/d7c/gpio_8h.html#abe63dafb245e051f118900fc06880e80a20c7a1b50e198f5ccdf819a4c8d1758e">kPullNone</a>,           </div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno"><a class="line" href="../../d6/d7c/gpio_8h.html#abe63dafb245e051f118900fc06880e80aa68220a1a10e196c227c82285b429b73">   91</a></span>  <a class="code hl_enumvalue" href="../../d6/d7c/gpio_8h.html#abe63dafb245e051f118900fc06880e80aa68220a1a10e196c227c82285b429b73">kPullUp</a>,             </div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>  <a class="code hl_enumvalue" href="../../d6/d7c/gpio_8h.html#abe63dafb245e051f118900fc06880e80a98153ec2071e46f7b155db68ec70a697">kPullDown</a>            </div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno"><a class="line" href="../../d6/d7c/gpio_8h.html#abe63dafb245e051f118900fc06880e80a98153ec2071e46f7b155db68ec70a697">   93</a></span>} <a class="code hl_enumeration" href="../../d6/d7c/gpio_8h.html#abe63dafb245e051f118900fc06880e80">GpioPullType</a>;</div>
 <div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> </div>
 <div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span> </div>
 <div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span><span class="comment">/***************************************************************************************************</span></div>
@@ -197,7 +180,7 @@ $(document).ready(function(){initNavTree('d6/d7c/gpio_8h_source.html','../../');
 <div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span><span class="comment"> * </span></div>
 <div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span><span class="comment"> * @return      0 if successful, otherwise returns 1 and sets variables errnum and errcode.</span></div>
 <div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span><span class="keywordtype">int</span> gpioPinSetup(<a class="code hl_struct" href="../../d9/d01/structGPIO__Type.html">GPIO_Type</a> *port, uint8_t pin, GpioMode mode);</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d6/d7c/gpio_8h.html#a02268e6fb69300da6350cbfd7f9c876e">gpioPinSetup</a>(<a class="code hl_struct" href="../../d9/d01/structGPIO__Type.html">GPIO_Type</a> *port, uint8_t pin, <a class="code hl_enumeration" href="../../d6/d7c/gpio_8h.html#a270cd8106146c63974f6b77328b86649">GpioMode</a> mode);</div>
 <div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span> </div>
 <div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span> </div>
 <div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span><span class="comment">/***************************************************************************************************</span></div>
@@ -209,7 +192,7 @@ $(document).ready(function(){initNavTree('d6/d7c/gpio_8h_source.html','../../');
 <div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span><span class="comment"> * </span></div>
 <div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span><span class="comment"> * @return      0 if successful, otherwise returns 1 and sets variables errnum and errcode.</span></div>
 <div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span><span class="keywordtype">int</span> gpioPinPullTypeSetup(<a class="code hl_struct" href="../../d9/d01/structGPIO__Type.html">GPIO_Type</a> *port, uint8_t pin, GpioPullType pull_type);</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d6/d7c/gpio_8h.html#a5a4bb7e44c3a94f1f32ed5697944d1f5">gpioPinPullTypeSetup</a>(<a class="code hl_struct" href="../../d9/d01/structGPIO__Type.html">GPIO_Type</a> *port, uint8_t pin, <a class="code hl_enumeration" href="../../d6/d7c/gpio_8h.html#abe63dafb245e051f118900fc06880e80">GpioPullType</a> pull_type);</div>
 <div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span> </div>
 <div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span> </div>
 <div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span><span class="comment">/***************************************************************************************************</span></div>
@@ -221,7 +204,7 @@ $(document).ready(function(){initNavTree('d6/d7c/gpio_8h_source.html','../../');
 <div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span><span class="comment"> * </span></div>
 <div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span><span class="comment"> * @return      0 if successful, otherwise returns 1 and sets variables errnum and errcode.</span></div>
 <div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span><span class="keywordtype">int</span> gpioPinRead(<a class="code hl_struct" href="../../d9/d01/structGPIO__Type.html">GPIO_Type</a> *port, uint8_t pin, uint8_t *read);</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d6/d7c/gpio_8h.html#a70eb92fb6c4a7bc6a5b9d2fce59de60c">gpioPinRead</a>(<a class="code hl_struct" href="../../d9/d01/structGPIO__Type.html">GPIO_Type</a> *port, uint8_t pin, uint8_t *read);</div>
 <div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span> </div>
 <div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span> </div>
 <div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span><span class="comment">/***************************************************************************************************</span></div>
@@ -234,7 +217,7 @@ $(document).ready(function(){initNavTree('d6/d7c/gpio_8h_source.html','../../');
 <div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span><span class="comment"> * </span></div>
 <div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span><span class="comment"> * @return      0 if successful, otherwise returns 1 and sets variables errnum and errcode.</span></div>
 <div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span><span class="keywordtype">int</span> gpioPinWrite(<a class="code hl_struct" href="../../d9/d01/structGPIO__Type.html">GPIO_Type</a> *port, uint8_t pin, uint8_t value, uint8_t *old_value);</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d6/d7c/gpio_8h.html#aadb0288142a6da5bad47d65e8dbec959">gpioPinWrite</a>(<a class="code hl_struct" href="../../d9/d01/structGPIO__Type.html">GPIO_Type</a> *port, uint8_t pin, uint8_t value, uint8_t *old_value);</div>
 <div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span> </div>
 <div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span> </div>
 <div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span><span class="comment">/***************************************************************************************************</span></div>
@@ -246,7 +229,7 @@ $(document).ready(function(){initNavTree('d6/d7c/gpio_8h_source.html','../../');
 <div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span><span class="comment"> * </span></div>
 <div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span><span class="comment"> * @return      0 if successful, otherwise returns 1 and sets variables errnum and errcode.</span></div>
 <div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span><span class="keywordtype">int</span> gpioPinToggle(<a class="code hl_struct" href="../../d9/d01/structGPIO__Type.html">GPIO_Type</a> *port, uint8_t pin, uint8_t *old_value);</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d6/d7c/gpio_8h.html#a8a74d9e02fac98a33137682520f5e1df">gpioPinToggle</a>(<a class="code hl_struct" href="../../d9/d01/structGPIO__Type.html">GPIO_Type</a> *port, uint8_t pin, uint8_t *old_value);</div>
 <div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span> </div>
 <div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span> </div>
 <div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span><span class="comment">/***************************************************************************************************</span></div>
@@ -260,18 +243,38 @@ $(document).ready(function(){initNavTree('d6/d7c/gpio_8h_source.html','../../');
 <div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span><span class="comment"> * </span></div>
 <div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span><span class="comment"> * @return      0 if successful, otherwise returns 1 and sets variables errnum and errcode.</span></div>
 <div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span><span class="keywordtype">int</span> gpioInterruptSet(<a class="code hl_struct" href="../../d9/d01/structGPIO__Type.html">GPIO_Type</a> *port, uint8_t pin, uint8_t rising_edge, uint8_t priority, <span class="keywordtype">void</span> (*handler)(<span class="keywordtype">void</span>));</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d6/d7c/gpio_8h.html#a1546a934b316e36440509dfd56d7c830">gpioInterruptSet</a>(<a class="code hl_struct" href="../../d9/d01/structGPIO__Type.html">GPIO_Type</a> *port, uint8_t pin, uint8_t rising_edge, uint8_t priority, <span class="keywordtype">void</span> (*handler)(<span class="keywordtype">void</span>));</div>
 <div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span> </div>
 <div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span><span class="preprocessor">#endif</span></div>
-<div class="ttc" id="astructGPIO__Type_html"><div class="ttname"><a href="../../d9/d01/structGPIO__Type.html">GPIO_Type</a></div><div class="ttdef"><b>Definition:</b> <a href="../../d2/d27/stm32f410rb_8h_source.html#l00095">stm32f410rb.h:95</a></div></div>
+<div class="ttc" id="agpio_8h_html_a02268e6fb69300da6350cbfd7f9c876e"><div class="ttname"><a href="../../d6/d7c/gpio_8h.html#a02268e6fb69300da6350cbfd7f9c876e">gpioPinSetup</a></div><div class="ttdeci">int gpioPinSetup(GPIO_Type *port, uint8_t pin, GpioMode mode)</div><div class="ttdef"><b>Definition:</b> gpio.c:73</div></div>
+<div class="ttc" id="agpio_8h_html_a1546a934b316e36440509dfd56d7c830"><div class="ttname"><a href="../../d6/d7c/gpio_8h.html#a1546a934b316e36440509dfd56d7c830">gpioInterruptSet</a></div><div class="ttdeci">int gpioInterruptSet(GPIO_Type *port, uint8_t pin, uint8_t rising_edge, uint8_t priority, void(*handler)(void))</div><div class="ttdef"><b>Definition:</b> gpio.c:256</div></div>
+<div class="ttc" id="agpio_8h_html_a270cd8106146c63974f6b77328b86649"><div class="ttname"><a href="../../d6/d7c/gpio_8h.html#a270cd8106146c63974f6b77328b86649">GpioMode</a></div><div class="ttdeci">GpioMode</div><div class="ttdef"><b>Definition:</b> gpio.h:49</div></div>
+<div class="ttc" id="agpio_8h_html_a270cd8106146c63974f6b77328b86649a167d5c15d891c9df7abb0838eab2c5ae"><div class="ttname"><a href="../../d6/d7c/gpio_8h.html#a270cd8106146c63974f6b77328b86649a167d5c15d891c9df7abb0838eab2c5ae">kModeAnalog</a></div><div class="ttdeci">@ kModeAnalog</div><div class="ttdef"><b>Definition:</b> gpio.h:53</div></div>
+<div class="ttc" id="agpio_8h_html_a270cd8106146c63974f6b77328b86649a192cbd847f3a21c2e50af71e88cad5f1"><div class="ttname"><a href="../../d6/d7c/gpio_8h.html#a270cd8106146c63974f6b77328b86649a192cbd847f3a21c2e50af71e88cad5f1">kModeInput</a></div><div class="ttdeci">@ kModeInput</div><div class="ttdef"><b>Definition:</b> gpio.h:50</div></div>
+<div class="ttc" id="agpio_8h_html_a270cd8106146c63974f6b77328b86649a3d3e88d890da4fac1306a27e27fda0e5"><div class="ttname"><a href="../../d6/d7c/gpio_8h.html#a270cd8106146c63974f6b77328b86649a3d3e88d890da4fac1306a27e27fda0e5">kModeAlternate</a></div><div class="ttdeci">@ kModeAlternate</div><div class="ttdef"><b>Definition:</b> gpio.h:52</div></div>
+<div class="ttc" id="agpio_8h_html_a270cd8106146c63974f6b77328b86649a6ed4f8cea039a2f4b46e741aa1cef338"><div class="ttname"><a href="../../d6/d7c/gpio_8h.html#a270cd8106146c63974f6b77328b86649a6ed4f8cea039a2f4b46e741aa1cef338">kModeOutput</a></div><div class="ttdeci">@ kModeOutput</div><div class="ttdef"><b>Definition:</b> gpio.h:51</div></div>
+<div class="ttc" id="agpio_8h_html_a44d446c8456aa403f5acc5225a68f9cd"><div class="ttname"><a href="../../d6/d7c/gpio_8h.html#a44d446c8456aa403f5acc5225a68f9cd">GpioOutputSpeed</a></div><div class="ttdeci">GpioOutputSpeed</div><div class="ttdef"><b>Definition:</b> gpio.h:75</div></div>
+<div class="ttc" id="agpio_8h_html_a44d446c8456aa403f5acc5225a68f9cda245e06a1a7b35ed590d82b57d04347c6"><div class="ttname"><a href="../../d6/d7c/gpio_8h.html#a44d446c8456aa403f5acc5225a68f9cda245e06a1a7b35ed590d82b57d04347c6">kSpeedVeryHigh</a></div><div class="ttdeci">@ kSpeedVeryHigh</div><div class="ttdef"><b>Definition:</b> gpio.h:79</div></div>
+<div class="ttc" id="agpio_8h_html_a44d446c8456aa403f5acc5225a68f9cda382b4e2b9a7961f373481ae0437e05eb"><div class="ttname"><a href="../../d6/d7c/gpio_8h.html#a44d446c8456aa403f5acc5225a68f9cda382b4e2b9a7961f373481ae0437e05eb">kSpeedHigh</a></div><div class="ttdeci">@ kSpeedHigh</div><div class="ttdef"><b>Definition:</b> gpio.h:78</div></div>
+<div class="ttc" id="agpio_8h_html_a44d446c8456aa403f5acc5225a68f9cda69adca63e05af2f5b9051df93b3ca1c5"><div class="ttname"><a href="../../d6/d7c/gpio_8h.html#a44d446c8456aa403f5acc5225a68f9cda69adca63e05af2f5b9051df93b3ca1c5">kSpeedLow</a></div><div class="ttdeci">@ kSpeedLow</div><div class="ttdef"><b>Definition:</b> gpio.h:76</div></div>
+<div class="ttc" id="agpio_8h_html_a44d446c8456aa403f5acc5225a68f9cdad00df142f40430b23cb2d013941a6b71"><div class="ttname"><a href="../../d6/d7c/gpio_8h.html#a44d446c8456aa403f5acc5225a68f9cdad00df142f40430b23cb2d013941a6b71">kSpeedMedium</a></div><div class="ttdeci">@ kSpeedMedium</div><div class="ttdef"><b>Definition:</b> gpio.h:77</div></div>
+<div class="ttc" id="agpio_8h_html_a5a4bb7e44c3a94f1f32ed5697944d1f5"><div class="ttname"><a href="../../d6/d7c/gpio_8h.html#a5a4bb7e44c3a94f1f32ed5697944d1f5">gpioPinPullTypeSetup</a></div><div class="ttdeci">int gpioPinPullTypeSetup(GPIO_Type *port, uint8_t pin, GpioPullType pull_type)</div><div class="ttdef"><b>Definition:</b> gpio.c:129</div></div>
+<div class="ttc" id="agpio_8h_html_a70eb92fb6c4a7bc6a5b9d2fce59de60c"><div class="ttname"><a href="../../d6/d7c/gpio_8h.html#a70eb92fb6c4a7bc6a5b9d2fce59de60c">gpioPinRead</a></div><div class="ttdeci">int gpioPinRead(GPIO_Type *port, uint8_t pin, uint8_t *read)</div><div class="ttdef"><b>Definition:</b> gpio.c:156</div></div>
+<div class="ttc" id="agpio_8h_html_a8a74d9e02fac98a33137682520f5e1df"><div class="ttname"><a href="../../d6/d7c/gpio_8h.html#a8a74d9e02fac98a33137682520f5e1df">gpioPinToggle</a></div><div class="ttdeci">int gpioPinToggle(GPIO_Type *port, uint8_t pin, uint8_t *old_value)</div><div class="ttdef"><b>Definition:</b> gpio.c:223</div></div>
+<div class="ttc" id="agpio_8h_html_aadb0288142a6da5bad47d65e8dbec959"><div class="ttname"><a href="../../d6/d7c/gpio_8h.html#aadb0288142a6da5bad47d65e8dbec959">gpioPinWrite</a></div><div class="ttdeci">int gpioPinWrite(GPIO_Type *port, uint8_t pin, uint8_t value, uint8_t *old_value)</div><div class="ttdef"><b>Definition:</b> gpio.c:185</div></div>
+<div class="ttc" id="agpio_8h_html_abe63dafb245e051f118900fc06880e80"><div class="ttname"><a href="../../d6/d7c/gpio_8h.html#abe63dafb245e051f118900fc06880e80">GpioPullType</a></div><div class="ttdeci">GpioPullType</div><div class="ttdef"><b>Definition:</b> gpio.h:89</div></div>
+<div class="ttc" id="agpio_8h_html_abe63dafb245e051f118900fc06880e80a20c7a1b50e198f5ccdf819a4c8d1758e"><div class="ttname"><a href="../../d6/d7c/gpio_8h.html#abe63dafb245e051f118900fc06880e80a20c7a1b50e198f5ccdf819a4c8d1758e">kPullNone</a></div><div class="ttdeci">@ kPullNone</div><div class="ttdef"><b>Definition:</b> gpio.h:90</div></div>
+<div class="ttc" id="agpio_8h_html_abe63dafb245e051f118900fc06880e80a98153ec2071e46f7b155db68ec70a697"><div class="ttname"><a href="../../d6/d7c/gpio_8h.html#abe63dafb245e051f118900fc06880e80a98153ec2071e46f7b155db68ec70a697">kPullDown</a></div><div class="ttdeci">@ kPullDown</div><div class="ttdef"><b>Definition:</b> gpio.h:92</div></div>
+<div class="ttc" id="agpio_8h_html_abe63dafb245e051f118900fc06880e80aa68220a1a10e196c227c82285b429b73"><div class="ttname"><a href="../../d6/d7c/gpio_8h.html#abe63dafb245e051f118900fc06880e80aa68220a1a10e196c227c82285b429b73">kPullUp</a></div><div class="ttdeci">@ kPullUp</div><div class="ttdef"><b>Definition:</b> gpio.h:91</div></div>
+<div class="ttc" id="agpio_8h_html_adda225378cc13988e92e7863f5e4f265"><div class="ttname"><a href="../../d6/d7c/gpio_8h.html#adda225378cc13988e92e7863f5e4f265">GpioOutputType</a></div><div class="ttdeci">GpioOutputType</div><div class="ttdef"><b>Definition:</b> gpio.h:63</div></div>
+<div class="ttc" id="agpio_8h_html_adda225378cc13988e92e7863f5e4f265a4da31d482fb6176782b41e12ca43dd3a"><div class="ttname"><a href="../../d6/d7c/gpio_8h.html#adda225378cc13988e92e7863f5e4f265a4da31d482fb6176782b41e12ca43dd3a">kOtypePushPull</a></div><div class="ttdeci">@ kOtypePushPull</div><div class="ttdef"><b>Definition:</b> gpio.h:64</div></div>
+<div class="ttc" id="agpio_8h_html_adda225378cc13988e92e7863f5e4f265a88803c8fbef8c6b886d5f98db06978e0"><div class="ttname"><a href="../../d6/d7c/gpio_8h.html#adda225378cc13988e92e7863f5e4f265a88803c8fbef8c6b886d5f98db06978e0">kOtypeOpenDrain</a></div><div class="ttdeci">@ kOtypeOpenDrain</div><div class="ttdef"><b>Definition:</b> gpio.h:65</div></div>
+<div class="ttc" id="astm32f410rb_8h_html"><div class="ttname"><a href="../../d2/d27/stm32f410rb_8h.html">stm32f410rb.h</a></div></div>
+<div class="ttc" id="astructGPIO__Type_html"><div class="ttname"><a href="../../d9/d01/structGPIO__Type.html">GPIO_Type</a></div><div class="ttdef"><b>Definition:</b> stm32f410rb.h:95</div></div>
 </div><!-- fragment --></div><!-- contents -->
-</div><!-- doc-content -->
 <!-- start footer part -->
-<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
-  <ul>
-    <li class="navelem"><a class="el" href="../../dir_14bc92f4b96c8519b376567118ac28b3.html">drivers</a></li><li class="navelem"><a class="el" href="../../dir_ee023d43c33bfccc31aa50a48a76892b.html">include</a></li><li class="navelem"><b>gpio.h</b></li>
-    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5 </li>
-  </ul>
-</div>
+<hr class="footer"/><address class="footer"><small>
+Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5
+</small></address>
 </body>
 </html>
