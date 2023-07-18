@@ -40,11 +40,22 @@
 #include "stm32f410rb.h"
 
 
+/**
+ * @defgroup    gpio gpio.h
+ */
+
+/**
+ * @defgroup    gpio_enum GPIO Configuration Enums 
+ * @ingroup     gpio
+ */
+
 /***************************************************************************************************
  * @brief       GPIO mode options.
  *
  * @details     This enumeration defines the available modes for GPIO pins.
  *              The modes determine the general purpose and behavior of the pins.
+ * 
+ * @ingroup     gpio_enum
  */
 typedef enum {
   kModeInput,          /**< Input mode. */
@@ -59,6 +70,8 @@ typedef enum {
  *
  * @details     This enumeration defines the available output types for GPIO pins.
  *              The output types determine the behavior of the pins when driving an output signal.
+ * 
+ * @ingroup     gpio_enum
  */
 typedef enum {
   kOtypePushPull,      /**< Push-pull output type. */
@@ -71,6 +84,8 @@ typedef enum {
  *
  * @details     This enumeration defines the available output speed options for GPIO pins.
  *              The output speed determines the slew rate of the pins when driving an output signal.
+ * 
+ * @ingroup     gpio_enum
  */
 typedef enum {
   kSpeedLow,           /**< Low output speed. */
@@ -85,6 +100,8 @@ typedef enum {
  *
  * @details     This enumeration defines the available pull types for GPIO pins.
  *              The pull types determine the internal resistor configuration of the pins.
+ * 
+ * @ingroup     gpio_enum
  */
 typedef enum {
   kPullNone,           /**< No pull-up/pull-down. */
@@ -92,6 +109,12 @@ typedef enum {
   kPullDown            /**< Pull-down resistor enabled. */
 } GpioPullType;
 
+
+
+/**
+ * @defgroup    gpio_func GPIO Functions
+ * @ingroup     gpio 
+ */
 
 /***************************************************************************************************
  * @brief       Configures the mode of a GPIO pin.
@@ -101,18 +124,22 @@ typedef enum {
  * @param       mode The mode to set for the pin. (from GpioMode enum)
  * 
  * @return      0 if successful, otherwise returns 1 and sets variables errnum and errcode.
+ * 
+ * @ingroup     gpio_func
  */
 int gpioPinSetup(GPIO_Type *port, uint8_t pin, GpioMode mode);
 
 
 /***************************************************************************************************
  * @brief       Configures the pull type of a GPIO pin.
- *
+ * 
  * @param       port Pointer to the GPIO port. (Use GPIOx definitios from stm32f410rb.h)
  * @param       pin The pin number to configure. (0 - 15)
  * @param       pull_type The pull type to set for the pin. (from GpioPullType enum)
  * 
  * @return      0 if successful, otherwise returns 1 and sets variables errnum and errcode.
+ * 
+ * @ingroup     gpio_func
  */
 int gpioPinPullTypeSetup(GPIO_Type *port, uint8_t pin, GpioPullType pull_type);
 
@@ -125,6 +152,8 @@ int gpioPinPullTypeSetup(GPIO_Type *port, uint8_t pin, GpioPullType pull_type);
  * @param       read Pointer to store the read value.
  * 
  * @return      0 if successful, otherwise returns 1 and sets variables errnum and errcode.
+ * 
+ * @ingroup     gpio_func
  */
 int gpioPinRead(GPIO_Type *port, uint8_t pin, uint8_t *read);
 
@@ -138,6 +167,8 @@ int gpioPinRead(GPIO_Type *port, uint8_t pin, uint8_t *read);
  * @param       old_value Pointer to store the previous pin value.
  * 
  * @return      0 if successful, otherwise returns 1 and sets variables errnum and errcode.
+ * 
+ * @ingroup     gpio_func
  */
 int gpioPinWrite(GPIO_Type *port, uint8_t pin, uint8_t value, uint8_t *old_value);
 
@@ -150,6 +181,8 @@ int gpioPinWrite(GPIO_Type *port, uint8_t pin, uint8_t value, uint8_t *old_value
  * @param       old_value Pointer to store the previous pin value.
  * 
  * @return      0 if successful, otherwise returns 1 and sets variables errnum and errcode.
+ * 
+ * @ingroup     gpio_func
  */
 int gpioPinToggle(GPIO_Type *port, uint8_t pin, uint8_t *old_value);
 
@@ -164,6 +197,8 @@ int gpioPinToggle(GPIO_Type *port, uint8_t pin, uint8_t *old_value);
  * @param       handler Pointer to the interrupt handler function.
  * 
  * @return      0 if successful, otherwise returns 1 and sets variables errnum and errcode.
+ * 
+ * @ingroup     gpio_func
  */
 int gpioInterruptSet(GPIO_Type *port, uint8_t pin, uint8_t rising_edge, uint8_t priority, void (*handler)(void));
 

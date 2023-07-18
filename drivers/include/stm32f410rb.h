@@ -6,7 +6,7 @@
  * @details     This file contains the structures and definitions for various peripherals
  *              on the STM32F410RB microcontroller. It provides an interface for configuring
  *              and accessing the peripherals such as GPIO, RCC, etc.
- * ¬
+ * 
  * @author      Hiram Montejano Gómez
  * 
  * @date        Last Updated:   15/07/2023
@@ -34,10 +34,13 @@
 
 #include <stdint.h>
 
+/**
+ * @defgroup    stm32 stm32f410rb.h
+ */
 
 /**
- * @defgroup    ACESS_MODIFIERS Access Modifiers
- * 
+ * @defgroup    access_modifiers Access Modifiers
+ * @ingroup     stm32
  * @{
  */
 
@@ -53,11 +56,20 @@
 /** @} */
 
 
+/**
+ * @defgroup    register_type Register Type Structs
+ * @ingroup     stm32
+ */
+
 /***************************************************************************************************
  * @brief       SYSCFG register structure
  *
  * @details     This structure represents the SYSCFG register block, which contains
  *              configuration and control registers for various system functions.
+ * 
+ * @defgroup    syscfg_reg SYSCFG
+ * @ingroup     register_type
+ * @{
  */
 typedef struct {
   __IO uint32_t MEMRMP;         /**< 0x00 (R/W) Memory remap */
@@ -68,6 +80,7 @@ typedef struct {
   __IO uint32_t CMPCR;          /**< 0x20 (R/W) Compensation cell control */
   __IO uint32_t CFGR;           /**< 0x24 (R/W) Configuration register */
 } SYSCFG_Type;
+/** @} */
 
 
 /***************************************************************************************************
@@ -75,6 +88,10 @@ typedef struct {
  *
  * @details     This structure represents the EXTI register block, which is responsible for
  *              configuring and controlling the external interrupts.
+ * 
+ * @defgroup    exti_reg EXTI
+ * @ingroup     register_type
+ * @{
  */
 typedef struct {
   __IO uint32_t IMR;            /**< 0x00 (R/W) Interrupt mask */
@@ -84,6 +101,7 @@ typedef struct {
   __IO uint32_t SWIER;          /**< 0x10 (R/W) Software interrupt event */
   __IO uint32_t PR;             /**< 0x14 (R/W) Pending */
 } EXTI_Type;
+/** @} */
 
 
 /***************************************************************************************************
@@ -91,6 +109,10 @@ typedef struct {
  *
  * @details     This structure represents the GPIO register block, which contains
  *              configuration and control registers for the General Purpose Input/Output pins.
+ * 
+ * @defgroup    gpio_reg  GPIO
+ * @ingroup     register_type
+ * @{
  */
 typedef struct {
   __IO    uint32_t MODER;       /**< 0x00 (R/W) Mode */
@@ -104,6 +126,7 @@ typedef struct {
   __IO    uint32_t AFRL;        /**< 0x20 (R/W) Alternate function low */
   __IO    uint32_t AFRH;        /**< 0x24 (R/W) Alternate function high */
 } GPIO_Type;
+/** @} */
 
 
 /***************************************************************************************************
@@ -111,6 +134,10 @@ typedef struct {
  *
  * @details     This structure represents the RCC register block, which contains
  *              configuration and control registers for the Reset and Clock Control.
+ * 
+ * @defgroup    rcc_reg RCC
+ * @ingroup     register_type
+ * @{
  */
 typedef struct {
   __IO uint32_t CR;             /**< 0x00 (R/W) Clock control */
@@ -141,6 +168,7 @@ typedef struct {
   __I  uint32_t RESERVED9;
   __IO uint32_t DCKCFGR2;       /**< 0x94 (R/W) Dedicated Clocks Configuration 2 */
 } RCC_Type;
+/** @} */
 
 
 /***************************************************************************************************
@@ -148,6 +176,10 @@ typedef struct {
  *
  * @details     This structure represents the NVIC register block, which contains
  *              configuration and control registers for the Nested Vectored Interrupt Controller.
+ * 
+ * @defgroup    nvic_reg NVIC
+ * @ingroup     register_type
+ * @{
  */
 typedef struct {
   __IO uint32_t ISER[8];        /**< 0x000 (R/W) Interrupt set-enable */
@@ -164,6 +196,7 @@ typedef struct {
   __I  uint32_t RESERVED6[644];
   __O  uint32_t STIR;           /**< 0xE00 (W) Software trigger interrupt */
 } NVIC_Type;
+/** @} */
 
 
 /********************* Peripheral Memory Map ********************/
