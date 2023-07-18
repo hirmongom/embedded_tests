@@ -9,7 +9,7 @@
  * 
  * @author      Hiram Montejano Gómez
  * 
- * @date        Last Updated:   15/07/2023
+ * @date        Last Updated:   18/07/2023
  * 
  * @copyright   This file is part of the "STM32F10RB Microcontroller Applications" project.
  * 
@@ -39,8 +39,13 @@
  */
 
 /**
- * @defgroup    access_modifiers Access Modifiers
+ * @defgroup    reg_def Macros
  * @ingroup     stm32
+ */
+
+/**
+ * @defgroup    access_modifiers Access Modifiers
+ * @ingroup     reg_def
  * @{
  */
 
@@ -200,6 +205,11 @@ typedef struct {
 
 
 /********************* Peripheral Memory Map ********************/
+/**
+ * @defgroup    base_addr Register Base Addresses
+ * @ingroup     reg_def
+ * @{
+ */
 
 #define SYSCFG_BASE_ADDR    (0x40013800UL)
 #define EXTI_BASE_ADDR      (0x40013C00UL)
@@ -210,8 +220,14 @@ typedef struct {
 #define RCC_BASE_ADDR       (0x40023800UL)
 #define NVIC_BASE_ADDR      (0xE000E100UL)
 
+/** @} */
 
 /********************* Peripheral Declaration ********************/
+/**
+ * @defgroup    reg_map Register Structure Mapping
+ * @ingroup     reg_def
+ * @{
+ */
 
 #define SYSCFG              ((SYSCFG_Type*) SYSCFG_BASE_ADDR)
 #define EXTI                ((EXTI_Type*)   EXTI_BASE_ADDR)
@@ -221,5 +237,7 @@ typedef struct {
 #define GPIOH               ((GPIO_Type*)   GPIOH_BASE_ADDR)
 #define RCC                 ((RCC_Type*)    RCC_BASE_ADDR)
 #define NVIC                ((NVIC_Type*)   NVIC_BASE_ADDR)
+
+/** @} */
 
 #endif

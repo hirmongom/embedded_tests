@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['reset_5fisr_177',['Reset_ISR',['../d3/df1/startup_8c.html#a8e29cc375b0d2bde9bfd35e9fc490e13',1,'startup.c']]]
+  ['svcall_5fisr_184',['SVCall_ISR',['../d3/df1/startup_8c.html#a125617e1a4ed9a1648832110904bedbd',1,'startup.c']]]
 ];

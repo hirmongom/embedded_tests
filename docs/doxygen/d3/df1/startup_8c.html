@@ -88,7 +88,7 @@ Macros</h2></td></tr>
 <tr class="separator:ac3854cac0ccb2cba6ae0c184e81f3323"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1763c9556bd80b7806528729edc98a05"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/df1/startup_8c.html#a1763c9556bd80b7806528729edc98a05">STACK_START</a>&#160;&#160;&#160;(<a class="el" href="../../d3/df1/startup_8c.html#ac3854cac0ccb2cba6ae0c184e81f3323">SRAM_END</a>)</td></tr>
 <tr class="separator:a1763c9556bd80b7806528729edc98a05"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab65dc2c51b9c543ba5a4619f6b5eac14"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/df1/startup_8c.html#ab65dc2c51b9c543ba5a4619f6b5eac14">OVERRIDABLE_ISR</a>&#160;&#160;&#160;<a class="el" href="../../d6/d40/err_8h.html#a4ad9bf3798189d42cab52acea7f8bca9">__attribute__</a>((weak, alias(&quot;Default_ISR&quot;)))</td></tr>
+<tr class="memitem:ab65dc2c51b9c543ba5a4619f6b5eac14"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/df1/startup_8c.html#ab65dc2c51b9c543ba5a4619f6b5eac14">OVERRIDABLE_ISR</a>&#160;&#160;&#160;__attribute__((weak, alias(&quot;Default_ISR&quot;)))</td></tr>
 <tr class="separator:ab65dc2c51b9c543ba5a4619f6b5eac14"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
@@ -212,7 +212,7 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define OVERRIDABLE_ISR&#160;&#160;&#160;<a class="el" href="../../d6/d40/err_8h.html#a4ad9bf3798189d42cab52acea7f8bca9">__attribute__</a>((weak, alias(&quot;Default_ISR&quot;)))</td>
+          <td class="memname">#define OVERRIDABLE_ISR&#160;&#160;&#160;__attribute__((weak, alias(&quot;Default_ISR&quot;)))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -372,7 +372,7 @@ Variables</h2></td></tr>
 <p>This array represents the vector table used by the Nested Vectored Interrupt Controller (NVIC) to handle various interrupts and exceptions in the system. Each entry in the table corresponds to a specific interrupt or exception and points to the corresponding interrupt service routine (ISR).</p>
 <dl class="section note"><dt>Note</dt><dd>The vector table is defined as an array of 32-bit unsigned integers (uint32_t).</dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>Modifying the vector table requires a deep understanding of the system's interrupt handling mechanisms and should only be done with caution and in accordance with the RM0401 reference manual.</dd></dl>
-<dl class="section see"><dt>See also</dt><dd>RM0401 Reference Manual, Page 198 for more information on the <a class="el" href="../../d2/d27/stm32f410rb_8h.html#ac8e97e8ce56ae9f57da1363a937f8a17">NVIC</a> and the vector table. </dd></dl>
+<dl class="section see"><dt>See also</dt><dd>RM0401 Reference Manual, Page 198 for more information on the <a class="el" href="../../d7/d60/group__reg__map.html#gac8e97e8ce56ae9f57da1363a937f8a17">NVIC</a> and the vector table. </dd></dl>
 
 </div>
 </div>

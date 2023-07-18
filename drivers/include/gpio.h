@@ -10,7 +10,7 @@
  * 
  * @author      Hiram Montejano Gómez
  * 
- * @date        Last Updated:   15/07/2023
+ * @date        Last Updated:   18/07/2023
  * 
  * @todo        Functions for Analog or Afsel
  * @todo        Output type configuration
