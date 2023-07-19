@@ -9,9 +9,18 @@
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
+<link href="../../navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../resize.js"></script>
+<script type="text/javascript" src="../../navtreedata.js"></script>
+<script type="text/javascript" src="../../navtree.js"></script>
 <link href="../../search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../search/searchdata.js"></script>
 <script type="text/javascript" src="../../search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+  $(document).ready(function() { init_search(); });
+/* @license-end */
+</script>
 <link href="../../doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -24,6 +33,21 @@
    <div id="projectname">STM32F10RB Microcontroller
    </div>
   </td>
+   <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="../../search/mag_sel.svg"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Search" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="../../search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
  </tr>
  </tbody>
 </table>
@@ -35,17 +59,23 @@
 var searchBox = new SearchBox("searchBox", "../../search",false,'Search','.html');
 /* @license-end */
 </script>
-<script type="text/javascript" src="../../menudata.js"></script>
-<script type="text/javascript" src="../../menu.js"></script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
-$(function() {
-  initMenu('../../',true,false,'search.php','Search');
-  $(document).ready(function() { init_search(); });
-});
-/* @license-end */</script>
-<div id="main-nav"></div>
-</div><!-- top -->
+$(document).ready(function(){initNavTree('d2/d43/group__rcc__reg.html','../../'); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -62,7 +92,7 @@ $(function() {
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a>  </div>
+<a href="#nested-classes">Data Structures</a>  </div>
   <div class="headertitle">
 <div class="title">RCC<div class="ingroups"><a class="el" href="../../d4/d8f/group__stm32.html">stm32f410rb.h</a> &raquo; <a class="el" href="../../d0/dd9/group__register__type.html">Register Type Structs</a></div></div>  </div>
 </div><!--header-->
@@ -72,14 +102,14 @@ $(function() {
 <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Classes</h2></td></tr>
+Data Structures</h2></td></tr>
 <tr class="memitem:d1/dc5/structRCC__Type"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/d43/group__rcc__reg.html#d1/dc5/structRCC__Type">RCC_Type</a></td></tr>
 <tr class="separator:d1/dc5/structRCC__Type"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>RCC register structure. </p>
 <p>This structure represents the RCC register block, which contains configuration and control registers for the Reset and Clock Control. </p>
-<hr/><h2 class="groupheader">Class Documentation</h2>
+<hr/><h2 class="groupheader">Data Structure Documentation</h2>
 <a name="d1/dc5/structRCC__Type" id="d1/dc5/structRCC__Type"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#d1/dc5/structRCC__Type">&#9670;&nbsp;</a></span>RCC_Type</h2>
 
@@ -92,7 +122,7 @@ Classes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="fieldtable">
-<tr><th colspan="3">Class Members</th></tr>
+<tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
 <a id="a79294251588bee89d7c5404a49d5b4ac"></a><a class="el" href="../../d2/d1c/group__access__modifiers.html#gaec43007d9998a0a0e01faede4133d6be">__IO</a> uint32_t</td>
 <td class="fieldname">
@@ -278,9 +308,12 @@ DCKCFGR2</td>
 </div>
 </div>
 </div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+  </ul>
+</div>
 </body>
 </html>

@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['odr_167',['ODR',['../de/d6c/group__gpio__reg.html#a35e605626c6b8e326521b903727e1734',1,'GPIO_Type']]],
-  ['ospeedr_168',['OSPEEDR',['../de/d6c/group__gpio__reg.html#ace88791b3ce14565c0e490408708a9dc',1,'GPIO_Type']]],
-  ['otyper_169',['OTYPER',['../de/d6c/group__gpio__reg.html#ad6afc2d80179c5d724fec0c94c2e7fe4',1,'GPIO_Type']]]
+  ['odr_145',['ODR',['../de/d6c/group__gpio__reg.html#a35e605626c6b8e326521b903727e1734',1,'GPIO_Type']]],
+  ['ospeedr_146',['OSPEEDR',['../de/d6c/group__gpio__reg.html#ace88791b3ce14565c0e490408708a9dc',1,'GPIO_Type']]],
+  ['otyper_147',['OTYPER',['../de/d6c/group__gpio__reg.html#ad6afc2d80179c5d724fec0c94c2e7fe4',1,'GPIO_Type']]]
 ];
