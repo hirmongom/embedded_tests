@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['memrmp_227',['MEMRMP',['../d6/dc0/group__syscfg__reg.html#ae34a6c206e9a8aa8e087e880209f7979',1,'SYSCFG_Type']]],
-  ['moder_228',['MODER',['../de/d6c/group__gpio__reg.html#a1e4ff7ca2e618e255c9079e524444fa9',1,'GPIO_Type']]]
+  ['pllcfgr_170',['PLLCFGR',['../d2/d43/group__rcc__reg.html#a74a4f1bd7bfa711955dd5e14283a7a0f',1,'RCC_Type']]],
+  ['pmc_171',['PMC',['../d6/dc0/group__syscfg__reg.html#a7359bbd67cb50a6549613a6f4af61c9a',1,'SYSCFG_Type']]],
+  ['pr_172',['PR',['../d1/d32/group__exti__reg.html#a963ce5541c7b1e82cb99862b0f2235c2',1,'EXTI_Type']]],
+  ['pupdr_173',['PUPDR',['../de/d6c/group__gpio__reg.html#a618881b88a3b1aeb222ef63b95a479a3',1,'GPIO_Type']]]
 ];

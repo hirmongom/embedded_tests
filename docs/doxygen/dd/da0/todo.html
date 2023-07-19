@@ -66,15 +66,13 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><dl class="reflist">
-<dt>Member <a class="el" href="../../d8/da0/gpio_8c.html#a34f0ee3ba56cf2f667f113f13e3d60c9">delay</a>  ()</dt>
-<dd><p class="startdd"><a class="anchor" id="_todo000002"></a>Make use of the RTC to provide a more accurate delay funciton </p>
-<p class="enddd">Make the function usable in a util.c file  </p>
-</dd>
 <dt>File <a class="el" href="../../d6/d7c/gpio_8h.html">gpio.h</a>  </dt>
 <dd><p class="startdd"><a class="anchor" id="_todo000001"></a>Functions for Analog or Afsel </p>
 <p class="interdd">Output type configuration </p>
 <p class="enddd">Output speed configuration </p>
 </dd>
+<dt>Member <a class="el" href="../../dd/d89/group__gpio__func.html#ga02268e6fb69300da6350cbfd7f9c876e">gpioPinSetup</a>  (<a class="el" href="../../de/d6c/group__gpio__reg.html#d9/d01/structGPIO__Type">GPIO_Type</a> *port, uint8_t pin, GpioMode mode)</dt>
+<dd><a class="anchor" id="_todo000003"></a>Add option to configure port speed  </dd>
 <dt>Member <a class="el" href="../../dd/d89/group__gpio__func.html#ga1546a934b316e36440509dfd56d7c830">gpioInterruptSet</a>  (<a class="el" href="../../de/d6c/group__gpio__reg.html#d9/d01/structGPIO__Type">GPIO_Type</a> *port, uint8_t pin, uint8_t rising_edge, uint8_t priority, void(*handler)(void))</dt>
 <dd><p class="startdd"><a class="anchor" id="_todo000008"></a>Check if the GPIO port is correct and if it is initialized. </p>
 <p class="enddd">Clarify the allowed range for the priority parameter and which value is higher prio  </p>
@@ -83,8 +81,6 @@ $(function() {
 <dd><a class="anchor" id="_todo000004"></a>Check if port is correct and if it is initializated  </dd>
 <dt>Member <a class="el" href="../../dd/d89/group__gpio__func.html#ga70eb92fb6c4a7bc6a5b9d2fce59de60c">gpioPinRead</a>  (<a class="el" href="../../de/d6c/group__gpio__reg.html#d9/d01/structGPIO__Type">GPIO_Type</a> *port, uint8_t pin, uint8_t *read)</dt>
 <dd><a class="anchor" id="_todo000005"></a>Check if the GPIO port is correct and if it is initialized and in the appropriate mode.  </dd>
-<dt>Member <a class="el" href="../../dd/d89/group__gpio__func.html#ga02268e6fb69300da6350cbfd7f9c876e">gpioPinSetup</a>  (<a class="el" href="../../de/d6c/group__gpio__reg.html#d9/d01/structGPIO__Type">GPIO_Type</a> *port, uint8_t pin, GpioMode mode)</dt>
-<dd><a class="anchor" id="_todo000003"></a>Add option to configure port speed  </dd>
 <dt>Member <a class="el" href="../../dd/d89/group__gpio__func.html#ga8a74d9e02fac98a33137682520f5e1df">gpioPinToggle</a>  (<a class="el" href="../../de/d6c/group__gpio__reg.html#d9/d01/structGPIO__Type">GPIO_Type</a> *port, uint8_t pin, uint8_t *old_value)</dt>
 <dd><a class="anchor" id="_todo000007"></a>Check if the GPIO port is correct and if it is initialized and in the appropriate mode.  </dd>
 <dt>Member <a class="el" href="../../dd/d89/group__gpio__func.html#gaadb0288142a6da5bad47d65e8dbec959">gpioPinWrite</a>  (<a class="el" href="../../de/d6c/group__gpio__reg.html#d9/d01/structGPIO__Type">GPIO_Type</a> *port, uint8_t pin, uint8_t value, uint8_t *old_value)</dt>

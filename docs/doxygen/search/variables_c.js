@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['pllcfgr_232',['PLLCFGR',['../d2/d43/group__rcc__reg.html#a74a4f1bd7bfa711955dd5e14283a7a0f',1,'RCC_Type']]],
-  ['pmc_233',['PMC',['../d6/dc0/group__syscfg__reg.html#a7359bbd67cb50a6549613a6f4af61c9a',1,'SYSCFG_Type']]],
-  ['pr_234',['PR',['../d1/d32/group__exti__reg.html#a963ce5541c7b1e82cb99862b0f2235c2',1,'EXTI_Type']]],
-  ['pupdr_235',['PUPDR',['../de/d6c/group__gpio__reg.html#a618881b88a3b1aeb222ef63b95a479a3',1,'GPIO_Type']]]
+  ['sscgr_185',['SSCGR',['../d2/d43/group__rcc__reg.html#af9a4ee28e663f53b895e6c54ca2f1e74',1,'RCC_Type']]],
+  ['stir_186',['STIR',['../d2/dc9/group__nvic__reg.html#a0b0d7f3131da89c659a2580249432749',1,'NVIC_Type']]],
+  ['swier_187',['SWIER',['../d1/d32/group__exti__reg.html#a5f27ff5fe8900b09e7188f4c36981fc8',1,'EXTI_Type']]]
 ];
