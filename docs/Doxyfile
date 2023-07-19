@@ -5,7 +5,7 @@
 #---------------------------------------------------------------------------
 
 PROJECT_NAME            = "STM32F10RB Microcontroller"
-OUTPUT_DIRECTORY        = ./docs/
+OUTPUT_DIRECTORY        = ./
 CREATE_SUBDIRS          = YES
 
 #---------------------------------------------------------------------------
@@ -23,8 +23,10 @@ RECURSIVE               = YES
 # Configuration options related to the input files
 #---------------------------------------------------------------------------
 
-INPUT                   = ./startup ./drivers ./README.md
+INPUT                   = ../startup ../drivers ../README.md
 FILE_PATTERNS           = *.c *.h
+LAYOUT_FILE             = ./doxygen_layout.xml
+USE_MDFILE_AS_MAINPAGE  = README.md
 
 #---------------------------------------------------------------------------
 # Configuration options related to the HTML output
@@ -48,20 +50,18 @@ CALL_GRAPH              = NO
 CALLER_GRAPH            = NO
 
 #---------------------------------------------------------------------------
-# Configuration options related to the project's source code
-#---------------------------------------------------------------------------
-
-USE_MDFILE_AS_MAINPAGE  = README.md
-
-#---------------------------------------------------------------------------
 # Miscellaneous configuration options
 #---------------------------------------------------------------------------
 
 QUIET                   = YES
-WARN_IF_UNDOCUMENTED    = YES
-WARN_FORMAT             = "$file:$line: $text"
+WARN_IF_UNDOCUMENTED    = NO
+
 SORT_BRIEF_DOCS         = NO
 SORT_MEMBER_DOCS        = NO
+
 INLINE_SIMPLE_STRUCTS   = YES
+
 JAVADOC_BANNER          = YES
-SHOW_FILES              = NO
+
+DISABLE_INDEX           = YES
+GENERATE_TREEVIEW       = YES
