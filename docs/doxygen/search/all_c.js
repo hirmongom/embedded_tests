@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['nvic_0',['NVIC',['../d2/dc9/group__nvic__reg.html',1,'']]],
-  ['nvic_5ftype_1',['NVIC_Type',['../d2/dc9/group__nvic__reg.html#d9/deb/structNVIC__Type',1,'']]]
+  ['odr_0',['ODR',['../de/d6c/group__gpio__reg.html#a35e605626c6b8e326521b903727e1734',1,'GPIO_Type']]],
+  ['ospeedr_1',['OSPEEDR',['../de/d6c/group__gpio__reg.html#ace88791b3ce14565c0e490408708a9dc',1,'GPIO_Type']]],
+  ['otyper_2',['OTYPER',['../de/d6c/group__gpio__reg.html#ad6afc2d80179c5d724fec0c94c2e7fe4',1,'GPIO_Type']]]
 ];

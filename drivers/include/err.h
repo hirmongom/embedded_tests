@@ -15,7 +15,7 @@
  * 
  * @author      Hiram Montejano Gómez
  * 
- * @date        Last Updated:   18/07/2023
+ * @date        Last Updated:   20/07/2023
  * 
  * @copyright   This file is part of the "STM32F10RB Microcontroller Applications" project.
  * 
@@ -34,6 +34,9 @@
  *              see <http://www.gnu.org/licenses/>.
  */
 
+#ifndef ERR_H
+#define ERR_H
+
 
 #include <stdint.h>
 
@@ -46,11 +49,10 @@
 /**
  * @defgroup    errvar Error Variables
  * @ingroup     errors
+ * @{
  */
 
 /***************************************************************************************************
- * @var         uint16_t errnum
- * 
  * @brief       Error number variable.
  *
  * @details     This variable holds the error number indicating the type of error that occurred.
@@ -59,15 +61,11 @@
  *              Refer to the documentation or code references for specific usage information.
  *
  * @note        This variable is located in the ".err" section.
- * 
- * @ingroup     errvar
  */
 uint16_t errnum;
 
 
 /***************************************************************************************************
- * @var         uint16_t errcode
- * 
  * @brief       Error code variable.
  *
  * @details     This variable holds the error code providing additional information about the error.
@@ -76,7 +74,10 @@ uint16_t errnum;
  *              Refer to the documentation or code references for specific usage information.
  *
  * @note        This variable is located in the ".err" section.
- * 
- * @ingroup     errvar
  */
 uint16_t errcode;
+
+/** @} */
+
+
+#endif

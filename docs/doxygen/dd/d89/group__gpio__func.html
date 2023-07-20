@@ -169,8 +169,8 @@ Functions</h2></td></tr>
 <p>This function configures the mode of a GPIO pin on the STM32F10RB microcontroller. The pin number should be within the range 0-15. The GPIO port is checked for initialization, and if not initialized, it is enabled. The pin mode is then set according to the provided mode. The mode parameter should be one of the values from the GpioMode enumeration. Upon successful configuration, the function returns 0. Otherwise, 1 is returned and variables errnum and errcode are set with the error code.</p>
 <div class="fragment"><div class="line"><span class="lineno">   70</span>                                                              {</div>
 <div class="line"><span class="lineno">   71</span>  <span class="keywordflow">if</span> (pin &gt; 15) {</div>
-<div class="line"><span class="lineno">   72</span>    errnum = 1;  <span class="comment">// GPIO error</span></div>
-<div class="line"><span class="lineno">   73</span>    errcode = 2;  <span class="comment">// Wrong pin number</span></div>
+<div class="line"><span class="lineno">   72</span>    <a class="code hl_variable" href="../../d3/d14/group__errvar.html#ga5307a02392eb82c21b66dc029fc3900f">errnum</a> = 1;  <span class="comment">// GPIO error</span></div>
+<div class="line"><span class="lineno">   73</span>    <a class="code hl_variable" href="../../d3/d14/group__errvar.html#ga9920935c0cd3c9050ba4197c399c9615">errcode</a> = 2;  <span class="comment">// Wrong pin number</span></div>
 <div class="line"><span class="lineno">   74</span>    <span class="keywordflow">return</span> 1;</div>
 <div class="line"><span class="lineno">   75</span>  }</div>
 <div class="line"><span class="lineno">   76</span> </div>
@@ -199,8 +199,8 @@ Functions</h2></td></tr>
 <div class="line"><span class="lineno">   99</span>    }</div>
 <div class="line"><span class="lineno">  100</span>  }</div>
 <div class="line"><span class="lineno">  101</span>  <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">  102</span>    errnum = 1;  <span class="comment">// GPIO error</span></div>
-<div class="line"><span class="lineno">  103</span>    errcode = 1;  <span class="comment">// Wrong GPIO port</span></div>
+<div class="line"><span class="lineno">  102</span>    <a class="code hl_variable" href="../../d3/d14/group__errvar.html#ga5307a02392eb82c21b66dc029fc3900f">errnum</a> = 1;  <span class="comment">// GPIO error</span></div>
+<div class="line"><span class="lineno">  103</span>    <a class="code hl_variable" href="../../d3/d14/group__errvar.html#ga9920935c0cd3c9050ba4197c399c9615">errcode</a> = 1;  <span class="comment">// Wrong GPIO port</span></div>
 <div class="line"><span class="lineno">  104</span>    <span class="keywordflow">return</span> 1;</div>
 <div class="line"><span class="lineno">  105</span>  }</div>
 <div class="line"><span class="lineno">  106</span> </div>
@@ -209,7 +209,9 @@ Functions</h2></td></tr>
 <div class="line"><span class="lineno">  109</span> </div>
 <div class="line"><span class="lineno">  110</span>  <span class="keywordflow">return</span> 0;</div>
 <div class="line"><span class="lineno">  111</span>}</div>
-<div class="ttc" id="agroup__gpio__reg_html_a1e4ff7ca2e618e255c9079e524444fa9"><div class="ttname"><a href="../../de/d6c/group__gpio__reg.html#a1e4ff7ca2e618e255c9079e524444fa9">GPIO_Type::MODER</a></div><div class="ttdeci">__IO uint32_t MODER</div><div class="ttdef"><b>Definition</b> stm32f410rb.h:123</div></div>
+<div class="ttc" id="agroup__errvar_html_ga5307a02392eb82c21b66dc029fc3900f"><div class="ttname"><a href="../../d3/d14/group__errvar.html#ga5307a02392eb82c21b66dc029fc3900f">errnum</a></div><div class="ttdeci">uint16_t errnum</div><div class="ttdoc">Error number variable.</div><div class="ttdef"><b>Definition</b> err.h:65</div></div>
+<div class="ttc" id="agroup__errvar_html_ga9920935c0cd3c9050ba4197c399c9615"><div class="ttname"><a href="../../d3/d14/group__errvar.html#ga9920935c0cd3c9050ba4197c399c9615">errcode</a></div><div class="ttdeci">uint16_t errcode</div><div class="ttdoc">Error code variable.</div><div class="ttdef"><b>Definition</b> err.h:78</div></div>
+<div class="ttc" id="agroup__gpio__reg_html_a1e4ff7ca2e618e255c9079e524444fa9"><div class="ttname"><a href="../../de/d6c/group__gpio__reg.html#a1e4ff7ca2e618e255c9079e524444fa9">GPIO_Type::MODER</a></div><div class="ttdeci">__IO uint32_t MODER</div><div class="ttdef"><b>Definition</b> stm32f410rb.h:118</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -258,8 +260,8 @@ Functions</h2></td></tr>
 <p>This function configures the pull type of a GPIO pin on the STM32F10RB microcontroller. The function checks if the provided GPIO port is correct and initialized. The pin number should be within the range 0-15. The pull type is then set according to the provided type, which should be one of the values from the GpioPullType enumeration. Upon successful configuration, the function returns 0. Otherwise, 1 is returned and variables errnum and errcode are set with the error code.</p>
 <div class="fragment"><div class="line"><span class="lineno">  126</span>                                                                               {</div>
 <div class="line"><span class="lineno">  127</span>  <span class="keywordflow">if</span> (pin &gt; 15) {</div>
-<div class="line"><span class="lineno">  128</span>    errnum = 1;  <span class="comment">// GPIO error</span></div>
-<div class="line"><span class="lineno">  129</span>    errcode = 2;  <span class="comment">// Wrong pin number</span></div>
+<div class="line"><span class="lineno">  128</span>    <a class="code hl_variable" href="../../d3/d14/group__errvar.html#ga5307a02392eb82c21b66dc029fc3900f">errnum</a> = 1;  <span class="comment">// GPIO error</span></div>
+<div class="line"><span class="lineno">  129</span>    <a class="code hl_variable" href="../../d3/d14/group__errvar.html#ga9920935c0cd3c9050ba4197c399c9615">errcode</a> = 2;  <span class="comment">// Wrong pin number</span></div>
 <div class="line"><span class="lineno">  130</span>    <span class="keywordflow">return</span> 1;</div>
 <div class="line"><span class="lineno">  131</span>  }</div>
 <div class="line"><span class="lineno">  132</span>  </div>
@@ -267,7 +269,7 @@ Functions</h2></td></tr>
 <div class="line"><span class="lineno">  134</span>  port-&gt;<a class="code hl_variable" href="../../de/d6c/group__gpio__reg.html#a618881b88a3b1aeb222ef63b95a479a3">PUPDR</a> |= (pull_type &lt;&lt; pin * 2);</div>
 <div class="line"><span class="lineno">  135</span>  <span class="keywordflow">return</span> 0;</div>
 <div class="line"><span class="lineno">  136</span>}</div>
-<div class="ttc" id="agroup__gpio__reg_html_a618881b88a3b1aeb222ef63b95a479a3"><div class="ttname"><a href="../../de/d6c/group__gpio__reg.html#a618881b88a3b1aeb222ef63b95a479a3">GPIO_Type::PUPDR</a></div><div class="ttdeci">__IO uint32_t PUPDR</div><div class="ttdef"><b>Definition</b> stm32f410rb.h:126</div></div>
+<div class="ttc" id="agroup__gpio__reg_html_a618881b88a3b1aeb222ef63b95a479a3"><div class="ttname"><a href="../../de/d6c/group__gpio__reg.html#a618881b88a3b1aeb222ef63b95a479a3">GPIO_Type::PUPDR</a></div><div class="ttdeci">__IO uint32_t PUPDR</div><div class="ttdef"><b>Definition</b> stm32f410rb.h:121</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -316,8 +318,8 @@ Functions</h2></td></tr>
 <p>This function reads the value of a GPIO pin on the STM32F10RB microcontroller. The pin number should be within the range 0-15. The function checks if the provided GPIO port is correct and initialized, as well as the mode of the pin. Upon successful read, the function stores the read value in the memory location pointed to by the 'read' parameter. The read value will be either 0 or 1, indicating the logic level of the pin. If an error occurs, 1 is returned, and variables errnum and errcode are set with the error code.</p>
 <div class="fragment"><div class="line"><span class="lineno">  153</span>                                                             {</div>
 <div class="line"><span class="lineno">  154</span>  <span class="keywordflow">if</span> (pin &gt; 15) {</div>
-<div class="line"><span class="lineno">  155</span>    errnum = 1;  <span class="comment">// GPIO error</span></div>
-<div class="line"><span class="lineno">  156</span>    errcode = 2;  <span class="comment">// Wrong pin number</span></div>
+<div class="line"><span class="lineno">  155</span>    <a class="code hl_variable" href="../../d3/d14/group__errvar.html#ga5307a02392eb82c21b66dc029fc3900f">errnum</a> = 1;  <span class="comment">// GPIO error</span></div>
+<div class="line"><span class="lineno">  156</span>    <a class="code hl_variable" href="../../d3/d14/group__errvar.html#ga9920935c0cd3c9050ba4197c399c9615">errcode</a> = 2;  <span class="comment">// Wrong pin number</span></div>
 <div class="line"><span class="lineno">  157</span>    <span class="keywordflow">return</span> 1;</div>
 <div class="line"><span class="lineno">  158</span>  }</div>
 <div class="line"><span class="lineno">  159</span>  </div>
@@ -325,7 +327,7 @@ Functions</h2></td></tr>
 <div class="line"><span class="lineno">  161</span>  *read = (uint8_t) pin_value;</div>
 <div class="line"><span class="lineno">  162</span>  <span class="keywordflow">return</span> 0;</div>
 <div class="line"><span class="lineno">  163</span>}</div>
-<div class="ttc" id="agroup__gpio__reg_html_a7202422c37d73e011c41fa0ced908176"><div class="ttname"><a href="../../de/d6c/group__gpio__reg.html#a7202422c37d73e011c41fa0ced908176">GPIO_Type::IDR</a></div><div class="ttdeci">__I uint32_t IDR</div><div class="ttdef"><b>Definition</b> stm32f410rb.h:127</div></div>
+<div class="ttc" id="agroup__gpio__reg_html_a7202422c37d73e011c41fa0ced908176"><div class="ttname"><a href="../../de/d6c/group__gpio__reg.html#a7202422c37d73e011c41fa0ced908176">GPIO_Type::IDR</a></div><div class="ttdeci">__I uint32_t IDR</div><div class="ttdef"><b>Definition</b> stm32f410rb.h:122</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -381,8 +383,8 @@ Functions</h2></td></tr>
 <p>This function writes a value (0 or 1) to a GPIO pin on the STM32F10RB microcontroller. The pin number should be within the range 0-15. The function checks if the provided GPIO port is correct and initialized, as well as the mode of the pin. The previous value of the pin is stored in the memory location pointed to by the 'old_value' parameter. If the 'value' parameter is 0, the pin is cleared (set to logic low). If the 'value' parameter is 1, the pin is set (set to logic high). If an error occurs, 1 is returned, and variables errnum and errcode are set with the error code.</p>
 <div class="fragment"><div class="line"><span class="lineno">  182</span>                                                                                  {</div>
 <div class="line"><span class="lineno">  183</span>  <span class="keywordflow">if</span> (pin &gt; 15) {</div>
-<div class="line"><span class="lineno">  184</span>    errnum = 1;  <span class="comment">// GPIO error</span></div>
-<div class="line"><span class="lineno">  185</span>    errcode = 2;  <span class="comment">// Wrong pin number</span></div>
+<div class="line"><span class="lineno">  184</span>    <a class="code hl_variable" href="../../d3/d14/group__errvar.html#ga5307a02392eb82c21b66dc029fc3900f">errnum</a> = 1;  <span class="comment">// GPIO error</span></div>
+<div class="line"><span class="lineno">  185</span>    <a class="code hl_variable" href="../../d3/d14/group__errvar.html#ga9920935c0cd3c9050ba4197c399c9615">errcode</a> = 2;  <span class="comment">// Wrong pin number</span></div>
 <div class="line"><span class="lineno">  186</span>    <span class="keywordflow">return</span> 1;</div>
 <div class="line"><span class="lineno">  187</span>  }</div>
 <div class="line"><span class="lineno">  188</span>  </div>
@@ -394,14 +396,14 @@ Functions</h2></td></tr>
 <div class="line"><span class="lineno">  194</span>  } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (value == 1) {</div>
 <div class="line"><span class="lineno">  195</span>    port-&gt;<a class="code hl_variable" href="../../de/d6c/group__gpio__reg.html#a35e605626c6b8e326521b903727e1734">ODR</a> |= (1 &lt;&lt; pin);</div>
 <div class="line"><span class="lineno">  196</span>  } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">  197</span>    errnum = 1;  <span class="comment">// GPIO error</span></div>
-<div class="line"><span class="lineno">  198</span>    errcode = 5;  <span class="comment">// Tried to write wrong value</span></div>
+<div class="line"><span class="lineno">  197</span>    <a class="code hl_variable" href="../../d3/d14/group__errvar.html#ga5307a02392eb82c21b66dc029fc3900f">errnum</a> = 1;  <span class="comment">// GPIO error</span></div>
+<div class="line"><span class="lineno">  198</span>    <a class="code hl_variable" href="../../d3/d14/group__errvar.html#ga9920935c0cd3c9050ba4197c399c9615">errcode</a> = 5;  <span class="comment">// Tried to write wrong value</span></div>
 <div class="line"><span class="lineno">  199</span>    <span class="keywordflow">return</span> 1;</div>
 <div class="line"><span class="lineno">  200</span>  }</div>
 <div class="line"><span class="lineno">  201</span>  </div>
 <div class="line"><span class="lineno">  202</span>  <span class="keywordflow">return</span> 0;</div>
 <div class="line"><span class="lineno">  203</span>}</div>
-<div class="ttc" id="agroup__gpio__reg_html_a35e605626c6b8e326521b903727e1734"><div class="ttname"><a href="../../de/d6c/group__gpio__reg.html#a35e605626c6b8e326521b903727e1734">GPIO_Type::ODR</a></div><div class="ttdeci">__IO uint32_t ODR</div><div class="ttdef"><b>Definition</b> stm32f410rb.h:128</div></div>
+<div class="ttc" id="agroup__gpio__reg_html_a35e605626c6b8e326521b903727e1734"><div class="ttname"><a href="../../de/d6c/group__gpio__reg.html#a35e605626c6b8e326521b903727e1734">GPIO_Type::ODR</a></div><div class="ttdeci">__IO uint32_t ODR</div><div class="ttdef"><b>Definition</b> stm32f410rb.h:123</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -450,8 +452,8 @@ Functions</h2></td></tr>
 <p>This function toggles the value of a GPIO pin on the STM32F10RB microcontroller. The pin number should be within the range 0-15. The function checks if the provided GPIO port is correct and initialized, as well as the mode of the pin. The previous value of the pin is stored in the memory location pointed to by the 'old_value' parameter. If the pin is currently low, it is toggled to high. If the pin is currently high, it is toggled to low. If an error occurs, 1 is returned, and variables errnum and errcode are set with the error code.</p>
 <div class="fragment"><div class="line"><span class="lineno">  220</span>                                                                    {</div>
 <div class="line"><span class="lineno">  221</span>  <span class="keywordflow">if</span> (pin &gt; 15) {</div>
-<div class="line"><span class="lineno">  222</span>    errnum = 1;  <span class="comment">// GPIO error</span></div>
-<div class="line"><span class="lineno">  223</span>    errcode = 2;  <span class="comment">// Wrong pin number</span></div>
+<div class="line"><span class="lineno">  222</span>    <a class="code hl_variable" href="../../d3/d14/group__errvar.html#ga5307a02392eb82c21b66dc029fc3900f">errnum</a> = 1;  <span class="comment">// GPIO error</span></div>
+<div class="line"><span class="lineno">  223</span>    <a class="code hl_variable" href="../../d3/d14/group__errvar.html#ga9920935c0cd3c9050ba4197c399c9615">errcode</a> = 2;  <span class="comment">// Wrong pin number</span></div>
 <div class="line"><span class="lineno">  224</span>    <span class="keywordflow">return</span> 1;</div>
 <div class="line"><span class="lineno">  225</span>  }</div>
 <div class="line"><span class="lineno">  226</span>  </div>
@@ -523,18 +525,18 @@ Functions</h2></td></tr>
 <p>This function sets up an interrupt for a GPIO pin on the STM32F10RB microcontroller. The pin number should be within the range 0-15. The function checks if the provided GPIO port is correct and initialized. It also validates the rising_edge and priority parameters. The interrupt trigger type is set based on the rising_edge parameter, with 1 indicating a rising edge trigger and 0 indicating a falling edge trigger. The priority parameter sets the interrupt priority level, which should be between 7 and 15 (inclusive). The handler parameter is a pointer to the interrupt handler function that will be executed when the interrupt occurs. Upon successful setup, the function returns 0. If an error occurs, 1 is returned, and variables errnum and errcode are set with the appropriate error codes.</p>
 <div class="fragment"><div class="line"><span class="lineno">  253</span>                                                                                                                 {</div>
 <div class="line"><span class="lineno">  254</span>  <span class="keywordflow">if</span> (pin &gt; 15) {</div>
-<div class="line"><span class="lineno">  255</span>    errnum = 1;  <span class="comment">// GPIO error</span></div>
-<div class="line"><span class="lineno">  256</span>    errcode = 2;  <span class="comment">// Wrong pin number</span></div>
+<div class="line"><span class="lineno">  255</span>    <a class="code hl_variable" href="../../d3/d14/group__errvar.html#ga5307a02392eb82c21b66dc029fc3900f">errnum</a> = 1;  <span class="comment">// GPIO error</span></div>
+<div class="line"><span class="lineno">  256</span>    <a class="code hl_variable" href="../../d3/d14/group__errvar.html#ga9920935c0cd3c9050ba4197c399c9615">errcode</a> = 2;  <span class="comment">// Wrong pin number</span></div>
 <div class="line"><span class="lineno">  257</span>    <span class="keywordflow">return</span> 1;</div>
 <div class="line"><span class="lineno">  258</span>  }</div>
 <div class="line"><span class="lineno">  259</span>  <span class="keywordflow">if</span> (rising_edge &gt; 1) {</div>
-<div class="line"><span class="lineno">  260</span>    errnum = 1;  <span class="comment">// GPIO error</span></div>
-<div class="line"><span class="lineno">  261</span>    errcode = 6;  <span class="comment">// Wrong value for trigger selection</span></div>
+<div class="line"><span class="lineno">  260</span>    <a class="code hl_variable" href="../../d3/d14/group__errvar.html#ga5307a02392eb82c21b66dc029fc3900f">errnum</a> = 1;  <span class="comment">// GPIO error</span></div>
+<div class="line"><span class="lineno">  261</span>    <a class="code hl_variable" href="../../d3/d14/group__errvar.html#ga9920935c0cd3c9050ba4197c399c9615">errcode</a> = 6;  <span class="comment">// Wrong value for trigger selection</span></div>
 <div class="line"><span class="lineno">  262</span>    <span class="keywordflow">return</span> 1;  <span class="comment">// Can only be 0 or 1</span></div>
 <div class="line"><span class="lineno">  263</span>  }</div>
 <div class="line"><span class="lineno">  264</span>  <span class="keywordflow">if</span> (priority &lt; 7) {</div>
-<div class="line"><span class="lineno">  265</span>    errnum = 1;  <span class="comment">// GPIO error</span></div>
-<div class="line"><span class="lineno">  266</span>    errcode = 7: <span class="comment">// Wrong interrupt priority</span></div>
+<div class="line"><span class="lineno">  265</span>    <a class="code hl_variable" href="../../d3/d14/group__errvar.html#ga5307a02392eb82c21b66dc029fc3900f">errnum</a> = 1;  <span class="comment">// GPIO error</span></div>
+<div class="line"><span class="lineno">  266</span>    <a class="code hl_variable" href="../../d3/d14/group__errvar.html#ga9920935c0cd3c9050ba4197c399c9615">errcode</a> = 7: <span class="comment">// Wrong interrupt priority</span></div>
 <div class="line"><span class="lineno">  267</span>    <span class="keywordflow">return</span> 1;</div>
 <div class="line"><span class="lineno">  268</span>  } </div>
 <div class="line"><span class="lineno">  269</span>    </div>
@@ -549,8 +551,8 @@ Functions</h2></td></tr>
 <div class="line"><span class="lineno">  278</span>  <span class="keywordflow">else</span> <span class="keywordflow">if</span> (port == GPIOH)</div>
 <div class="line"><span class="lineno">  279</span>    exti_source_input = 7;</div>
 <div class="line"><span class="lineno">  280</span>  <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">  281</span>    errnum = 1;  <span class="comment">// GPIO error</span></div>
-<div class="line"><span class="lineno">  282</span>    errcode = 1;  <span class="comment">// Wrong GPIO port</span></div>
+<div class="line"><span class="lineno">  281</span>    <a class="code hl_variable" href="../../d3/d14/group__errvar.html#ga5307a02392eb82c21b66dc029fc3900f">errnum</a> = 1;  <span class="comment">// GPIO error</span></div>
+<div class="line"><span class="lineno">  282</span>    <a class="code hl_variable" href="../../d3/d14/group__errvar.html#ga9920935c0cd3c9050ba4197c399c9615">errcode</a> = 1;  <span class="comment">// Wrong GPIO port</span></div>
 <div class="line"><span class="lineno">  283</span>    <span class="keywordflow">return</span> 1;</div>
 <div class="line"><span class="lineno">  284</span>  }</div>
 <div class="line"><span class="lineno">  285</span> </div>

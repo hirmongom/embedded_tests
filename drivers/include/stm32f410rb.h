@@ -9,7 +9,7 @@
  * 
  * @author      Hiram Montejano Gómez
  * 
- * @date        Last Updated:   18/07/2023
+ * @date        Last Updated:   20/07/2023
  * 
  * @copyright   This file is part of the "STM32F10RB Microcontroller Applications" project.
  * 
@@ -49,14 +49,9 @@
  * @{
  */
 
-/** @brief      Defines 'read only' permissions */
-#define     __I     volatile const
-
-/** @brief      Defines 'wwrite only' permissions */
-#define     __O     volatile
-
-/** @brief      Defines 'read/write' permissions */
-#define     __IO    volatile
+#define     __I     volatile const    // Defines 'read only' permissions
+#define     __O     volatile          // Defines 'write only' permissions
+#define     __IO    volatile          // Defines 'read/write' permissions
 
 /** @} */
 
