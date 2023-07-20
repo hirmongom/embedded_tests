@@ -1,5 +1,6 @@
 /***************************************************************************************************
  * @file        gpio.h
+ * @defgroup    gpio gpio.h
  * 
  * @brief       Header file for GPIO peripheral driver.
  * 
@@ -10,7 +11,7 @@
  * 
  * @author      Hiram Montejano Gómez
  * 
- * @date        Last Updated:   18/07/2023
+ * @date        Last Updated:   20/07/2023
  * 
  * @todo        Functions for Analog or Afsel
  * @todo        Output type configuration
@@ -39,10 +40,6 @@
 
 #include "stm32f410rb.h"
 
-
-/**
- * @defgroup    gpio gpio.h
- */
 
 /**
  * @defgroup    gpio_enum GPIO Configuration Enums 

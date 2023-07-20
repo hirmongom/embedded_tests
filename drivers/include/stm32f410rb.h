@@ -1,5 +1,6 @@
 /***************************************************************************************************
  * @file        stm32f410rb.h
+ * @defgroup    stm32 stm32f410rb.h
  * 
  * @brief       Header file for STM32F410RB microcontroller peripherals.
  * 
@@ -34,9 +35,6 @@
 
 #include <stdint.h>
 
-/**
- * @defgroup    stm32 stm32f410rb.h
- */
 
 /**
  * @defgroup    reg_def Macros

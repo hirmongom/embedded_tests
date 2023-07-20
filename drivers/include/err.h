@@ -1,5 +1,6 @@
 /***************************************************************************************************
  * @file        err.h
+ * @defgroup    errors err.h
  * 
  * @brief       Error Number and Error Code
  * 
@@ -39,11 +40,6 @@
 
 
 #include <stdint.h>
-
-
-/**
- * @defgroup    errors err.h
- */
 
 
 /**
