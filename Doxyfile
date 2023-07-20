@@ -24,7 +24,7 @@ OPTIMIZE_OUTPUT_FOR_C   = YES
 # Configuration options related to the input files
 #---------------------------------------------------------------------------
 
-INPUT                   = ../startup ../drivers ../README.md
+INPUT                   = ./startup ./drivers ./README.md ./LICENSE
 FILE_PATTERNS           = *.c *.h
 LAYOUT_FILE             = ./doxygen_layout.xml
 USE_MDFILE_AS_MAINPAGE  = README.md
@@ -57,6 +57,9 @@ CALLER_GRAPH            = NO
 QUIET                   = YES
 WARN_IF_UNDOCUMENTED    = NO
 
+MARKDOWN_SUPPORT        = YES
+TOC_INCLUDE_HEADINGS    = 0
+
 SORT_BRIEF_DOCS         = NO
 SORT_MEMBER_DOCS        = NO
 
@@ -68,3 +71,5 @@ JAVADOC_BANNER          = YES
 SHOW_FILES              = NO
 DISABLE_INDEX           = YES
 GENERATE_TREEVIEW       = YES
+
+GENERATE_TODOLIST       = NO

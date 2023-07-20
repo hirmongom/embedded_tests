@@ -33,7 +33,6 @@ with the STM32F410RB and Cortex-M4 architecture.
 I have prior experience in bare metal embedded software development, particularly with the Texas Instruments Tiva TM4C123GXL evaluation board. 
 During that time, I developed applications to test various features of the board, including:
 
-- The GPIOF registry
 - External Input and Output
 - Interrupts
 - Analog to Digital Converter (ADC)
