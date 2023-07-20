@@ -5,7 +5,7 @@
 #---------------------------------------------------------------------------
 
 PROJECT_NAME            = "STM32F10RB Microcontroller"
-OUTPUT_DIRECTORY        = ./
+OUTPUT_DIRECTORY        = ./docs
 CREATE_SUBDIRS          = YES
 
 #---------------------------------------------------------------------------
