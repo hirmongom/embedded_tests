@@ -10,7 +10,7 @@
  * 
  * @author      Hiram Montejano Gómez
  * 
- * @date        Last Updated:   18/07/2023
+ * @date        Last Updated:   21/07/2023
  * 
  * @copyright   This file is part of the "STM32F10RB Microcontroller Applications" project.
  * 
@@ -263,7 +263,7 @@ int gpioInterruptSet(GPIO_Type *port, uint8_t pin, uint8_t rising_edge, uint8_t 
   }
   if (priority < 7) {
     errnum = 1;  // GPIO error
-    errcode = 7: // Wrong interrupt priority
+    errcode = 7; // Wrong interrupt priority
     return 1;
   } 
     
