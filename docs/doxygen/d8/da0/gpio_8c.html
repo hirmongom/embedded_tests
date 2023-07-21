@@ -235,12 +235,12 @@ static void(*&#160;</td><td class="memItemRight" valign="bottom"><b>gpio_isr_fun
 
 <p>Interrupt Service Routine for EXTI0. </p>
 <p >This ISR is triggered when an interrupt occurs on EXTI line 0. It calls the associated GPIO interrupt handler function stored in gpio_isr_functions[0]. After handling the interrupt, it clears the interrupt flag for EXTI line 0. </p>
-<div class="fragment"><div class="line"><span class="lineno">  325</span>                      {</div>
-<div class="line"><span class="lineno">  326</span>  <span class="keywordflow">if</span> (EXTI-&gt;PR &amp; (1 &lt;&lt; 0)) {</div>
-<div class="line"><span class="lineno">  327</span>    <a class="code hl_variable" href="../../d8/da0/gpio_8c.html#a7314a7a112e62c5091d66d33ec36c413">gpio_isr_functions</a>[0]();</div>
-<div class="line"><span class="lineno">  328</span>    EXTI-&gt;PR |= (1 &lt;&lt; 0);    <span class="comment">// Clear flag</span></div>
-<div class="line"><span class="lineno">  329</span>  }</div>
-<div class="line"><span class="lineno">  330</span>}</div>
+<div class="fragment"><div class="line"><span class="lineno">  324</span>                      {</div>
+<div class="line"><span class="lineno">  325</span>  <span class="keywordflow">if</span> (EXTI-&gt;PR &amp; (1 &lt;&lt; 0)) {</div>
+<div class="line"><span class="lineno">  326</span>    <a class="code hl_variable" href="../../d8/da0/gpio_8c.html#a7314a7a112e62c5091d66d33ec36c413">gpio_isr_functions</a>[0]();</div>
+<div class="line"><span class="lineno">  327</span>    EXTI-&gt;PR |= (1 &lt;&lt; 0);    <span class="comment">// Clear flag</span></div>
+<div class="line"><span class="lineno">  328</span>  }</div>
+<div class="line"><span class="lineno">  329</span>}</div>
 <div class="ttc" id="agpio_8c_html_a7314a7a112e62c5091d66d33ec36c413"><div class="ttname"><a href="../../d8/da0/gpio_8c.html#a7314a7a112e62c5091d66d33ec36c413">gpio_isr_functions</a></div><div class="ttdeci">static void(* gpio_isr_functions[16])(void)</div><div class="ttdoc">Array of function pointers to be executed when an interrupt occurs.</div><div class="ttdef"><b>Definition:</b> gpio.c:42</div></div>
 </div><!-- fragment -->
 </div>
@@ -263,12 +263,12 @@ static void(*&#160;</td><td class="memItemRight" valign="bottom"><b>gpio_isr_fun
 
 <p>Interrupt Service Routine for EXTI1. </p>
 <p >This ISR is triggered when an interrupt occurs on EXTI line 1. It calls the associated GPIO interrupt handler function stored in gpio_isr_functions[1]. After handling the interrupt, it clears the interrupt flag for EXTI line 1. </p>
-<div class="fragment"><div class="line"><span class="lineno">  341</span>                      {</div>
-<div class="line"><span class="lineno">  342</span>  <span class="keywordflow">if</span> (EXTI-&gt;PR &amp; (1 &lt;&lt; 1)) {</div>
-<div class="line"><span class="lineno">  343</span>    <a class="code hl_variable" href="../../d8/da0/gpio_8c.html#a7314a7a112e62c5091d66d33ec36c413">gpio_isr_functions</a>[1]();</div>
-<div class="line"><span class="lineno">  344</span>    EXTI-&gt;PR |= (1 &lt;&lt; 1);    <span class="comment">// Clear flag</span></div>
-<div class="line"><span class="lineno">  345</span>  }</div>
-<div class="line"><span class="lineno">  346</span>}</div>
+<div class="fragment"><div class="line"><span class="lineno">  340</span>                      {</div>
+<div class="line"><span class="lineno">  341</span>  <span class="keywordflow">if</span> (EXTI-&gt;PR &amp; (1 &lt;&lt; 1)) {</div>
+<div class="line"><span class="lineno">  342</span>    <a class="code hl_variable" href="../../d8/da0/gpio_8c.html#a7314a7a112e62c5091d66d33ec36c413">gpio_isr_functions</a>[1]();</div>
+<div class="line"><span class="lineno">  343</span>    EXTI-&gt;PR |= (1 &lt;&lt; 1);    <span class="comment">// Clear flag</span></div>
+<div class="line"><span class="lineno">  344</span>  }</div>
+<div class="line"><span class="lineno">  345</span>}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -290,12 +290,12 @@ static void(*&#160;</td><td class="memItemRight" valign="bottom"><b>gpio_isr_fun
 
 <p>Interrupt Service Routine for EXTI2. </p>
 <p >This ISR is triggered when an interrupt occurs on EXTI line 2. It calls the associated GPIO interrupt handler function stored in gpio_isr_functions[2]. After handling the interrupt, it clears the interrupt flag for EXTI line 2. </p>
-<div class="fragment"><div class="line"><span class="lineno">  357</span>                      {</div>
-<div class="line"><span class="lineno">  358</span>  <span class="keywordflow">if</span> (EXTI-&gt;PR &amp; (1 &lt;&lt; 2)) {</div>
-<div class="line"><span class="lineno">  359</span>    <a class="code hl_variable" href="../../d8/da0/gpio_8c.html#a7314a7a112e62c5091d66d33ec36c413">gpio_isr_functions</a>[2]();</div>
-<div class="line"><span class="lineno">  360</span>    EXTI-&gt;PR |= (1 &lt;&lt; 2);    <span class="comment">// Clear flag</span></div>
-<div class="line"><span class="lineno">  361</span>  }</div>
-<div class="line"><span class="lineno">  362</span>}</div>
+<div class="fragment"><div class="line"><span class="lineno">  356</span>                      {</div>
+<div class="line"><span class="lineno">  357</span>  <span class="keywordflow">if</span> (EXTI-&gt;PR &amp; (1 &lt;&lt; 2)) {</div>
+<div class="line"><span class="lineno">  358</span>    <a class="code hl_variable" href="../../d8/da0/gpio_8c.html#a7314a7a112e62c5091d66d33ec36c413">gpio_isr_functions</a>[2]();</div>
+<div class="line"><span class="lineno">  359</span>    EXTI-&gt;PR |= (1 &lt;&lt; 2);    <span class="comment">// Clear flag</span></div>
+<div class="line"><span class="lineno">  360</span>  }</div>
+<div class="line"><span class="lineno">  361</span>}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -317,12 +317,12 @@ static void(*&#160;</td><td class="memItemRight" valign="bottom"><b>gpio_isr_fun
 
 <p>Interrupt Service Routine for EXTI3. </p>
 <p >This ISR is triggered when an interrupt occurs on EXTI line 3. It calls the associated GPIO interrupt handler function stored in gpio_isr_functions[3]. After handling the interrupt, it clears the interrupt flag for EXTI line 3. </p>
-<div class="fragment"><div class="line"><span class="lineno">  373</span>                      {</div>
-<div class="line"><span class="lineno">  374</span>  <span class="keywordflow">if</span> (EXTI-&gt;PR &amp; (1 &lt;&lt; 3)) {</div>
-<div class="line"><span class="lineno">  375</span>    <a class="code hl_variable" href="../../d8/da0/gpio_8c.html#a7314a7a112e62c5091d66d33ec36c413">gpio_isr_functions</a>[3]();</div>
-<div class="line"><span class="lineno">  376</span>    EXTI-&gt;PR |= (1 &lt;&lt; 3);    <span class="comment">// Clear flag</span></div>
-<div class="line"><span class="lineno">  377</span>  }</div>
-<div class="line"><span class="lineno">  378</span>}</div>
+<div class="fragment"><div class="line"><span class="lineno">  372</span>                      {</div>
+<div class="line"><span class="lineno">  373</span>  <span class="keywordflow">if</span> (EXTI-&gt;PR &amp; (1 &lt;&lt; 3)) {</div>
+<div class="line"><span class="lineno">  374</span>    <a class="code hl_variable" href="../../d8/da0/gpio_8c.html#a7314a7a112e62c5091d66d33ec36c413">gpio_isr_functions</a>[3]();</div>
+<div class="line"><span class="lineno">  375</span>    EXTI-&gt;PR |= (1 &lt;&lt; 3);    <span class="comment">// Clear flag</span></div>
+<div class="line"><span class="lineno">  376</span>  }</div>
+<div class="line"><span class="lineno">  377</span>}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -344,12 +344,12 @@ static void(*&#160;</td><td class="memItemRight" valign="bottom"><b>gpio_isr_fun
 
 <p>Interrupt Service Routine for EXTI4. </p>
 <p >This ISR is triggered when an interrupt occurs on EXTI line 4. It calls the associated GPIO interrupt handler function stored in gpio_isr_functions[4]. After handling the interrupt, it clears the interrupt flag for EXTI line 4. </p>
-<div class="fragment"><div class="line"><span class="lineno">  389</span>                      {</div>
-<div class="line"><span class="lineno">  390</span>  <span class="keywordflow">if</span> (EXTI-&gt;PR &amp; (1 &lt;&lt; 4)) {</div>
-<div class="line"><span class="lineno">  391</span>    <a class="code hl_variable" href="../../d8/da0/gpio_8c.html#a7314a7a112e62c5091d66d33ec36c413">gpio_isr_functions</a>[4]();</div>
-<div class="line"><span class="lineno">  392</span>    EXTI-&gt;PR |= (1 &lt;&lt; 4);    <span class="comment">// Clear flag</span></div>
-<div class="line"><span class="lineno">  393</span>  }</div>
-<div class="line"><span class="lineno">  394</span>}</div>
+<div class="fragment"><div class="line"><span class="lineno">  388</span>                      {</div>
+<div class="line"><span class="lineno">  389</span>  <span class="keywordflow">if</span> (EXTI-&gt;PR &amp; (1 &lt;&lt; 4)) {</div>
+<div class="line"><span class="lineno">  390</span>    <a class="code hl_variable" href="../../d8/da0/gpio_8c.html#a7314a7a112e62c5091d66d33ec36c413">gpio_isr_functions</a>[4]();</div>
+<div class="line"><span class="lineno">  391</span>    EXTI-&gt;PR |= (1 &lt;&lt; 4);    <span class="comment">// Clear flag</span></div>
+<div class="line"><span class="lineno">  392</span>  }</div>
+<div class="line"><span class="lineno">  393</span>}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -371,14 +371,14 @@ static void(*&#160;</td><td class="memItemRight" valign="bottom"><b>gpio_isr_fun
 
 <p>Interrupt Service Routine for EXTI lines 5 to 9. </p>
 <p >This ISR is triggered when an interrupt occurs on any of the EXTI lines 5 to 9. It calls the associated GPIO interrupt handler function stored in gpio_isr_functions[i] for each triggered EXTI line. After handling the interrupts, it clears the corresponding interrupt flags for EXTI lines 5 to 9. </p>
-<div class="fragment"><div class="line"><span class="lineno">  406</span>                        {</div>
-<div class="line"><span class="lineno">  407</span>  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 5; i &lt;= 9; i++) {</div>
-<div class="line"><span class="lineno">  408</span>    <span class="keywordflow">if</span> (EXTI-&gt;PR &amp; (1 &lt;&lt; i)) {</div>
-<div class="line"><span class="lineno">  409</span>      <a class="code hl_variable" href="../../d8/da0/gpio_8c.html#a7314a7a112e62c5091d66d33ec36c413">gpio_isr_functions</a>[i]();</div>
-<div class="line"><span class="lineno">  410</span>      EXTI-&gt;PR |= (1 &lt;&lt; i);</div>
-<div class="line"><span class="lineno">  411</span>    }</div>
-<div class="line"><span class="lineno">  412</span>  }</div>
-<div class="line"><span class="lineno">  413</span>}</div>
+<div class="fragment"><div class="line"><span class="lineno">  405</span>                        {</div>
+<div class="line"><span class="lineno">  406</span>  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 5; i &lt;= 9; i++) {</div>
+<div class="line"><span class="lineno">  407</span>    <span class="keywordflow">if</span> (EXTI-&gt;PR &amp; (1 &lt;&lt; i)) {</div>
+<div class="line"><span class="lineno">  408</span>      <a class="code hl_variable" href="../../d8/da0/gpio_8c.html#a7314a7a112e62c5091d66d33ec36c413">gpio_isr_functions</a>[i]();</div>
+<div class="line"><span class="lineno">  409</span>      EXTI-&gt;PR |= (1 &lt;&lt; i);</div>
+<div class="line"><span class="lineno">  410</span>    }</div>
+<div class="line"><span class="lineno">  411</span>  }</div>
+<div class="line"><span class="lineno">  412</span>}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -400,14 +400,14 @@ static void(*&#160;</td><td class="memItemRight" valign="bottom"><b>gpio_isr_fun
 
 <p>Interrupt Service Routine for EXTI lines 10 to 15. </p>
 <p >This ISR is triggered when an interrupt occurs on any of the EXTI lines 10 to 15. It calls the associated GPIO interrupt handler function stored in gpio_isr_functions[i] for each triggered EXTI line. After handling the interrupts, it clears the corresponding interrupt flags for EXTI lines 10 to 15. </p>
-<div class="fragment"><div class="line"><span class="lineno">  425</span>                          {</div>
-<div class="line"><span class="lineno">  426</span>  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 10; i &lt;= 15; i++) {</div>
-<div class="line"><span class="lineno">  427</span>    <span class="keywordflow">if</span> (EXTI-&gt;PR &amp; (1 &lt;&lt; i)) {</div>
-<div class="line"><span class="lineno">  428</span>      <a class="code hl_variable" href="../../d8/da0/gpio_8c.html#a7314a7a112e62c5091d66d33ec36c413">gpio_isr_functions</a>[i]();</div>
-<div class="line"><span class="lineno">  429</span>      EXTI-&gt;PR |= (1 &lt;&lt; i);</div>
-<div class="line"><span class="lineno">  430</span>    }</div>
-<div class="line"><span class="lineno">  431</span>  }</div>
-<div class="line"><span class="lineno">  432</span>}</div>
+<div class="fragment"><div class="line"><span class="lineno">  424</span>                          {</div>
+<div class="line"><span class="lineno">  425</span>  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 10; i &lt;= 15; i++) {</div>
+<div class="line"><span class="lineno">  426</span>    <span class="keywordflow">if</span> (EXTI-&gt;PR &amp; (1 &lt;&lt; i)) {</div>
+<div class="line"><span class="lineno">  427</span>      <a class="code hl_variable" href="../../d8/da0/gpio_8c.html#a7314a7a112e62c5091d66d33ec36c413">gpio_isr_functions</a>[i]();</div>
+<div class="line"><span class="lineno">  428</span>      EXTI-&gt;PR |= (1 &lt;&lt; i);</div>
+<div class="line"><span class="lineno">  429</span>    }</div>
+<div class="line"><span class="lineno">  430</span>  }</div>
+<div class="line"><span class="lineno">  431</span>}</div>
 </div><!-- fragment -->
 </div>
 </div>

@@ -192,7 +192,7 @@ int gpioPinToggle(GPIO_Type *port, uint8_t pin, uint8_t *old_value);
  * @param       port Pointer to the GPIO port. (Use GPIOx definitios from stm32f410rb.h)
  * @param       pin The pin number to set up the interrupt for. (0 - 15)
  * @param       rising_edge Set to 1 for rising edge trigger, 0 for falling edge trigger. (0 or 1)
- * @param       priority The interrupt priority level (between 7 and 15).
+ * @param       priority The interrupt priority level (between 0 and 15, 0 is max priority).
  * @param       handler Pointer to the interrupt handler function.
  * 
  * @return      0 if successful, otherwise returns 1 and sets variables errnum and errcode.

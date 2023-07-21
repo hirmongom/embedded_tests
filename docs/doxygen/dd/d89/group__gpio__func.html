@@ -522,78 +522,76 @@ Functions</h2></td></tr>
     <tr><td class="paramname">port</td><td>Pointer to the GPIO port. (Use GPIOx definitios from <a class="el" href="../../d2/d27/stm32f410rb_8h.html">stm32f410rb.h</a>) </td></tr>
     <tr><td class="paramname">pin</td><td>The pin number to set up the interrupt for. (0 - 15) </td></tr>
     <tr><td class="paramname">rising_edge</td><td>Set to 1 for rising edge trigger, 0 for falling edge trigger. (0 or 1) </td></tr>
-    <tr><td class="paramname">priority</td><td>The interrupt priority level (between 7 and 15). </td></tr>
+    <tr><td class="paramname">priority</td><td>The interrupt priority level (between 0 and 15, 0 is max priority). </td></tr>
     <tr><td class="paramname">handler</td><td>Pointer to the interrupt handler function.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>0 if successful, otherwise returns 1 and sets variables errnum and errcode.</dd></dl>
 <p>This function sets up an interrupt for a GPIO pin on the STM32F10RB microcontroller. The pin number should be within the range 0-15. The function checks if the provided GPIO port is correct and initialized. It also validates the rising_edge and priority parameters. The interrupt trigger type is set based on the rising_edge parameter, with 1 indicating a rising edge trigger and 0 indicating a falling edge trigger. The priority parameter sets the interrupt priority level, which should be between 7 and 15 (inclusive). The handler parameter is a pointer to the interrupt handler function that will be executed when the interrupt occurs. Upon successful setup, the function returns 0. If an error occurs, 1 is returned, and variables errnum and errcode are set with the appropriate error codes.</p>
-<dl class="todo"><dt><b><a class="el" href="../../dd/da0/todo.html#_todo000008">Todo:</a></b></dt><dd><p class="startdd">Check if the GPIO port is correct and if it is initialized. </p>
-<p class="enddd">Clarify the allowed range for the priority parameter and which value is higher prio </p>
-</dd></dl>
-<div class="fragment"><div class="line"><span class="lineno">  253</span>                                                                                                                 {</div>
-<div class="line"><span class="lineno">  254</span>  <span class="keywordflow">if</span> (pin &gt; 15) {</div>
-<div class="line"><span class="lineno">  255</span>    <a class="code hl_variable" href="../../d3/d14/group__errvar.html#ga5307a02392eb82c21b66dc029fc3900f">errnum</a> = 1;  <span class="comment">// GPIO error</span></div>
-<div class="line"><span class="lineno">  256</span>    <a class="code hl_variable" href="../../d3/d14/group__errvar.html#ga9920935c0cd3c9050ba4197c399c9615">errcode</a> = 2;  <span class="comment">// Wrong pin number</span></div>
-<div class="line"><span class="lineno">  257</span>    <span class="keywordflow">return</span> 1;</div>
-<div class="line"><span class="lineno">  258</span>  }</div>
-<div class="line"><span class="lineno">  259</span>  <span class="keywordflow">if</span> (rising_edge &gt; 1) {</div>
-<div class="line"><span class="lineno">  260</span>    <a class="code hl_variable" href="../../d3/d14/group__errvar.html#ga5307a02392eb82c21b66dc029fc3900f">errnum</a> = 1;  <span class="comment">// GPIO error</span></div>
-<div class="line"><span class="lineno">  261</span>    <a class="code hl_variable" href="../../d3/d14/group__errvar.html#ga9920935c0cd3c9050ba4197c399c9615">errcode</a> = 6;  <span class="comment">// Wrong value for trigger selection</span></div>
-<div class="line"><span class="lineno">  262</span>    <span class="keywordflow">return</span> 1;  <span class="comment">// Can only be 0 or 1</span></div>
-<div class="line"><span class="lineno">  263</span>  }</div>
-<div class="line"><span class="lineno">  264</span>  <span class="keywordflow">if</span> (priority &gt; 15) {</div>
-<div class="line"><span class="lineno">  265</span>    <a class="code hl_variable" href="../../d3/d14/group__errvar.html#ga5307a02392eb82c21b66dc029fc3900f">errnum</a> = 1;  <span class="comment">// GPIO error</span></div>
-<div class="line"><span class="lineno">  266</span>    <a class="code hl_variable" href="../../d3/d14/group__errvar.html#ga9920935c0cd3c9050ba4197c399c9615">errcode</a> = 7; <span class="comment">// Wrong interrupt priority</span></div>
-<div class="line"><span class="lineno">  267</span>    <span class="keywordflow">return</span> 1;</div>
-<div class="line"><span class="lineno">  268</span>  } </div>
-<div class="line"><span class="lineno">  269</span>    </div>
-<div class="line"><span class="lineno">  270</span>  uint8_t exti_source_input;</div>
-<div class="line"><span class="lineno">  271</span> </div>
-<div class="line"><span class="lineno">  272</span>  <span class="keywordflow">if</span> (port == GPIOA)</div>
-<div class="line"><span class="lineno">  273</span>    exti_source_input = 0;</div>
-<div class="line"><span class="lineno">  274</span>  <span class="keywordflow">else</span> <span class="keywordflow">if</span> (port == GPIOB)</div>
-<div class="line"><span class="lineno">  275</span>    exti_source_input = 1;</div>
-<div class="line"><span class="lineno">  276</span>  <span class="keywordflow">else</span> <span class="keywordflow">if</span> (port == GPIOC)</div>
-<div class="line"><span class="lineno">  277</span>    exti_source_input = 2;</div>
-<div class="line"><span class="lineno">  278</span>  <span class="keywordflow">else</span> <span class="keywordflow">if</span> (port == GPIOH)</div>
-<div class="line"><span class="lineno">  279</span>    exti_source_input = 7;</div>
-<div class="line"><span class="lineno">  280</span>  <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">  281</span>    <a class="code hl_variable" href="../../d3/d14/group__errvar.html#ga5307a02392eb82c21b66dc029fc3900f">errnum</a> = 1;  <span class="comment">// GPIO error</span></div>
-<div class="line"><span class="lineno">  282</span>    <a class="code hl_variable" href="../../d3/d14/group__errvar.html#ga9920935c0cd3c9050ba4197c399c9615">errcode</a> = 1;  <span class="comment">// Wrong GPIO port</span></div>
-<div class="line"><span class="lineno">  283</span>    <span class="keywordflow">return</span> 1;</div>
-<div class="line"><span class="lineno">  284</span>  }</div>
-<div class="line"><span class="lineno">  285</span> </div>
-<div class="line"><span class="lineno">  286</span>  RCC-&gt;APB2ENR |= (1 &lt;&lt; 14);    <span class="comment">// Enable system configuration controller clock</span></div>
-<div class="line"><span class="lineno">  287</span>  SYSCFG-&gt;EXTICR[pin / 4] &amp;= ~(0xF &lt;&lt; (pin % 4) * 4); <span class="comment">// Clear register</span></div>
-<div class="line"><span class="lineno">  288</span>  SYSCFG-&gt;EXTICR[pin / 4] |= (exti_source_input &lt;&lt; (pin % 4) * 4);  <span class="comment">// Select source input for the EXTIx</span></div>
-<div class="line"><span class="lineno">  289</span>  </div>
-<div class="line"><span class="lineno">  290</span>  EXTI-&gt;IMR |= (1 &lt;&lt; pin);  <span class="comment">// Set pin in EXTI line as interrupt</span></div>
-<div class="line"><span class="lineno">  291</span>  <span class="keywordflow">if</span> (rising_edge == 1) {</div>
-<div class="line"><span class="lineno">  292</span>    EXTI-&gt;RTSR |= (1 &lt;&lt; pin); <span class="comment">// Enable rising edge trigger</span></div>
-<div class="line"><span class="lineno">  293</span>    EXTI-&gt;FTSR &amp;= ~(1 &lt;&lt; pin);  <span class="comment">// Disable falling edge trigger</span></div>
-<div class="line"><span class="lineno">  294</span>  } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">  295</span>    EXTI-&gt;RTSR &amp;= ~(1 &lt;&lt; pin);  <span class="comment">// Disable rising edge trigger</span></div>
-<div class="line"><span class="lineno">  296</span>    EXTI-&gt;FTSR |= (1 &lt;&lt; pin); <span class="comment">// Enable falling edge trigger</span></div>
-<div class="line"><span class="lineno">  297</span>  }</div>
-<div class="line"><span class="lineno">  298</span> </div>
-<div class="line"><span class="lineno">  299</span>  <span class="comment">// Set priority and set-enable interrupt</span></div>
-<div class="line"><span class="lineno">  300</span>  <span class="keywordflow">if</span> (pin &lt;= 4) {</div>
-<div class="line"><span class="lineno">  301</span>    <a class="code hl_define" href="../../d7/d60/group__reg__map.html#gaa7924766f430fd0e3837e8f7f2db1547">NVIC</a>-&gt;IPR[6 + pin] = (priority &lt;&lt; 4);</div>
-<div class="line"><span class="lineno">  302</span>    <a class="code hl_define" href="../../d7/d60/group__reg__map.html#gaa7924766f430fd0e3837e8f7f2db1547">NVIC</a>-&gt;ISER[0] |= (1 &lt;&lt; (6 + pin));</div>
-<div class="line"><span class="lineno">  303</span>  } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (pin &lt;= 9) {</div>
-<div class="line"><span class="lineno">  304</span>    <a class="code hl_define" href="../../d7/d60/group__reg__map.html#gaa7924766f430fd0e3837e8f7f2db1547">NVIC</a>-&gt;IPR[23] = (priority &lt;&lt; 4);</div>
-<div class="line"><span class="lineno">  305</span>    <a class="code hl_define" href="../../d7/d60/group__reg__map.html#gaa7924766f430fd0e3837e8f7f2db1547">NVIC</a>-&gt;ISER[0] |= (1 &lt;&lt; 23);</div>
-<div class="line"><span class="lineno">  306</span>  } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">  307</span>    <a class="code hl_define" href="../../d7/d60/group__reg__map.html#gaa7924766f430fd0e3837e8f7f2db1547">NVIC</a>-&gt;IPR[40] = (priority &lt;&lt; 4);</div>
-<div class="line"><span class="lineno">  308</span>    <a class="code hl_define" href="../../d7/d60/group__reg__map.html#gaa7924766f430fd0e3837e8f7f2db1547">NVIC</a>-&gt;ISER[1] |= (1 &lt;&lt; 8);</div>
-<div class="line"><span class="lineno">  309</span>  }</div>
-<div class="line"><span class="lineno">  310</span> </div>
-<div class="line"><span class="lineno">  311</span>  <a class="code hl_variable" href="../../d8/da0/gpio_8c.html#a7314a7a112e62c5091d66d33ec36c413">gpio_isr_functions</a>[pin] = handler;</div>
-<div class="line"><span class="lineno">  312</span> </div>
-<div class="line"><span class="lineno">  313</span>  <span class="keywordflow">return</span> 0;</div>
-<div class="line"><span class="lineno">  314</span>}</div>
+<dl class="todo"><dt><b><a class="el" href="../../dd/da0/todo.html#_todo000008">Todo:</a></b></dt><dd>Check if the GPIO port is correct and if it is initialized. </dd></dl>
+<div class="fragment"><div class="line"><span class="lineno">  252</span>                                                                                                                 {</div>
+<div class="line"><span class="lineno">  253</span>  <span class="keywordflow">if</span> (pin &gt; 15) {</div>
+<div class="line"><span class="lineno">  254</span>    <a class="code hl_variable" href="../../d3/d14/group__errvar.html#ga5307a02392eb82c21b66dc029fc3900f">errnum</a> = 1;  <span class="comment">// GPIO error</span></div>
+<div class="line"><span class="lineno">  255</span>    <a class="code hl_variable" href="../../d3/d14/group__errvar.html#ga9920935c0cd3c9050ba4197c399c9615">errcode</a> = 2;  <span class="comment">// Wrong pin number</span></div>
+<div class="line"><span class="lineno">  256</span>    <span class="keywordflow">return</span> 1;</div>
+<div class="line"><span class="lineno">  257</span>  }</div>
+<div class="line"><span class="lineno">  258</span>  <span class="keywordflow">if</span> (rising_edge &gt; 1) {</div>
+<div class="line"><span class="lineno">  259</span>    <a class="code hl_variable" href="../../d3/d14/group__errvar.html#ga5307a02392eb82c21b66dc029fc3900f">errnum</a> = 1;  <span class="comment">// GPIO error</span></div>
+<div class="line"><span class="lineno">  260</span>    <a class="code hl_variable" href="../../d3/d14/group__errvar.html#ga9920935c0cd3c9050ba4197c399c9615">errcode</a> = 6;  <span class="comment">// Wrong value for trigger selection</span></div>
+<div class="line"><span class="lineno">  261</span>    <span class="keywordflow">return</span> 1;  <span class="comment">// Can only be 0 or 1</span></div>
+<div class="line"><span class="lineno">  262</span>  }</div>
+<div class="line"><span class="lineno">  263</span>  <span class="keywordflow">if</span> (priority &gt; 15) {</div>
+<div class="line"><span class="lineno">  264</span>    <a class="code hl_variable" href="../../d3/d14/group__errvar.html#ga5307a02392eb82c21b66dc029fc3900f">errnum</a> = 1;  <span class="comment">// GPIO error</span></div>
+<div class="line"><span class="lineno">  265</span>    <a class="code hl_variable" href="../../d3/d14/group__errvar.html#ga9920935c0cd3c9050ba4197c399c9615">errcode</a> = 7; <span class="comment">// Wrong interrupt priority</span></div>
+<div class="line"><span class="lineno">  266</span>    <span class="keywordflow">return</span> 1;</div>
+<div class="line"><span class="lineno">  267</span>  } </div>
+<div class="line"><span class="lineno">  268</span>    </div>
+<div class="line"><span class="lineno">  269</span>  uint8_t exti_source_input;</div>
+<div class="line"><span class="lineno">  270</span> </div>
+<div class="line"><span class="lineno">  271</span>  <span class="keywordflow">if</span> (port == GPIOA)</div>
+<div class="line"><span class="lineno">  272</span>    exti_source_input = 0;</div>
+<div class="line"><span class="lineno">  273</span>  <span class="keywordflow">else</span> <span class="keywordflow">if</span> (port == GPIOB)</div>
+<div class="line"><span class="lineno">  274</span>    exti_source_input = 1;</div>
+<div class="line"><span class="lineno">  275</span>  <span class="keywordflow">else</span> <span class="keywordflow">if</span> (port == GPIOC)</div>
+<div class="line"><span class="lineno">  276</span>    exti_source_input = 2;</div>
+<div class="line"><span class="lineno">  277</span>  <span class="keywordflow">else</span> <span class="keywordflow">if</span> (port == GPIOH)</div>
+<div class="line"><span class="lineno">  278</span>    exti_source_input = 7;</div>
+<div class="line"><span class="lineno">  279</span>  <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">  280</span>    <a class="code hl_variable" href="../../d3/d14/group__errvar.html#ga5307a02392eb82c21b66dc029fc3900f">errnum</a> = 1;  <span class="comment">// GPIO error</span></div>
+<div class="line"><span class="lineno">  281</span>    <a class="code hl_variable" href="../../d3/d14/group__errvar.html#ga9920935c0cd3c9050ba4197c399c9615">errcode</a> = 1;  <span class="comment">// Wrong GPIO port</span></div>
+<div class="line"><span class="lineno">  282</span>    <span class="keywordflow">return</span> 1;</div>
+<div class="line"><span class="lineno">  283</span>  }</div>
+<div class="line"><span class="lineno">  284</span> </div>
+<div class="line"><span class="lineno">  285</span>  RCC-&gt;APB2ENR |= (1 &lt;&lt; 14);    <span class="comment">// Enable system configuration controller clock</span></div>
+<div class="line"><span class="lineno">  286</span>  SYSCFG-&gt;EXTICR[pin / 4] &amp;= ~(0xF &lt;&lt; (pin % 4) * 4); <span class="comment">// Clear register</span></div>
+<div class="line"><span class="lineno">  287</span>  SYSCFG-&gt;EXTICR[pin / 4] |= (exti_source_input &lt;&lt; (pin % 4) * 4);  <span class="comment">// Select source input for the EXTIx</span></div>
+<div class="line"><span class="lineno">  288</span>  </div>
+<div class="line"><span class="lineno">  289</span>  EXTI-&gt;IMR |= (1 &lt;&lt; pin);  <span class="comment">// Set pin in EXTI line as interrupt</span></div>
+<div class="line"><span class="lineno">  290</span>  <span class="keywordflow">if</span> (rising_edge == 1) {</div>
+<div class="line"><span class="lineno">  291</span>    EXTI-&gt;RTSR |= (1 &lt;&lt; pin); <span class="comment">// Enable rising edge trigger</span></div>
+<div class="line"><span class="lineno">  292</span>    EXTI-&gt;FTSR &amp;= ~(1 &lt;&lt; pin);  <span class="comment">// Disable falling edge trigger</span></div>
+<div class="line"><span class="lineno">  293</span>  } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">  294</span>    EXTI-&gt;RTSR &amp;= ~(1 &lt;&lt; pin);  <span class="comment">// Disable rising edge trigger</span></div>
+<div class="line"><span class="lineno">  295</span>    EXTI-&gt;FTSR |= (1 &lt;&lt; pin); <span class="comment">// Enable falling edge trigger</span></div>
+<div class="line"><span class="lineno">  296</span>  }</div>
+<div class="line"><span class="lineno">  297</span> </div>
+<div class="line"><span class="lineno">  298</span>  <span class="comment">// Set priority and set-enable interrupt</span></div>
+<div class="line"><span class="lineno">  299</span>  <span class="keywordflow">if</span> (pin &lt;= 4) {</div>
+<div class="line"><span class="lineno">  300</span>    <a class="code hl_define" href="../../d7/d60/group__reg__map.html#gaa7924766f430fd0e3837e8f7f2db1547">NVIC</a>-&gt;IPR[6 + pin] = (priority &lt;&lt; 4);</div>
+<div class="line"><span class="lineno">  301</span>    <a class="code hl_define" href="../../d7/d60/group__reg__map.html#gaa7924766f430fd0e3837e8f7f2db1547">NVIC</a>-&gt;ISER[0] |= (1 &lt;&lt; (6 + pin));</div>
+<div class="line"><span class="lineno">  302</span>  } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (pin &lt;= 9) {</div>
+<div class="line"><span class="lineno">  303</span>    <a class="code hl_define" href="../../d7/d60/group__reg__map.html#gaa7924766f430fd0e3837e8f7f2db1547">NVIC</a>-&gt;IPR[23] = (priority &lt;&lt; 4);</div>
+<div class="line"><span class="lineno">  304</span>    <a class="code hl_define" href="../../d7/d60/group__reg__map.html#gaa7924766f430fd0e3837e8f7f2db1547">NVIC</a>-&gt;ISER[0] |= (1 &lt;&lt; 23);</div>
+<div class="line"><span class="lineno">  305</span>  } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">  306</span>    <a class="code hl_define" href="../../d7/d60/group__reg__map.html#gaa7924766f430fd0e3837e8f7f2db1547">NVIC</a>-&gt;IPR[40] = (priority &lt;&lt; 4);</div>
+<div class="line"><span class="lineno">  307</span>    <a class="code hl_define" href="../../d7/d60/group__reg__map.html#gaa7924766f430fd0e3837e8f7f2db1547">NVIC</a>-&gt;ISER[1] |= (1 &lt;&lt; 8);</div>
+<div class="line"><span class="lineno">  308</span>  }</div>
+<div class="line"><span class="lineno">  309</span> </div>
+<div class="line"><span class="lineno">  310</span>  <a class="code hl_variable" href="../../d8/da0/gpio_8c.html#a7314a7a112e62c5091d66d33ec36c413">gpio_isr_functions</a>[pin] = handler;</div>
+<div class="line"><span class="lineno">  311</span> </div>
+<div class="line"><span class="lineno">  312</span>  <span class="keywordflow">return</span> 0;</div>
+<div class="line"><span class="lineno">  313</span>}</div>
 <div class="ttc" id="agpio_8c_html_a7314a7a112e62c5091d66d33ec36c413"><div class="ttname"><a href="../../d8/da0/gpio_8c.html#a7314a7a112e62c5091d66d33ec36c413">gpio_isr_functions</a></div><div class="ttdeci">static void(* gpio_isr_functions[16])(void)</div><div class="ttdoc">Array of function pointers to be executed when an interrupt occurs.</div><div class="ttdef"><b>Definition:</b> gpio.c:42</div></div>
 <div class="ttc" id="agroup__reg__map_html_gaa7924766f430fd0e3837e8f7f2db1547"><div class="ttname"><a href="../../d7/d60/group__reg__map.html#gaa7924766f430fd0e3837e8f7f2db1547">NVIC</a></div><div class="ttdeci">#define NVIC</div><div class="ttdoc">Vector Table for Nested Vectored Interrupt Controller (NVIC)</div><div class="ttdef"><b>Definition:</b> stm32f410rb.h:228</div></div>
 </div><!-- fragment -->

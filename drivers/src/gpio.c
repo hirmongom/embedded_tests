@@ -248,7 +248,6 @@ int gpioPinToggle(GPIO_Type *port, uint8_t pin, uint8_t *old_value) {
  *              the appropriate error codes.
  *
  * @todo        Check if the GPIO port is correct and if it is initialized.
- * @todo        Clarify the allowed range for the priority parameter and which value is higher prio
  */
 int gpioInterruptSet(GPIO_Type *port, uint8_t pin, uint8_t rising_edge, uint8_t priority, void (*handler)(void)) {
   if (pin > 15) {
