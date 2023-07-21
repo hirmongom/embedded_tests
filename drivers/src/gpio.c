@@ -322,7 +322,7 @@ int gpioInterruptSet(GPIO_Type *port, uint8_t pin, uint8_t rising_edge, uint8_t 
  *              gpio_isr_functions[0].
  *              After handling the interrupt, it clears the interrupt flag for EXTI line 0.
  */
-static void EXTI0_ISR (void) {
+void EXTI0_ISR (void) {
   if (EXTI->PR & (1 << 0)) {
     gpio_isr_functions[0]();
     EXTI->PR |= (1 << 0);    // Clear flag
@@ -338,7 +338,7 @@ static void EXTI0_ISR (void) {
  *              gpio_isr_functions[1].
  *              After handling the interrupt, it clears the interrupt flag for EXTI line 1.
  */
-static void EXTI1_ISR (void) {
+void EXTI1_ISR (void) {
   if (EXTI->PR & (1 << 1)) {
     gpio_isr_functions[1]();
     EXTI->PR |= (1 << 1);    // Clear flag
@@ -354,7 +354,7 @@ static void EXTI1_ISR (void) {
  *              gpio_isr_functions[2].
  *              After handling the interrupt, it clears the interrupt flag for EXTI line 2.
  */
-static void EXTI2_ISR (void) {
+void EXTI2_ISR (void) {
   if (EXTI->PR & (1 << 2)) {
     gpio_isr_functions[2]();
     EXTI->PR |= (1 << 2);    // Clear flag
@@ -370,7 +370,7 @@ static void EXTI2_ISR (void) {
  *              gpio_isr_functions[3].
  *              After handling the interrupt, it clears the interrupt flag for EXTI line 3.
  */
-static void EXTI3_ISR (void) {
+void EXTI3_ISR (void) {
   if (EXTI->PR & (1 << 3)) {
     gpio_isr_functions[3]();
     EXTI->PR |= (1 << 3);    // Clear flag
@@ -386,7 +386,7 @@ static void EXTI3_ISR (void) {
  *              gpio_isr_functions[4].
  *              After handling the interrupt, it clears the interrupt flag for EXTI line 4.
  */
-static void EXTI4_ISR (void) {
+void EXTI4_ISR (void) {
   if (EXTI->PR & (1 << 4)) {
     gpio_isr_functions[4]();
     EXTI->PR |= (1 << 4);    // Clear flag
@@ -403,7 +403,7 @@ static void EXTI4_ISR (void) {
  *              After handling the interrupts, it clears the corresponding interrupt flags for 
  *              EXTI lines 5 to 9.
  */
-static void EXTI9_5_ISR (void) {
+void EXTI9_5_ISR (void) {
   for (int i = 5; i <= 9; i++) {
     if (EXTI->PR & (1 << i)) {
       gpio_isr_functions[i]();
@@ -422,7 +422,7 @@ static void EXTI9_5_ISR (void) {
  *              After handling the interrupts, it clears the corresponding interrupt flags for 
  *              EXTI lines 10 to 15.
  */
-static void EXTI15_10_ISR (void) {
+void EXTI15_10_ISR (void) {
   for (int i = 10; i <= 15; i++) {
     if (EXTI->PR & (1 << i)) {
       gpio_isr_functions[i]();
