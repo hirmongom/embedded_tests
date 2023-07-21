@@ -1,10 +1,10 @@
 var searchData=
 [
-  ['sscgr_0',['SSCGR',['../d2/d43/group__rcc__reg.html#af9a4ee28e663f53b895e6c54ca2f1e74',1,'RCC_Type']]],
-  ['stir_1',['STIR',['../d2/dc9/group__nvic__reg.html#a0b0d7f3131da89c659a2580249432749',1,'NVIC_Type']]],
-  ['stm32f410rb_20microcontroller_20applications_2',['STM32F410RB Microcontroller Applications',['../index.html',1,'']]],
-  ['stm32f410rb_2eh_3',['stm32f410rb.h',['../d4/d8f/group__stm32.html',1,'']]],
-  ['swier_4',['SWIER',['../d1/d32/group__exti__reg.html#a5f27ff5fe8900b09e7188f4c36981fc8',1,'EXTI_Type']]],
-  ['syscfg_5',['SYSCFG',['../d6/dc0/group__syscfg__reg.html',1,'']]],
-  ['syscfg_5ftype_6',['SYSCFG_Type',['../d6/dc0/group__syscfg__reg.html#d3/d0b/structSYSCFG__Type',1,'']]]
+  ['rcc_0',['RCC',['../d2/d43/group__rcc__reg.html',1,'']]],
+  ['rcc_5ftype_1',['RCC_Type',['../d2/d43/group__rcc__reg.html#d1/dc5/structRCC__Type',1,'']]],
+  ['register_20base_20addresses_2',['Register Base Addresses',['../d3/d05/group__base__addr.html',1,'']]],
+  ['register_20structure_20mapping_3',['Register Structure Mapping',['../d7/d60/group__reg__map.html',1,'']]],
+  ['register_20type_20structs_4',['Register Type Structs',['../d0/dd9/group__register__type.html',1,'']]],
+  ['reset_5fisr_5',['Reset_ISR',['../d3/df1/startup_8c.html#a8e29cc375b0d2bde9bfd35e9fc490e13',1,'startup.c']]],
+  ['rtsr_6',['RTSR',['../d1/d32/group__exti__reg.html#a2c2aeaf5a85c63e7f02c472b613167d9',1,'EXTI_Type']]]
 ];

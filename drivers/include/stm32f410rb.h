@@ -10,7 +10,7 @@
  * 
  * @author      Hiram Montejano Gómez
  * 
- * @date        Last Updated:   20/07/2023
+ * @date        Last Updated:   21/07/2023
  * 
  * @copyright   This file is part of the "STM32F10RB Microcontroller Applications" project.
  * 
@@ -41,16 +41,15 @@
  * @ingroup     stm32
  */
 
+
 /**
  * @defgroup    access_modifiers Access Modifiers
  * @ingroup     reg_def
  * @{
  */
-
 #define     __I     volatile const    // Defines 'read only' permissions
 #define     __O     volatile          // Defines 'write only' permissions
 #define     __IO    volatile          // Defines 'read/write' permissions
-
 /** @} */
 
 
@@ -58,6 +57,7 @@
  * @defgroup    register_type Register Type Structs
  * @ingroup     stm32
  */
+
 
 /***************************************************************************************************
  * @brief       SYSCFG register structure
@@ -197,13 +197,11 @@ typedef struct {
 /** @} */
 
 
-/********************* Peripheral Memory Map ********************/
-/**
+/***************************************************************************************************
  * @defgroup    base_addr Register Base Addresses
  * @ingroup     reg_def
  * @{
  */
-
 #define SYSCFG_BASE_ADDR    (0x40013800UL)
 #define EXTI_BASE_ADDR      (0x40013C00UL)
 #define GPIOA_BASE_ADDR     (0x40020000UL)
@@ -212,16 +210,14 @@ typedef struct {
 #define GPIOH_BASE_ADDR     (0x40021C00UL)
 #define RCC_BASE_ADDR       (0x40023800UL)
 #define NVIC_BASE_ADDR      (0xE000E100UL)
-
 /** @} */
 
-/********************* Peripheral Declaration ********************/
-/**
+
+/***************************************************************************************************
  * @defgroup    reg_map Register Structure Mapping
  * @ingroup     reg_def
  * @{
  */
-
 #define SYSCFG              ((SYSCFG_Type*) SYSCFG_BASE_ADDR)
 #define EXTI                ((EXTI_Type*)   EXTI_BASE_ADDR)
 #define GPIOA               ((GPIO_Type*)   GPIOA_BASE_ADDR)
@@ -230,7 +226,7 @@ typedef struct {
 #define GPIOH               ((GPIO_Type*)   GPIOH_BASE_ADDR)
 #define RCC                 ((RCC_Type*)    RCC_BASE_ADDR)
 #define NVIC                ((NVIC_Type*)   NVIC_BASE_ADDR)
-
 /** @} */
+
 
 #endif

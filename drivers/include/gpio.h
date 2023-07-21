@@ -11,7 +11,7 @@
  * 
  * @author      Hiram Montejano Gómez
  * 
- * @date        Last Updated:   20/07/2023
+ * @date        Last Updated:   21/07/2023
  * 
  * @todo        Functions for Analog or Afsel
  * @todo        Output type configuration
@@ -34,6 +34,7 @@
  *              see <http://www.gnu.org/licenses/>.
  */
 
+
 #ifndef GPIO_H
 #define GPIO_H
 
@@ -45,6 +46,7 @@
  * @defgroup    gpio_enum GPIO Configuration Enums 
  * @ingroup     gpio
  */
+
 
 /***************************************************************************************************
  * @brief       GPIO mode options.
@@ -107,11 +109,11 @@ typedef enum {
 } GpioPullType;
 
 
-
 /**
  * @defgroup    gpio_func GPIO Functions
  * @ingroup     gpio 
  */
+
 
 /***************************************************************************************************
  * @brief       Configures the mode of a GPIO pin.
@@ -198,5 +200,6 @@ int gpioPinToggle(GPIO_Type *port, uint8_t pin, uint8_t *old_value);
  * @ingroup     gpio_func
  */
 int gpioInterruptSet(GPIO_Type *port, uint8_t pin, uint8_t rising_edge, uint8_t priority, void (*handler)(void));
+
 
 #endif

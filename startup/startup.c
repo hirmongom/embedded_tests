@@ -12,7 +12,7 @@
  * 
  * @author      Hiram Montejano Gómez
  * 
- * @date        Last Updated:   15/07/2023
+ * @date        Last Updated:   21/07/2023
  * 
  * @copyright   This file is part of the "STM32F10RB Microcontroller Applications" project.
  * 
@@ -31,18 +31,30 @@
  *              see <http://www.gnu.org/licenses/>.
  */
 
+
 #include <stdint.h>
+
+
+extern uint32_t _etext;
+extern uint32_t _sdata;
+extern uint32_t _edata;
+extern uint32_t _sbss;
+extern uint32_t _ebss;
 
 #define     SRAM_START      (0x20000000U)
 #define     SRAM_SIZE       (32U * 1024U)
 #define     SRAM_END        (SRAM_START + SRAM_SIZE)
 #define     STACK_START     (SRAM_END)
 
+
+/***************************************************************************************************
+ * @brief       Macro to define the attributes of an overridable function
+ */
 #define OVERRIDABLE_ISR     __attribute__((weak, alias("Default_ISR")))
+
 
 void Default_ISR(void);
 void Reset_ISR(void);
-
 void NMI_ISR(void);
 void HardFault_ISR(void);
 void MemManage_ISR(void);
@@ -111,19 +123,22 @@ void I2C4_ER_ISR(void)                  OVERRIDABLE_ISR;
 void EXTI23_LPTIM1_ISR(void)            OVERRIDABLE_ISR;
 
 
-/**
- * @brief Vector Table for Nested Vectored Interrupt Controller (NVIC)
+/***************************************************************************************************
+ * @brief       Vector Table for Nested Vectored Interrupt Controller (NVIC)
+ * @var         uint32_t NVIC[]
  *
- * This array represents the vector table used by the Nested Vectored Interrupt Controller (NVIC)
- * to handle various interrupts and exceptions in the system. Each entry in the table corresponds
- * to a specific interrupt or exception and points to the corresponding interrupt service routine (ISR).
+ * @details     This array represents the vector table used by the Nested Vectored Interrupt 
+ *              Controller (NVIC) to handle various interrupts and exceptions in the system. 
+ *              Each entry in the table corresponds to a specific interrupt or exception and 
+ *              points to the corresponding interrupt service routine (ISR).
  *
- * @note The vector table is defined as an array of 32-bit unsigned integers (uint32_t).
+ * @note        The vector table is defined as an array of 32-bit unsigned integers (uint32_t).
  *
- * @warning Modifying the vector table requires a deep understanding of the system's interrupt handling
- * mechanisms and should only be done with caution and in accordance with the RM0401 reference manual.
+ * @warning     Modifying the vector table requires a deep understanding of the system's interrupt 
+ *              handling mechanisms and should only be done with caution and in accordance with the RM0401 reference manual.
  *
- * @see RM0401 Reference Manual, Page 198 for more information on the NVIC and the vector table.
+ * @see         RM0401 Reference Manual, Page 198 for more information on the NVIC and the vector 
+ *              table.
  */
 uint32_t NVIC[] __attribute__((section(".isr_vector"))) = {
   STACK_START,
@@ -243,28 +258,24 @@ uint32_t NVIC[] __attribute__((section(".isr_vector"))) = {
   (uint32_t)&EXTI23_LPTIM1_ISR
 };
 
-extern uint32_t _etext;
-extern uint32_t _sdata;
-extern uint32_t _edata;
-extern uint32_t _sbss;
-extern uint32_t _ebss;
 
-/**
- * @brief Main function
+/***************************************************************************************************
+ * @brief       Main function
  *
- * This is the entry point of the program. It is called after the reset sequence and
- * performs necessary initialization before calling the user-defined main function.
+ * @details     This is the entry point of the program. It is called after the reset sequence and
+ *              performs necessary initialization before calling the user-defined main function.
  *
- * @return Integer value representing the exit status of the program.
+ * @return      Integer value representing the exit status of the program.
  */
 int main(void);
 
-/**
- * @brief Reset Interrupt Service Routine (ISR)
+
+/***************************************************************************************************
+ * @brief       Reset Interrupt Service Routine (ISR)
  *
- * This ISR is invoked when a reset occurs. It is responsible for initializing
- * the .data section by copying the data from FLASH to SRAM, initializing the .bss section
- * by setting it to zero, and then calling the user-defined main function.
+ * @details     This ISR is invoked when a reset occurs. It is responsible for initializing the 
+ *              .data section by copying the data from FLASH to SRAM, initializing the .bss section
+ *              by setting it to zero, and then calling the user-defined main function.
  */
 void Reset_ISR(void) {
   // Copy .data section to SRAM
@@ -317,31 +328,69 @@ void Reset_ISR(void) {
   main();
 }
 
+
+/***************************************************************************************************
+ * @brief       Non-Maskable Interrupt Service Routine (ISR)
+ *
+ * @details     This ISR is invoked when a Non-Maskable Interrupt (NMI) occurs.
+ *              Currently, it enters an infinite loop, effectively halting the system.
+ */
 void NMI_ISR(void) {
   while(1);
 }
 
+
+/***************************************************************************************************
+ * @brief       Hard Fault Interrupt Service Routine (ISR)
+ *
+ * @details     This ISR is invoked when a Hard Fault occurs.
+ *              Currently, it enters an infinite loop, effectively halting the system.
+ */
 void HardFault_ISR(void) {
   while(1);
 }
 
+
+/***************************************************************************************************
+ * @brief       Memory Management Fault Interrupt Service Routine (ISR)
+ *
+ * @details     This ISR is invoked when a Memory Management Fault occurs.
+ *              Currently, it enters an infinite loop, effectively halting the system.
+ */
 void MemManage_ISR(void) {
   while(1);
 }
 
+
+/***************************************************************************************************
+ * @brief       Bus Fault Interrupt Service Routine (ISR)
+ *
+ * @details     This ISR is invoked when a Bus Fault occurs.
+ *              Currently, it enters an infinite loop, effectively halting the system.
+ */
 void BusFault_ISR(void) {
   while(1);
 }
 
+
+/***************************************************************************************************
+ * @brief       Usage Fault Interrupt Service Routine (ISR)
+ *
+ * @details     This ISR is invoked when a Usage Fault occurs.
+ *              Currently, it enters an infinite loop, effectively halting the system.
+ */
 void UsageFault_ISR(void) {
   while(1);
 }
 
-/**
- * @brief Default Interrupt Service Routine (ISR)
+
+/***************************************************************************************************
+ * @brief       Default Interrupt Service Routine (ISR)
  *
- * This ISR is a placeholder for all other interrupts that do not have a dedicated ISR defined.
- * It enters an infinite loop, effectively halting the system when an unexpected interrupt occurs.
+ * @details     This ISR is a placeholder for all other interrupts that do not have a dedicated ISR 
+ *              defined.
+ *              It enters an infinite loop, effectively halting the system when an unexpected 
+ *              interrupt occurs.
  */
 void Default_ISR(void) {
   while(1);

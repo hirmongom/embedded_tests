@@ -12,11 +12,11 @@
  *              The error information is stored in a 32-bit memory location, allowing 
  *              for convenient access and manipulation of the error number and error code 
  *              using a single variable. The structure contains two 16-bit fields:
- *              `errorNumber` and `errorCode`.
+ *              `errorNumber`(errnum) and `errorCode`(errcode).
  * 
  * @author      Hiram Montejano Gómez
  * 
- * @date        Last Updated:   20/07/2023
+ * @date        Last Updated:   21/07/2023
  * 
  * @copyright   This file is part of the "STM32F10RB Microcontroller Applications" project.
  * 
@@ -47,7 +47,6 @@
  * @ingroup     errors
  * @{
  */
-
 /***************************************************************************************************
  * @brief       Error number variable.
  *
@@ -72,7 +71,6 @@ uint16_t errnum;
  * @note        This variable is located in the ".err" section.
  */
 uint16_t errcode;
-
 /** @} */
 
 
