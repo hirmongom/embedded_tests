@@ -1,5 +1,1 @@
-- Document stm32f410rb.h propperly
-- Document startup.c properly
-- Test behaviour of gpio interrupts with exti_isrs as static in gpio.c
-- Understand priorities and update gpioInterruptSet() behaviour accordingly
 - Proper error number and code documentation

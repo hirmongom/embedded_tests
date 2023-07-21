@@ -46,10 +46,10 @@ int main(void) {
   gpioPinPullTypeSetup(GPIOC, 4, kPullDown);
   gpioPinPullTypeSetup(GPIOC, 7, kPullDown);
   gpioPinPullTypeSetup(GPIOA, 12, kPullDown);
-  gpioInterruptSet(GPIOC, 13, 1, 12, buttonHandler1);
-  gpioInterruptSet(GPIOC, 4, 1, 9, buttonHandler2);
-  gpioInterruptSet(GPIOC, 7, 1, 10, buttonHandler3);
-  gpioInterruptSet(GPIOA, 12, 1, 8, buttonHandler4);
+  gpioInterruptSet(GPIOC, 13, 1, 13, buttonHandler1);
+  gpioInterruptSet(GPIOC, 4, 1, 15, buttonHandler2);
+  gpioInterruptSet(GPIOC, 7, 1, 14, buttonHandler3);
+  gpioInterruptSet(GPIOA, 12, 1, 0, buttonHandler4);
 
   while (1) {}
 }

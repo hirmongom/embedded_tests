@@ -261,7 +261,7 @@ int gpioInterruptSet(GPIO_Type *port, uint8_t pin, uint8_t rising_edge, uint8_t 
     errcode = 6;  // Wrong value for trigger selection
     return 1;  // Can only be 0 or 1
   }
-  if (priority < 7) {
+  if (priority > 15) {
     errnum = 1;  // GPIO error
     errcode = 7; // Wrong interrupt priority
     return 1;
@@ -298,13 +298,13 @@ int gpioInterruptSet(GPIO_Type *port, uint8_t pin, uint8_t rising_edge, uint8_t 
 
   // Set priority and set-enable interrupt
   if (pin <= 4) {
-    NVIC->IPR[6 + pin] |= (priority << 4);
+    NVIC->IPR[6 + pin] = (priority << 4);
     NVIC->ISER[0] |= (1 << (6 + pin));
   } else if (pin <= 9) {
-    NVIC->IPR[23] |= (priority << 4);
+    NVIC->IPR[23] = (priority << 4);
     NVIC->ISER[0] |= (1 << 23);
   } else {
-    NVIC->IPR[40] |= (priority << 4);
+    NVIC->IPR[40] = (priority << 4);
     NVIC->ISER[1] |= (1 << 8);
   }
 
