@@ -40,3 +40,30 @@
 
 __attribute__((section(".err"))) uint16_t errnum = 0;
 __attribute__((section(".err"))) uint16_t errcode = 0;
+
+
+/***************************************************************************************************
+ * @details     This function is used to indicate and handle various error conditions in the system.
+ *              It sets the "errnum" and "errcode" variables to specify the type of error and its
+ *              code, respectively. After setting the error information, the function enters an
+ *              infinite loop to halt the program's execution. During this loop, the built-in LED
+ *              connected to pin PA5 (Port A, Pin 5) blinks in a pattern/delay that identifies
+ *              the type of error.
+ *
+ * @note        The error handling loop in this function is intended to stop the program execution
+ *              when an error occurs. Developers should ensure that the error conditions are 
+ *              properly handled and that the program can recover or exit gracefully based on the 
+ *              error type and code set by this function.
+ *              
+ * @warning     The behavior of the error handling loop and LED blinking pattern/delay may vary 
+ *              based on the specific implementation and hardware configuration.
+ * 
+ * @todo        Implement
+ */
+void triggerError(uint16_t number, uint16_t code) {
+  // Set error vars
+
+  // Initialize GPIOA pin 5
+
+  // Enter loop
+}

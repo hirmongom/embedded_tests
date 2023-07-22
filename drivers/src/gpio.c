@@ -57,6 +57,92 @@ static inline void delay() {
 
 
 /***************************************************************************************************
+ * @brief       Check if a GPIO port is initialized
+ *
+ * @details     This function checks if a specific GPIO port is initialized by verifying that the 
+ *              corresponding bit in the AHB1ENR (Advanced High-performance Bus 1 Enable Register)
+ *              of the RCC (Reset and Clock Control) is set. The AHB1ENR register is used to enable 
+ *              the clock for various peripherals, including GPIO ports.
+ *
+ * @param       port    The GPIO port to check for initialization.
+ *
+ * @return      0 if the port is not initialized and enabled.
+ *              1 if the port is initialized and enabled.
+ */
+static inline int checkGpioPortInit(GPIO_Type port) {
+  if (port == GPIOA) {
+    if (!(RCC->AHB1ENR & (1 << 0))) {
+      return 0;
+    }
+  } else if (port == GPIOB) {
+    if (!(RCC->AHB1ENR & (1 << 1))) {
+      return 0;
+    } 
+  }
+  else if (port == GPIOC) {
+    if (!(RCC->AHB1ENR & (1 << 2))) {
+      return 0;
+    }
+  }
+  else if (port == GPIOH) {
+    if (!(RCC->AHB1ENR & (1 << 7))) {
+      return 0;
+    }
+  }
+  else {
+    errnum = 1;  // GPIO error
+    errcode = 1;  // Wrong GPIO port
+    return 1;
+  }
+
+  errnum 1; // GPIO error
+  errcode = 3;  // Uninitialized port
+  return 1;
+}
+
+
+/***************************************************************************************************
+ * @brief       Checks the validity of a GPIO pin number.
+ * 
+ * @details     This function checks if the given GPIO pin number is within the valid range 
+ *              (0 to 15).
+ * 
+ * @param       pin   The GPIO pin number to check (0 to 15).
+ * 
+ * @return      Returns 0 if the pin number is valid, otherwise returns 1.
+ */
+static inline int checkGpioValidPin(uint8_t pin) {
+  if (pin > 15) {
+    errnum = 1;  // GPIO error
+    errcode = 2;  // Wrong pin number
+    return 1;
+  }
+
+  return 0;
+}
+
+
+/***************************************************************************************************
+ * @brief       Checks if the mode of the GPIO pin is configured as output.
+ * 
+ * @details     This function checks the mode configuration of a specific GPIO pin
+ *              to determine if it is set as an output.
+ * 
+ * @param       port  The GPIO port to check the pin mode for.
+ * @param       pin   The GPIO pin number to check the mode for (0 to 15).
+ * 
+ * @return      Returns 0 if the GPIO pin is configured as output, otherwise returns 1.
+ */
+static inline int checkGpioPinModeOutput(GPIO_Type port, uint8_t pin) {
+  if (port->MODER & (1 << pin * 2)) return 0;
+
+  errno = 1;  // GPIO error
+  errcode = 4;  // GPIO has incompatible mode
+  return 1;
+}
+
+
+/***************************************************************************************************
  * @details     This function configures the mode of a GPIO pin on the STM32F10RB microcontroller.
  *              The pin number should be within the range 0-15. 
  *              The GPIO port is checked for initialization, and if not initialized, it is enabled. 
@@ -68,11 +154,7 @@ static inline void delay() {
  * @todo        Add option to configure port speed
  */
 int gpioPinSetup(GPIO_Type *port, uint8_t pin, GpioMode mode) {
-  if (pin > 15) {
-    errnum = 1;  // GPIO error
-    errcode = 2;  // Wrong pin number
-    return 1;
-  }
+  if (checkGpioValidPin(pin)) return 1; // Given pin is not in range 0..15
 
   // Check if port is initializated, if not, initialize it
   if (port == GPIOA) {
@@ -120,15 +202,10 @@ int gpioPinSetup(GPIO_Type *port, uint8_t pin, GpioMode mode) {
  *              the values from the GpioPullType enumeration.
  *              Upon successful configuration, the function returns 0. Otherwise, 1 is returned and
  *              variables errnum and errcode are set with the error code.
- *
- * @todo        Check if port is correct and if it is initializated
  */
 int gpioPinPullTypeSetup(GPIO_Type *port, uint8_t pin, GpioPullType pull_type) {
-  if (pin > 15) {
-    errnum = 1;  // GPIO error
-    errcode = 2;  // Wrong pin number
-    return 1;
-  }
+  if (checkGpioPortInit(port)) return 1; // Uninitialized port
+  if (checkGpioValidPin(pin)) return 1; // Given pin is not in range 0..15
   
   port->PUPDR &= ~(3 << pin * 2);
   port->PUPDR |= (pull_type << pin * 2);
@@ -146,16 +223,10 @@ int gpioPinPullTypeSetup(GPIO_Type *port, uint8_t pin, GpioPullType pull_type) {
  *              The read value will be either 0 or 1, indicating the logic level of the pin.
  *              If an error occurs, 1 is returned, and variables errnum and errcode are set with
  *              the error code.
- *
- * @todo        Check if the GPIO port is correct and if it is initialized and in the appropriate 
- *              mode.
  */
 int gpioPinRead(GPIO_Type *port, uint8_t pin, uint8_t *read) {
-  if (pin > 15) {
-    errnum = 1;  // GPIO error
-    errcode = 2;  // Wrong pin number
-    return 1;
-  }
+  if (checkGpioPortInit(port)) return 1; // Uninitialized port
+  if (checkGpioValidPin(pin)) return 1; // Given pin is not in range 0..15
   
   uint32_t pin_value = (port->IDR >> pin) & 0x01;
   *read = (uint8_t) pin_value;
@@ -175,16 +246,11 @@ int gpioPinRead(GPIO_Type *port, uint8_t pin, uint8_t *read) {
  *              If the 'value' parameter is 1, the pin is set (set to logic high).
  *              If an error occurs, 1 is returned, and variables errnum and errcode are set with
  *              the error code.
- *
- * @todo        Check if the GPIO port is correct and if it is initialized and in the appropriate 
- *              mode.
  */
 int gpioPinWrite(GPIO_Type *port, uint8_t pin, uint8_t value, uint8_t *old_value) {
-  if (pin > 15) {
-    errnum = 1;  // GPIO error
-    errcode = 2;  // Wrong pin number
-    return 1;
-  }
+  if (checkGpioPortInit(port)) return 1; // Uninitialized port
+  if (checkGpioValidPin(pin)) return 1; // Given pin is not in range 0..15
+  if (checkGpioPinModeOutput(port, pin)) return 1;  // The mode of the pin is not output
   
   uint32_t pin_value = (port->IDR >> pin) & 0x01;
   *old_value = (uint8_t) pin_value;
@@ -214,16 +280,12 @@ int gpioPinWrite(GPIO_Type *port, uint8_t pin, uint8_t value, uint8_t *old_value
  *              it is toggled to low.
  *              If an error occurs, 1 is returned, and variables errnum and errcode are set with
  *              the error code.
- *
- * @todo        Check if the GPIO port is correct and if it is initialized and in the appropriate mode.
  */
 int gpioPinToggle(GPIO_Type *port, uint8_t pin, uint8_t *old_value) {
-  if (pin > 15) {
-    errnum = 1;  // GPIO error
-    errcode = 2;  // Wrong pin number
-    return 1;
-  }
-  
+  if (checkGpioPortInit(port)) return 1; // Uninitialized port
+  if (checkGpioValidPin(pin)) return 1; // Given pin is not in range 0..15;
+  if (checkGpioPinModeOutput(port, pin)) return 1;  // The mode of the pin is not output
+
   uint32_t pin_value = (port->IDR >> pin) & 0x01;
   *old_value = (uint8_t) pin_value;
 
@@ -246,15 +308,11 @@ int gpioPinToggle(GPIO_Type *port, uint8_t pin, uint8_t *old_value) {
  *              Upon successful setup, the function returns 0.
  *              If an error occurs, 1 is returned, and variables errnum and errcode are set with
  *              the appropriate error codes.
- *
- * @todo        Check if the GPIO port is correct and if it is initialized.
  */
 int gpioInterruptSet(GPIO_Type *port, uint8_t pin, uint8_t rising_edge, uint8_t priority, void (*handler)(void)) {
-  if (pin > 15) {
-    errnum = 1;  // GPIO error
-    errcode = 2;  // Wrong pin number
-    return 1;
-  }
+  if (checkGpioPortInit(port)) return 1; // Uninitialized port
+  if (checkGpioValidPin(pin)) return 1; // Given pin is not in range 0..15
+
   if (rising_edge > 1) {
     errnum = 1;  // GPIO error
     errcode = 6;  // Wrong value for trigger selection

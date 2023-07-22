@@ -55,7 +55,7 @@
  *              The value of `errnum` can be accessed and modified from different parts of the code.
  *              Refer to the documentation or code references for specific usage information.
  *
- * @note        This variable is located in the ".err" section.
+ * @note        This variable is located in the ".err" section at address 0x20000000.
  */
 uint16_t errnum;
 
@@ -68,10 +68,26 @@ uint16_t errnum;
  *              The value of `errcode` can be accessed and modified from different parts of the code.
  *              Refer to the documentation or code references for specific usage information.
  *
- * @note        This variable is located in the ".err" section.
+ * @note        This variable is located in the ".err" section at address 0x20000002.
  */
 uint16_t errcode;
 /** @} */
+
+
+/***************************************************************************************************
+ * @brief       Triggers an error condition, sets error information, and enters an error 
+ *              handling loop.
+ *
+ * @param       number  An unsigned 16-bit integer representing the type of error.
+ *                      It is used to set the "errnum" variable, which indicates the type of error.
+ *                      (e.g., GPIO error, peripheral error, etc.)
+ *
+ * @param       code    An unsigned 16-bit integer representing the specific code associated with 
+ *                      the error.
+ *                      It is used to set the "errcode" variable, which provides additional 
+ *                      information about the error condition (e.g., error details, source, etc.).
+ */
+void triggerError(uint16_t number, uint16_t code);
 
 
 #endif
