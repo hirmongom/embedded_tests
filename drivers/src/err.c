@@ -36,6 +36,7 @@
 
 
 #include <stdint.h>
+#include "stm32f410rb.h"
 #include "err.h"
 
 __attribute__((section(".err"))) uint16_t errnum = 0;
@@ -57,13 +58,23 @@ __attribute__((section(".err"))) uint16_t errcode = 0;
  *              
  * @warning     The behavior of the error handling loop and LED blinking pattern/delay may vary 
  *              based on the specific implementation and hardware configuration.
- * 
- * @todo        Implement
  */
 void triggerError(uint16_t number, uint16_t code) {
-  // Set error vars
+  errnum = number;
+  errcode = code;
 
-  // Initialize GPIOA pin 5
+  // Initialize GPIOA if not already initialized
+  if (!(RCC->AHB1ENR & (1 << 0))) {
+    RCC->AHB1ENR |= (1 << 0);
+    for (uint32_t i = 0; i < 10000; i++);
+  }
+  
+  GPIOA->MODER &= ~(3 << 5 * 2);  // Clear previous configuration
+  GPIOA->MODER |= (1 << 5 * 2);   // Set PA5 as output
 
-  // Enter loop
+  // Enter infinite loop
+  while (1) {
+    GPIOA->ODR ^= (1 << 5);
+    for (uint32_t i = 0; i < 1000000; i++);
+  }
 }

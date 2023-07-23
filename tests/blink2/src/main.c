@@ -37,7 +37,7 @@ void buttonHandler3(void);
 void buttonHandler4(void);
 
 int main(void) {
-  gpioPinSetup(GPIOA, 5, kModeOutput);
+  gpioPinSetup(GPIOA, 6, kModeOutput);
   gpioPinSetup(GPIOC, 13, kModeInput);
   gpioPinSetup(GPIOC, 4, kModeInput);
   gpioPinSetup(GPIOC, 7, kModeInput);
@@ -56,21 +56,21 @@ int main(void) {
 
 void buttonHandler1(void) {
   for (int i = 0; i < 20; i++) {
-    gpioPinToggle(GPIOA, 5, NULL);
+    gpioPinToggle(GPIOA, 6, NULL);
     for (int j = 0; j < 100000; j++);
   }
 }
 
 void buttonHandler2(void) {
-  gpioPinToggle(GPIOA, 5, NULL);
+  gpioPinToggle(GPIOA, 6, NULL);
 }
 
 void buttonHandler3(void) {
-  gpioPinToggle(GPIOA, 5, NULL);
+  gpioPinToggle(GPIOA, 6, NULL);
   for (int i = 0; i < 10000000; i++);
-  gpioPinToggle(GPIOA, 5, NULL);
+  gpioPinToggle(GPIOA, 6, NULL);
 }
 
 void buttonHandler4(void) {
-  gpioPinWrite(GPIOA, 5, 0, NULL);
+  gpioPinWrite(GPIOC, 4, 1, NULL);
 }

@@ -69,34 +69,32 @@ static inline void delay() {
  * @return      0 if the port is not initialized and enabled.
  *              1 if the port is initialized and enabled.
  */
-static inline int checkGpioPortInit(GPIO_Type port) {
+static inline int checkGpioPortInit(GPIO_Type *port) {
   if (port == GPIOA) {
-    if (!(RCC->AHB1ENR & (1 << 0))) {
+    if (RCC->AHB1ENR & (1 << 0)) {
       return 0;
     }
   } else if (port == GPIOB) {
-    if (!(RCC->AHB1ENR & (1 << 1))) {
+    if (RCC->AHB1ENR & (1 << 1)) {
       return 0;
     } 
   }
   else if (port == GPIOC) {
-    if (!(RCC->AHB1ENR & (1 << 2))) {
+    if (RCC->AHB1ENR & (1 << 2)) {
       return 0;
     }
   }
   else if (port == GPIOH) {
-    if (!(RCC->AHB1ENR & (1 << 7))) {
+    if (RCC->AHB1ENR & (1 << 7)) {
       return 0;
     }
   }
   else {
-    errnum = 1;  // GPIO error
-    errcode = 1;  // Wrong GPIO port
+    triggerError(1, 1); // Wrong GPIO port
     return 1;
   }
 
-  errnum 1; // GPIO error
-  errcode = 3;  // Uninitialized port
+  triggerError(1, 3); // Uninitialized port
   return 1;
 }
 
@@ -113,8 +111,7 @@ static inline int checkGpioPortInit(GPIO_Type port) {
  */
 static inline int checkGpioValidPin(uint8_t pin) {
   if (pin > 15) {
-    errnum = 1;  // GPIO error
-    errcode = 2;  // Wrong pin number
+    triggerError(1, 2); // Wrong pin number
     return 1;
   }
 
@@ -133,11 +130,10 @@ static inline int checkGpioValidPin(uint8_t pin) {
  * 
  * @return      Returns 0 if the GPIO pin is configured as output, otherwise returns 1.
  */
-static inline int checkGpioPinModeOutput(GPIO_Type port, uint8_t pin) {
+static inline int checkGpioPinModeOutput(GPIO_Type *port, uint8_t pin) {
   if (port->MODER & (1 << pin * 2)) return 0;
 
-  errno = 1;  // GPIO error
-  errcode = 4;  // GPIO has incompatible mode
+  triggerError(1, 4); // Pin has incompatible mode
   return 1;
 }
 
@@ -181,8 +177,7 @@ int gpioPinSetup(GPIO_Type *port, uint8_t pin, GpioMode mode) {
     }
   }
   else {
-    errnum = 1;  // GPIO error
-    errcode = 1;  // Wrong GPIO port
+    triggerError(1, 1); // Wrong GPIO port
     return 1;
   }
 
@@ -260,8 +255,7 @@ int gpioPinWrite(GPIO_Type *port, uint8_t pin, uint8_t value, uint8_t *old_value
   } else if (value == 1) {
     port->ODR |= (1 << pin);
   } else {
-    errnum = 1;  // GPIO error
-    errcode = 5;  // Tried to write wrong value
+    triggerError(1, 5); // Tried to write wrong value
     return 1;
   }
   
@@ -314,13 +308,11 @@ int gpioInterruptSet(GPIO_Type *port, uint8_t pin, uint8_t rising_edge, uint8_t 
   if (checkGpioValidPin(pin)) return 1; // Given pin is not in range 0..15
 
   if (rising_edge > 1) {
-    errnum = 1;  // GPIO error
-    errcode = 6;  // Wrong value for trigger selection
+    triggerError(1, 6); // Wrong value for trigger selection
     return 1;  // Can only be 0 or 1
   }
   if (priority > 15) {
-    errnum = 1;  // GPIO error
-    errcode = 7; // Wrong interrupt priority
+    triggerError(1, 7); // Wrong interrupt priority
     return 1;
   } 
     
@@ -335,14 +327,13 @@ int gpioInterruptSet(GPIO_Type *port, uint8_t pin, uint8_t rising_edge, uint8_t 
   else if (port == GPIOH)
     exti_source_input = 7;
   else {
-    errnum = 1;  // GPIO error
-    errcode = 1;  // Wrong GPIO port
+    triggerError(1, 1); // Wrong GPIO port
     return 1;
   }
 
   RCC->APB2ENR |= (1 << 14);    // Enable system configuration controller clock
   SYSCFG->EXTICR[pin / 4] &= ~(0xF << (pin % 4) * 4); // Clear register
-  SYSCFG->EXTICR[pin / 4] |= (exti_source_input << (pin % 4) * 4);  // Select source input for the EXTIx
+  SYSCFG->EXTICR[pin / 4] |= (exti_source_input << (pin % 4) * 4);  // Select source input for EXTIx
   
   EXTI->IMR |= (1 << pin);  // Set pin in EXTI line as interrupt
   if (rising_edge == 1) {

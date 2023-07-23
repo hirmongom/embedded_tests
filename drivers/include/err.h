@@ -57,7 +57,7 @@
  *
  * @note        This variable is located in the ".err" section at address 0x20000000.
  */
-uint16_t errnum;
+extern uint16_t errnum;
 
 
 /***************************************************************************************************
@@ -70,7 +70,7 @@ uint16_t errnum;
  *
  * @note        This variable is located in the ".err" section at address 0x20000002.
  */
-uint16_t errcode;
+extern uint16_t errcode;
 /** @} */
 
 
