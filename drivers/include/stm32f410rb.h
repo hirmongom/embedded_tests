@@ -170,6 +170,29 @@ typedef struct {
 
 
 /***************************************************************************************************
+ * @brief       USART register structure
+ * 
+ * @details     This structure represents the USART register block, which contains
+ *              configuration and control registers for the Universal Synchronous/Asynchronous 
+ *              Receiver Transmitter
+ * 
+ * @defgroup    usart_reg USART
+ * @ingroup     register_type
+ * @{
+ */
+typedef struct {
+  __I  uint32_t SR;             /**< 0x00 (R) Status */
+  __I  uint32_t DR;             /**< 0x04 (R) Data */
+  __IO uint32_t BRR;            /**< 0x08 (R/W) Baud rate */
+  __IO uint32_t CR1;            /**< 0x0C (R/W) Control 1 */
+  __IO uint32_t CR2;            /**< 0x10 (R/W) Control 2 */
+  __IO uint32_t CR3;            /**< 0x14 (R/W) Control 3 */
+  __IO uint32_t GTPR;           /**< 0x18 (R/W) Guard time and prescaler */
+} USART_Type;
+/** @} */
+
+
+/***************************************************************************************************
  * @brief       NVIC register structure
  *
  * @details     This structure represents the NVIC register block, which contains
@@ -209,6 +232,9 @@ typedef struct {
 #define GPIOC_BASE_ADDR     (0x40020800UL)
 #define GPIOH_BASE_ADDR     (0x40021C00UL)
 #define RCC_BASE_ADDR       (0x40023800UL)
+#define USART1_BASE_ADDR    (0x40011000UL)
+#define USART2_BASE_ADDR    (0x40004400UL)
+#define USART6_BASE_ADDR    (0x40011400UL)
 #define NVIC_BASE_ADDR      (0xE000E100UL)
 /** @} */
 
@@ -225,6 +251,9 @@ typedef struct {
 #define GPIOC               ((GPIO_Type*)   GPIOC_BASE_ADDR)
 #define GPIOH               ((GPIO_Type*)   GPIOH_BASE_ADDR)
 #define RCC                 ((RCC_Type*)    RCC_BASE_ADDR)
+#define USART1              ((USART_Type*)  USART1_BASE_ADDR)
+#define USART2              ((USART_Type*)  USART2_BASE_ADDR)
+#define USART6              ((USART_Type*)  USART6_BASE_ADDR)
 #define NVIC                ((NVIC_Type*)   NVIC_BASE_ADDR)
 /** @} */
 
