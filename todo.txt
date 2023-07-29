@@ -1,1 +1,2 @@
-- Proper error number and code documentation
+TODO Proper error number and code documentation
+TODO USART driver
