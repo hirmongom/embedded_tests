@@ -182,7 +182,7 @@ typedef struct {
  */
 typedef struct {
   __I  uint32_t SR;             /**< 0x00 (R) Status */
-  __I  uint32_t DR;             /**< 0x04 (R) Data */
+  __IO uint32_t DR;             /**< 0x04 (R) Data */
   __IO uint32_t BRR;            /**< 0x08 (R/W) Baud rate */
   __IO uint32_t CR1;            /**< 0x0C (R/W) Control 1 */
   __IO uint32_t CR2;            /**< 0x10 (R/W) Control 2 */
