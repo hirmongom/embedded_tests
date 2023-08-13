@@ -38,37 +38,84 @@
 
 
 #include <stdint.h>
+#include "stm32f410rb.h"
 
 int main(void) {
-  /* Configure GPIO pins */
-  RCC->AHB1ENR |= (1 << 0);     // Enable clock for GPIOA
+  /* User button PC13 and user led PA5 configuration */
+  RCC->AHB1ENR |= (1 << 2);       // Enable clock for GPIOC
+  RCC->AHB1ENR |= (1 << 0);       // Enable clock for GPIOA
+
+  GPIOA->MODER |= (1 << 10);      // Set PA5 as output
+  GPIOC->MODER &= ~(3 << 26);     // Set PC13 as input (redundant)
+  GPIOC->PUPDR &= ~(3 << 26);     // Reset
+  GPIOC->PUPDR |= (1 << 26);      // PC13 pull-down
+
+  RCC->APB2ENR |= (1 << 14);        // Enable system configuration controller clock
+
+  SYSCFG->EXTICR[3] &= ~(0xF << 4); // Clear register
+  SYSCFG->EXTICR[3] |= (2 << 4);    // Select source input for the EXTI13
   
+  EXTI->IMR |= (1 << 13);     // Unmask pin in EXTI line
+  EXTI->FTSR &= ~(1 << 13); 
+  EXTI->RTSR |= (1 << 13);    // Enable rising edge trigger
+
+  NVIC->ISER[1] |= (1 << 8);  // Enable interrupt
+  NVIC->IPR[40] |= (1 << 4);  // Set priority
+
+  /* Configure USART2 on PA2 and PA3 */
+  
+  RCC->APB1ENR |= (1 << 17);    // Enable clock for USART2
+
   GPIOA->MODER |= (2 << 4);     // Alternate function mode on PA2
   GPIOA->MODER |= (2 << 6);     // Alternate function mode on PA3
 
+  GPIOA->OSPEEDR |= (3 << 4);   // High speed
+  GPIOA->OSPEEDR |= (3 << 6);   // High speed
+
+  GPIOA->PUPDR &= ~(3 << 4);    // No pull-up, pull-down
+  GPIOA->PUPDR &= ~(3 << 6);    // No pull-up, pull-down
+
   GPIOA->AFRL |= (7 << 8);      // Alternate Function 7 on PA2
-  GPIOA->AFRL |= (7 << 12);      // Alternate Function 7 on PA3
+  GPIOA->AFRL |= (7 << 12);     // Alternate Function 7 on PA3
 
-  /* Configure USART2 on PA2 and PA3 */
-  RCC->APB1ENR |= (1 << 17);    // Enable clock for USART2
-
-  uint32_t system_core_clock = 16000000;
+  /*
+  * USART2 is in the APB1, the clock source is pclk1
+  * pclk1 = hclk / 2
+  * hclk derives from the system clock (with no preescalers configured in this case)
+  * the mcu resets to the HSI clock (dont know how to change clock sources yet)
+  * HSI operates at 16MHz
+  * therefore, pclk1 = 8MHz
+  */
+  uint32_t system_core_clock = 8000000;  // USART clock is 8MHz
   uint16_t baud_rate = 9600;
-  uint16_t usart_div = (uint16_t) system_core_clock / baud_rate;
 
-  USART2->BRR = ((usart_div / 16) << 4) | (usart_div % 16);   // Set baud rate
+  uint16_t mantissa = system_core_clock / (16 * baud_rate);
+  uint16_t fraction = (system_core_clock % (16 * baud_rate)) / baud_rate;
 
-  USART2->CR1 |= (1 << 3);  // Usart transmitter enable
-
-  /* Test program */
-  char data[] = "Hi"; // Use an array of characters to store the string
+  USART2->BRR = (mantissa << 4) | fraction; // Set the baud rate
+  USART2->CR2 &= ~(3 << 12);    // 1 Stop bit
+  USART2->CR3 &= ~(1 << 3);     // Half duplex mode not selected
+  USART2->CR1 |= (1 << 2);      // Usart receiver enable
+  USART2->CR1 |= (1 << 3);      // Usart receiver enable
+  USART2->CR1 |= (1 << 13);     // Usart enable
   
-  for (int i = 0; i < 2; i++) {
-    while (!(USART2->SR & (1 << 7))); // Wait for TXE flag to be set
-    USART2->DR = data[i]; // Send one character at a time
-  }
-
-  while (!(USART2->SR & (1 << 6))); // Wait for TC flag (transmission complete)
 
   while (1); // Infinite loop to prevent the program from exiting
 } 
+
+void EXTI15_10_ISR(void) {
+  if (EXTI->PR & (1 << 13)) {
+    GPIOA->ODR ^= (1 << 5);
+    char data[] = "Hello USART"; // Use an array of characters to store the string
+  
+    for (unsigned long i = 0; i < sizeof(data) - 1; i++) {
+      while (!(USART2->SR & (1 << 7))); // Wait for TXE flag to be set
+      USART2->DR = data[i];     // Send one character at a time
+      USART2->CR1 |= (1 << 0);  // Send break
+      while (!(USART2->SR & (1 << 6))); // Wait for TC flag (transmission complete)
+    }
+
+    GPIOA->ODR ^= (1 << 5);
+    EXTI->PR |= (1 << 13);    // Clear flag
+    }
+}
