@@ -15,9 +15,7 @@
  * 
  * @author      Hiram Montejano Gómez (hiram.montejano@gmail.com)
  * 
- * @date        Last Updated: 30/07/2023
- * 
- * @todo        With interrupts
+ * @date        Last Updated: 27/08/2023
  * 
  * @copyright   This file is part of the "STM32F10RB Microcontroller Applications" project.
  * 
@@ -40,18 +38,39 @@
 #include <stdint.h>
 #include "stm32f410rb.h"
 
+
+void start_clocks();
+void user_button_init();
+void user_led_init();
+
+
+//**************************************************************************************************
 int main(void) {
-  /* User button PC13 and user led PA5 configuration */
+  start_clocks();
+  user_button_init();
+  user_led_init();
+  usart2_init();
+
+  while (1); // Infinite loop to prevent the program from exiting
+}
+
+
+//**************************************************************************************************
+void start_clocks() {
   RCC->AHB1ENR |= (1 << 2);       // Enable clock for GPIOC
   RCC->AHB1ENR |= (1 << 0);       // Enable clock for GPIOA
+  RCC->APB1ENR |= (1 << 17);      // Enable clock for USART2
+  RCC->APB2ENR |= (1 << 14);      // Enable system configuration controller clock
+}
 
-  GPIOA->MODER |= (1 << 10);      // Set PA5 as output
+
+//**************************************************************************************************
+void user_button_init() {
   GPIOC->MODER &= ~(3 << 26);     // Set PC13 as input (redundant)
   GPIOC->PUPDR &= ~(3 << 26);     // Reset
   GPIOC->PUPDR |= (1 << 26);      // PC13 pull-down
 
-  RCC->APB2ENR |= (1 << 14);        // Enable system configuration controller clock
-
+  // Interrupt configuration
   SYSCFG->EXTICR[3] &= ~(0xF << 4); // Clear register
   SYSCFG->EXTICR[3] |= (2 << 4);    // Select source input for the EXTI13
   
@@ -61,11 +80,18 @@ int main(void) {
 
   NVIC->ISER[1] |= (1 << 8);  // Enable interrupt
   NVIC->IPR[40] |= (1 << 4);  // Set priority
+}
 
-  /* Configure USART2 on PA2 and PA3 */
-  
-  RCC->APB1ENR |= (1 << 17);    // Enable clock for USART2
 
+//**************************************************************************************************
+void user_led_init() {
+  GPIOA->MODER |= (1 << 10);      // Set PA5 as output
+}
+
+
+//**************************************************************************************************
+void usart2_init() {
+  // USART2 GPIO Pins Configuration
   GPIOA->MODER |= (2 << 4);     // Alternate function mode on PA2
   GPIOA->MODER |= (2 << 6);     // Alternate function mode on PA3
 
@@ -98,15 +124,13 @@ int main(void) {
   USART2->CR1 |= (1 << 2);      // Usart receiver enable
   USART2->CR1 |= (1 << 3);      // Usart receiver enable
   USART2->CR1 |= (1 << 13);     // Usart enable
-  
+}
 
-  while (1); // Infinite loop to prevent the program from exiting
-} 
 
+//**************************************************************************************************
 void EXTI15_10_ISR(void) {
   if (EXTI->PR & (1 << 13)) {
-    GPIOA->ODR ^= (1 << 5);
-    char data[] = "Hello USART"; // Use an array of characters to store the string
+    char data[] = "a"; //"Hello USART"; // Use an array of characters to store the string
   
     for (unsigned long i = 0; i < sizeof(data) - 1; i++) {
       while (!(USART2->SR & (1 << 7))); // Wait for TXE flag to be set
@@ -115,7 +139,6 @@ void EXTI15_10_ISR(void) {
       while (!(USART2->SR & (1 << 6))); // Wait for TC flag (transmission complete)
     }
 
-    GPIOA->ODR ^= (1 << 5);
     EXTI->PR |= (1 << 13);    // Clear flag
     }
 }
