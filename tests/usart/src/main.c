@@ -42,6 +42,7 @@
 void start_clocks();
 void user_button_init();
 void user_led_init();
+void usart2_init();
 
 
 //**************************************************************************************************
@@ -79,7 +80,7 @@ void user_button_init() {
   EXTI->RTSR |= (1 << 13);    // Enable rising edge trigger
 
   NVIC->ISER[1] |= (1 << 8);  // Enable interrupt
-  NVIC->IPR[40] |= (1 << 4);  // Set priority
+  NVIC->IPR[40] |= (2 << 4);  // Set priority
 }
 
 
@@ -122,23 +123,37 @@ void usart2_init() {
   USART2->CR2 &= ~(3 << 12);    // 1 Stop bit
   USART2->CR3 &= ~(1 << 3);     // Half duplex mode not selected
   USART2->CR1 |= (1 << 2);      // Usart receiver enable
-  USART2->CR1 |= (1 << 3);      // Usart receiver enable
+  USART2->CR1 |= (1 << 3);      // Usart transmitter enable
   USART2->CR1 |= (1 << 13);     // Usart enable
+
+  // Configure receiver interrupt
+  USART2->CR1 |= (1 << 5);  // RXNEIE = 1: RXNE interrupt enabled
+  NVIC->ISER[1] |= (1 << 6);  // Enable interrupt for USART2 in NVIC
+  NVIC->IPR[38] |= (1 << 4);  // @todo Set priority
 }
 
 
 //**************************************************************************************************
 void EXTI15_10_ISR(void) {
   if (EXTI->PR & (1 << 13)) {
-    char data[] = "a"; //"Hello USART"; // Use an array of characters to store the string
-  
-    for (unsigned long i = 0; i < sizeof(data) - 1; i++) {
-      while (!(USART2->SR & (1 << 7))); // Wait for TXE flag to be set
-      USART2->DR = data[i];     // Send one character at a time
-      USART2->CR1 |= (1 << 0);  // Send break
-      while (!(USART2->SR & (1 << 6))); // Wait for TC flag (transmission complete)
-    }
+    while (!(USART2->SR & (1 << 7))); // Wait for TXE flag to be set (Transmit data register empty)
+    USART2->DR = 'A';  // Send test character
+    //USART2->CR1 |= (1 << 0);  // Send break
+    //while (!(USART2->SR & (1 << 6))); // Wait for TC flag (Transmission complete)
 
     EXTI->PR |= (1 << 13);    // Clear flag
+  }
+}
+
+
+void USART2_ISR(void) {
+  if (USART2->SR & (1 << 5)) {  // Check if RXNE (Read Data Register Not Empty) is set
+    /*
+    char received_char = USART2->DR;  // Read the data. This also clears the RXNE flag
+    if (received_char == 'A') {
+      GPIOA->ODR ^= (1 << 5); // Toggle LED
     }
+     Don't clear the RXNE and check status in openOCD
+    */
+  }
 }
