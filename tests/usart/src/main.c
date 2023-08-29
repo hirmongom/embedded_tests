@@ -36,20 +36,24 @@
 
 
 #include <stdint.h>
+#include <stddef.h>
 #include "stm32f410rb.h"
+
+#define FREQ 8000000    // 8MHz @todo need to manually set clock freq
 
 
 void start_clocks();
-void user_button_init();
-void user_led_init();
+void user_gpio_init();
 void usart2_init();
+static inline void usart_write_byte(uint8_t byte);
+static inline void usart_write_buffer(char *buffer, size_t length);
+static inline uint8_t usart_read_byte();
 
 
 //**************************************************************************************************
 int main(void) {
   start_clocks();
-  user_button_init();
-  user_led_init();
+  user_gpio_init();
   usart2_init();
 
   while (1); // Infinite loop to prevent the program from exiting
@@ -66,7 +70,11 @@ void start_clocks() {
 
 
 //**************************************************************************************************
-void user_button_init() {
+void user_gpio_init() {
+  // User LED
+  GPIOA->MODER |= (1 << 10);      // Set PA5 as output
+
+  // User button
   GPIOC->MODER &= ~(3 << 26);     // Set PC13 as input (redundant)
   GPIOC->PUPDR &= ~(3 << 26);     // Reset
   GPIOC->PUPDR |= (1 << 26);      // PC13 pull-down
@@ -86,7 +94,7 @@ void user_button_init() {
 
 //**************************************************************************************************
 void user_led_init() {
-  GPIOA->MODER |= (1 << 10);      // Set PA5 as output
+
 }
 
 
@@ -105,55 +113,61 @@ void usart2_init() {
   GPIOA->AFRL |= (7 << 8);      // Alternate Function 7 on PA2
   GPIOA->AFRL |= (7 << 12);     // Alternate Function 7 on PA3
 
-  /*
-  * USART2 is in the APB1, the clock source is pclk1
-  * pclk1 = hclk / 2
-  * hclk derives from the system clock (with no preescalers configured in this case)
-  * the mcu resets to the HSI clock (dont know how to change clock sources yet)
-  * HSI operates at 16MHz
-  * therefore, pclk1 = 8MHz
-  */
-  uint32_t system_core_clock = 8000000;  // USART clock is 8MHz
-  uint16_t baud_rate = 9600;
+  USART2->CR1 = 0;    // Disable this USART
 
-  uint16_t mantissa = system_core_clock / (16 * baud_rate);
-  uint16_t fraction = (system_core_clock % (16 * baud_rate)) / baud_rate;
+  unsigned long baud_rate = 9600;
+  USART2->BRR = FREQ / baud_rate; // Set the baud rate
 
-  USART2->BRR = (mantissa << 4) | fraction; // Set the baud rate
-  USART2->CR2 &= ~(3 << 12);    // 1 Stop bit
-  USART2->CR3 &= ~(1 << 3);     // Half duplex mode not selected
   USART2->CR1 |= (1 << 2);      // Usart receiver enable
   USART2->CR1 |= (1 << 3);      // Usart transmitter enable
-  USART2->CR1 |= (1 << 13);     // Usart enable
 
   // Configure receiver interrupt
-  USART2->CR1 |= (1 << 5);  // RXNEIE = 1: RXNE interrupt enabled
+  USART2->CR1 |= (1 << 5);    // RXNEIE = 1: RXNE interrupt enabled
   NVIC->ISER[1] |= (1 << 6);  // Enable interrupt for USART2 in NVIC
-  NVIC->IPR[38] |= (1 << 4);  // @todo Set priority
+  NVIC->IPR[38] |= (1 << 4);  // Set priority
+
+  USART2->CR1 |= (1 << 13);     // Usart enable
+}
+
+
+//**************************************************************************************************
+static inline void usart_write_byte(uint8_t byte) {
+  //while ((USART2->SR & (1 << 7)) == 0); // Wait for TXE flag to be set (Transmit data register empty)
+  USART2->DR = byte;  // Send test character
+}
+
+
+//**************************************************************************************************
+static inline void usart_write_buffer(char *buffer, size_t length) {
+  while (length-- > 0) usart_write_byte(*(uint8_t *)buffer++);
+}
+
+
+//**************************************************************************************************
+static inline uint8_t usart_read_byte() {
+  return (uint8_t) (USART2->DR & 255);
 }
 
 
 //**************************************************************************************************
 void EXTI15_10_ISR(void) {
   if (EXTI->PR & (1 << 13)) {
-    while (!(USART2->SR & (1 << 7))); // Wait for TXE flag to be set (Transmit data register empty)
+    while ((USART2->SR & (1 << 7)) == 0); // Wait for TXE flag to be set (Transmit data register empty)
     USART2->DR = 'A';  // Send test character
-    //USART2->CR1 |= (1 << 0);  // Send break
-    //while (!(USART2->SR & (1 << 6))); // Wait for TC flag (Transmission complete)
 
     EXTI->PR |= (1 << 13);    // Clear flag
   }
 }
 
 
+//**************************************************************************************************
 void USART2_ISR(void) {
   if (USART2->SR & (1 << 5)) {  // Check if RXNE (Read Data Register Not Empty) is set
-    /*
-    char received_char = USART2->DR;  // Read the data. This also clears the RXNE flag
+    uint8_t received_char = (USART2->DR & 255);  // Read the data. This also clears the RXNE flag
     if (received_char == 'A') {
       GPIOA->ODR ^= (1 << 5); // Toggle LED
+    } else {
+      GPIOA->ODR ^= (1 << 5); // Toggle LED
     }
-     Don't clear the RXNE and check status in openOCD
-    */
   }
 }
