@@ -60,70 +60,40 @@
 
 
 /***************************************************************************************************
- * @brief       SYSCFG register structure
+ * @brief       FLASH register structure
  *
- * @details     This structure represents the SYSCFG register block, which contains
- *              configuration and control registers for various system functions.
+ * @details     This structure represents the FLASH interface register block, which is responsible 
+ *              for configuring and controlling the Flash memory operations.
  * 
- * @defgroup    syscfg_reg SYSCFG
+ * @defgroup    flash_reg FLASH
  * @ingroup     register_type
  * @{
  */
 typedef struct {
-  __IO uint32_t MEMRMP;         /**< 0x00 (R/W) Memory remap */
-  __IO uint32_t PMC;            /**< 0x04 (R/W) Peripheral mode configuration */
-  __IO uint32_t EXTICR[4];      /**< 0x08-0x14 (R/W) External interrupt configuration [1..4] */
-  __I  uint32_t RESERVED;
-  __IO uint32_t CFGR2;          /**< 0x1C (R/W) Configuration register 2 */
-  __IO uint32_t CMPCR;          /**< 0x20 (R/W) Compensation cell control */
-  __IO uint32_t CFGR;           /**< 0x24 (R/W) Configuration register */
-} SYSCFG_Type;
+  __IO uint32_t ACR;            /**< 0x00 (R/W) Access control */
+  __IO uint32_t KEYR;           /**< 0x04 (R/W) Key */
+  __IO uint32_t OPTKEYR;        /**< 0x08 (R/W) Option key */
+  __IO uint32_t SR;             /**< 0x0C (R/W) Status */
+  __IO uint32_t CR;             /**< 0x10 (R/W) Control */
+  __IO uint32_t OPTCR;          /**< 0x14 (R/W) Option control */
+} FLASH_Type;
 /** @} */
 
 
 /***************************************************************************************************
- * @brief       EXTI register structure
+ * @brief       PWR register structure
  *
- * @details     This structure represents the EXTI register block, which is responsible for
- *              configuring and controlling the external interrupts.
+ * @details     This structure represents the PWR register block, which contains
+ *              configuration and control registers for the Power Controller.
  * 
- * @defgroup    exti_reg EXTI
+ * @defgroup    pwr_reg PWR
  * @ingroup     register_type
  * @{
  */
 typedef struct {
-  __IO uint32_t IMR;            /**< 0x00 (R/W) Interrupt mask */
-  __IO uint32_t EMR;            /**< 0x04 (R/W) Event mask */
-  __IO uint32_t RTSR;           /**< 0x08 (R/W) Rising trigger selection */
-  __IO uint32_t FTSR;           /**< 0x0C (R/W) Falling trigger selection */
-  __IO uint32_t SWIER;          /**< 0x10 (R/W) Software interrupt event */
-  __IO uint32_t PR;             /**< 0x14 (R/W) Pending */
-} EXTI_Type;
-/** @} */
-
-
-/***************************************************************************************************
- * @brief       GPIO register structure
- *
- * @details     This structure represents the GPIO register block, which contains
- *              configuration and control registers for the General Purpose Input/Output pins.
- * 
- * @defgroup    gpio_reg  GPIO
- * @ingroup     register_type
- * @{
- */
-typedef struct {
-  __IO    uint32_t MODER;       /**< 0x00 (R/W) Mode */
-  __IO    uint32_t OTYPER;      /**< 0x04 (R/W) Output type */
-  __IO    uint32_t OSPEEDR;     /**< 0x08 (R/W) Output speed */
-  __IO    uint32_t PUPDR;       /**< 0x0C (R/W) Pull-up/pull-down */
-  __I     uint32_t IDR;         /**< 0x10 (R) Input data */
-  __IO     uint32_t ODR;        /**< 0x14 (R/W) Output data */
-  __IO    uint32_t BSRR;        /**< 0x18 (R/W) Bit set/reset */
-  __IO    uint32_t LCKR;        /**< 0x1C (R/W) Configuration lock */
-  __IO    uint32_t AFRL;        /**< 0x20 (R/W) Alternate function low */
-  __IO    uint32_t AFRH;        /**< 0x24 (R/W) Alternate function high */
-} GPIO_Type;
+  __IO uint32_t CR;             /**< 0x00 (R/W) Power control */
+  __IO uint32_t CSR;            /**< 0x04 (R/W) Power control/status */
+} PWR_Type;
 /** @} */
 
 
@@ -170,25 +140,49 @@ typedef struct {
 
 
 /***************************************************************************************************
- * @brief       USART register structure
+ * @brief       GPIO register structure
+ *
+ * @details     This structure represents the GPIO register block, which contains
+ *              configuration and control registers for the General Purpose Input/Output pins.
  * 
- * @details     This structure represents the USART register block, which contains
- *              configuration and control registers for the Universal Synchronous/Asynchronous 
- *              Receiver Transmitter
- * 
- * @defgroup    usart_reg USART
+ * @defgroup    gpio_reg  GPIO
  * @ingroup     register_type
  * @{
  */
 typedef struct {
-  __I  uint32_t SR;             /**< 0x00 (R) Status */
-  __IO uint32_t DR;             /**< 0x04 (R) Data */
-  __IO uint32_t BRR;            /**< 0x08 (R/W) Baud rate */
-  __IO uint32_t CR1;            /**< 0x0C (R/W) Control 1 */
-  __IO uint32_t CR2;            /**< 0x10 (R/W) Control 2 */
-  __IO uint32_t CR3;            /**< 0x14 (R/W) Control 3 */
-  __IO uint32_t GTPR;           /**< 0x18 (R/W) Guard time and prescaler */
-} USART_Type;
+  __IO    uint32_t MODER;       /**< 0x00 (R/W) Mode */
+  __IO    uint32_t OTYPER;      /**< 0x04 (R/W) Output type */
+  __IO    uint32_t OSPEEDR;     /**< 0x08 (R/W) Output speed */
+  __IO    uint32_t PUPDR;       /**< 0x0C (R/W) Pull-up/pull-down */
+  __I     uint32_t IDR;         /**< 0x10 (R) Input data */
+  __IO     uint32_t ODR;        /**< 0x14 (R/W) Output data */
+  __IO    uint32_t BSRR;        /**< 0x18 (R/W) Bit set/reset */
+  __IO    uint32_t LCKR;        /**< 0x1C (R/W) Configuration lock */
+  __IO    uint32_t AFRL;        /**< 0x20 (R/W) Alternate function low */
+  __IO    uint32_t AFRH;        /**< 0x24 (R/W) Alternate function high */
+} GPIO_Type;
+/** @} */
+
+
+/***************************************************************************************************
+ * @brief       SYSCFG register structure
+ *
+ * @details     This structure represents the SYSCFG register block, which contains
+ *              configuration and control registers for various system functions.
+ * 
+ * @defgroup    syscfg_reg SYSCFG
+ * @ingroup     register_type
+ * @{
+ */
+typedef struct {
+  __IO uint32_t MEMRMP;         /**< 0x00 (R/W) Memory remap */
+  __IO uint32_t PMC;            /**< 0x04 (R/W) Peripheral mode configuration */
+  __IO uint32_t EXTICR[4];      /**< 0x08-0x14 (R/W) External interrupt configuration [1..4] */
+  __I  uint32_t RESERVED;
+  __IO uint32_t CFGR2;          /**< 0x1C (R/W) Configuration register 2 */
+  __IO uint32_t CMPCR;          /**< 0x20 (R/W) Compensation cell control */
+  __IO uint32_t CFGR;           /**< 0x24 (R/W) Configuration register */
+} SYSCFG_Type;
 /** @} */
 
 
@@ -221,21 +215,84 @@ typedef struct {
 
 
 /***************************************************************************************************
+ * @brief       EXTI register structure
+ *
+ * @details     This structure represents the EXTI register block, which is responsible for
+ *              configuring and controlling the external interrupts.
+ * 
+ * @defgroup    exti_reg EXTI
+ * @ingroup     register_type
+ * @{
+ */
+typedef struct {
+  __IO uint32_t IMR;            /**< 0x00 (R/W) Interrupt mask */
+  __IO uint32_t EMR;            /**< 0x04 (R/W) Event mask */
+  __IO uint32_t RTSR;           /**< 0x08 (R/W) Rising trigger selection */
+  __IO uint32_t FTSR;           /**< 0x0C (R/W) Falling trigger selection */
+  __IO uint32_t SWIER;          /**< 0x10 (R/W) Software interrupt event */
+  __IO uint32_t PR;             /**< 0x14 (R/W) Pending */
+} EXTI_Type;
+/** @} */
+
+
+/***************************************************************************************************
+ * @brief       USART register structure
+ * 
+ * @details     This structure represents the USART register block, which contains
+ *              configuration and control registers for the Universal Synchronous/Asynchronous 
+ *              Receiver Transmitter
+ * 
+ * @defgroup    usart_reg USART
+ * @ingroup     register_type
+ * @{
+ */
+typedef struct {
+  __I  uint32_t SR;             /**< 0x00 (R) Status */
+  __IO uint32_t DR;             /**< 0x04 (R) Data */
+  __IO uint32_t BRR;            /**< 0x08 (R/W) Baud rate */
+  __IO uint32_t CR1;            /**< 0x0C (R/W) Control 1 */
+  __IO uint32_t CR2;            /**< 0x10 (R/W) Control 2 */
+  __IO uint32_t CR3;            /**< 0x14 (R/W) Control 3 */
+  __IO uint32_t GTPR;           /**< 0x18 (R/W) Guard time and prescaler */
+} USART_Type;
+/** @} */
+
+
+/***************************************************************************************************
  * @defgroup    base_addr Register Base Addresses
  * @ingroup     reg_def
  * @{
  */
-#define SYSCFG_BASE_ADDR    (0x40013800UL)
-#define EXTI_BASE_ADDR      (0x40013C00UL)
+#define FLASH_BASE_ADDR     (0x40023C00UL)
+#define PWR_BASE_ADDR       (0x40007000UL)
+#define RCC_BASE_ADDR       (0x40023800UL)
 #define GPIOA_BASE_ADDR     (0x40020000UL)
 #define GPIOB_BASE_ADDR     (0x40020400UL)
 #define GPIOC_BASE_ADDR     (0x40020800UL)
 #define GPIOH_BASE_ADDR     (0x40021C00UL)
-#define RCC_BASE_ADDR       (0x40023800UL)
+#define SYSCFG_BASE_ADDR    (0x40013800UL)
+// DMA
+#define NVIC_BASE_ADDR      (0xE000E100UL)
+#define EXTI_BASE_ADDR      (0x40013C00UL)
+// CRC
+// ADC
+// DAC
+// RNG
+// TIM1
+// TIM5
+// TIM9 and TIM11
+// TIM6
+// LPTIM
+// WWDG
+// IWDG
+// RTC
+// FMPI2C
+// I2C
 #define USART1_BASE_ADDR    (0x40011000UL)
 #define USART2_BASE_ADDR    (0x40004400UL)
 #define USART6_BASE_ADDR    (0x40011400UL)
-#define NVIC_BASE_ADDR      (0xE000E100UL)
+// SPI
+// DBG
 /** @} */
 
 
@@ -244,17 +301,19 @@ typedef struct {
  * @ingroup     reg_def
  * @{
  */
-#define SYSCFG              ((SYSCFG_Type*) SYSCFG_BASE_ADDR)
-#define EXTI                ((EXTI_Type*)   EXTI_BASE_ADDR)
+#define FLASH               ((FLASH_Type*)  FLASH_BASE_ADDR)
+#define PWR                 ((PWR_Type*)    PWR_BASE_ADDR)
+#define RCC                 ((RCC_Type*)    RCC_BASE_ADDR)
 #define GPIOA               ((GPIO_Type*)   GPIOA_BASE_ADDR)
 #define GPIOB               ((GPIO_Type*)   GPIOB_BASE_ADDR)
 #define GPIOC               ((GPIO_Type*)   GPIOC_BASE_ADDR)
 #define GPIOH               ((GPIO_Type*)   GPIOH_BASE_ADDR)
-#define RCC                 ((RCC_Type*)    RCC_BASE_ADDR)
+#define SYSCFG              ((SYSCFG_Type*) SYSCFG_BASE_ADDR)
+#define NVIC                ((NVIC_Type*)   NVIC_BASE_ADDR)
+#define EXTI                ((EXTI_Type*)   EXTI_BASE_ADDR)
 #define USART1              ((USART_Type*)  USART1_BASE_ADDR)
 #define USART2              ((USART_Type*)  USART2_BASE_ADDR)
 #define USART6              ((USART_Type*)  USART6_BASE_ADDR)
-#define NVIC                ((NVIC_Type*)   NVIC_BASE_ADDR)
 /** @} */
 
 
