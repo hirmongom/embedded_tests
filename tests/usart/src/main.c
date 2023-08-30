@@ -39,9 +39,14 @@
 #include <stddef.h>
 #include "stm32f410rb.h"
 
-#define FREQ 8000000    // 8MHz @todo need to manually set clock freq
+
+#define PLL_M       8         // Division factor for the main PLL (PLL) input clock
+#define PLL_N       240       // Main PLL (PLL) multiplication factor for VCO
+#define PLL_P       4         // Main PLL (PLL) division factor for main system clock
+#define PLL_Q       5         // Main PLL (PLL) division factor for USB OTG FS, SDIO, and RNG.
 
 
+void set_system_clock();
 void start_clocks();
 void user_gpio_init();
 void usart2_init();
@@ -52,11 +57,67 @@ static inline uint8_t usart_read_byte();
 
 //**************************************************************************************************
 int main(void) {
+  set_system_clock();
   start_clocks();
   user_gpio_init();
   usart2_init();
 
   while (1); // Infinite loop to prevent the program from exiting
+}
+
+//**************************************************************************************************
+void set_system_clock() {
+  // Target is 60MHz
+  RCC->CR |= (1 << 16); // Enable HSE clock
+  while(!(RCC->CR & (1 << 17)));  // Wait for HSE clock ready flag
+
+  RCC->APB1ENR |= (1 << 28);  // Enable Power Interface clock
+  
+  PWR->CR |= (0b01 << 14);   // Scale 3 mode <= 64MHz 
+
+  RCC->CFGR |= (0 << 7);    // (0b0xxx) AHB prescaler = system clock not divided  
+  RCC->CFGR |= (5 << 10);   // (0b101) APB low speed prescaler = AHB / 4
+  RCC->CFGR |= (4 << 13);   // (0b100) APB high speed prescaler = AHB / 2
+
+  /* 
+  * Configuring the PLL (Phase-Locked Loop) for the desired system clock:
+  * 
+  * 1. PLL_M: This value is directly set to the lowest bits [5:0] of the PLLCFGR register.
+  *           It divides the input clock before it's fed to the VCO.
+  * 
+  * 2. PLL_N: This value is shifted to the left by 6 bits and set to bits [14:6] of the PLLCFGR 
+  *           register.
+  *           It determines the multiplication factor for the VCO (Voltage-Controlled Oscillator).
+  * 
+  * 3. PLL_P: This value determines the division factor for the main system clock.
+  *           The formula `((PLL_P >> 1) - 1)` is used to convert the actual division factor 
+  *           (2, 4, 6, or 8) to the respective 2-bit representation in the PLLCFGR register.
+  *           This value is then shifted to the left by 16 bits and set to bits [17:16].
+  * 
+  * 4. PLL_Q: This value is shifted to the left by 24 bits and set to bits [27:24] of the PLLCFGR 
+  *           register.
+  *           It determines the division factor for the OTG FS, SDIO, and RNG clocks.
+  * 
+  * 5. (1 << 22): This bit sets the PLL source to HSE (High-Speed External) clock. If this bit is 
+  *               reset, then HSI (High-Speed Internal) is used as the PLL source.
+  */
+  RCC->PLLCFGR = PLL_M | (PLL_N << 6) | (((PLL_P >> 1) -1) << 16) | (PLL_Q << 24) | (1 << 22);
+
+  RCC->CR |= (1 << 24);   // Enable main PLL
+  while (!(RCC->CR * (1 << 25)));   // Wait for PLL clock ready flag
+
+/* Configure the Flash Access Control Register (ACR)
+ * - (1 << 8): Prefetch enable. When set, it allows the Flash to fetch instructions before they are needed.
+ * - (1 << 9): Instruction cache enable. When set, it caches recently used instructions to speed up execution.
+ * - (1 << 10): Data cache enable. When set, it caches recently accessed data for faster access.
+ * - (5 << 0): Sets the Flash latency to 5 wait states. This is the number of CPU cycles that the memory access instruction will stall until the data is fetched from Flash.
+ */
+  FLASH->ACR = (1 << 8) | (1 << 9) | (1 << 10 ) | (5 << 0);
+
+  RCC->CFGR &= ~(3U << 0);    // Clear
+	RCC->CFGR |= (2 << 0);    // Set PLL as system clock
+
+  while(!(RCC->CFGR & (2 << 2)));   // Wait until PLL system clock status flag
 }
 
 
