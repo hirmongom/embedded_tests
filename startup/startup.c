@@ -10,7 +10,7 @@
  *              .bss section in SRAM to zero. Finally, it calls the main() function as
  *              the program's entry point
  * 
- * @author      Hiram Montejano Gómez
+ * @author      Hiram Montejano Gómez (hiram.montejano.gomez@gmail.com)
  * 
  * @date        Last Updated:   21/07/2023
  * 

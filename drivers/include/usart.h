@@ -9,7 +9,7 @@
  * 
  * @see         RM0401 Reference Manual, Page 627 for more information on USART. 
  * 
- * @author      Hiram Montejano Gómez (hiram.montejano@gmail.com)
+ * @author      Hiram Montejano Gómez (hiram.montejano.gomez@gmail.com)
  * 
  * @date        Last Updated: 30/07/2023
  * 

@@ -6,7 +6,7 @@
  * @details     This file implements the functions for configuring and controlling USART pins
  *              on the STM32F10RB microcontroller.
  * 
- * @author      Hiram Montejano Gómez (hiram.montejano@gmail.com)
+ * @author      Hiram Montejano Gómez (hiram.montejano.gomez@gmail.com)
  * 
  * @date        Last Updated: 30/07/2023
  * 

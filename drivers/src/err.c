@@ -13,7 +13,7 @@
  *              using a single variable. The structure contains two 16-bit fields:
  *              `errorNumber` and `errorCode`.
  * 
- * @author      Hiram Montejano Gómez
+ * @author      Hiram Montejano Gómez (hiram.montejano.gomez@gmail.com)
  * 
  * @date        Last Updated:   18/07/2023
  * 

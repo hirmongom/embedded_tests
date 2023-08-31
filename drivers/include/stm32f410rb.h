@@ -8,7 +8,7 @@
  *              on the STM32F410RB microcontroller. It provides an interface for configuring
  *              and accessing the peripherals such as GPIO, RCC, etc.
  * 
- * @author      Hiram Montejano Gómez
+ * @author      Hiram Montejano Gómez (hiram.montejano.gomez@gmail.com)
  * 
  * @date        Last Updated:   21/07/2023
  * 

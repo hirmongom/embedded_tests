@@ -9,7 +9,7 @@
  * 
  * @see         RM0401 Reference Manual, Page 135 for more information on GPIO configuration.
  * 
- * @author      Hiram Montejano Gómez
+ * @author      Hiram Montejano Gómez (hiram.montejano.gomez@gmail.com)
  * 
  * @date        Last Updated:   21/07/2023
  * 

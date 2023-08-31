@@ -28,7 +28,7 @@
  *              imposed by fixed sizes. However, it should be noted that this approach may incur
  *              some efficiency overhead.
  * 
- * @author      Hiram Montejano Gómez
+ * @author      Hiram Montejano Gómez (hiram.montejano.gomez@gmail.com)
  * 
  * @date        Last Updated:   15/07/2023
  * 
