@@ -31,6 +31,9 @@
 #ifndef SYSCLK_H
 #define SYSCLK_H
 
-void set_sysclk_to_60(void);
+
+// @todo macros for resulting speeds
+
+void set_system_clock(void);  /* Sets the System Clock to 60MHz */
 
 #endif
