@@ -26,3 +26,19 @@
  *              along with the "STM32F10RB Microcontroller Applications" project. If not, 
  *              see <http://www.gnu.org/licenses/>.
  */
+
+#ifndef USART2_H
+#define USART2_H
+
+
+#include <stdint.h>
+#include <stddef.h>
+
+
+void usart2_init(void);
+void usart2_write_byte(uint8_t byte);
+void usart2_write_buffer(char *buffer, size_t length);
+uint8_t usart2_read_byte(void);
+
+
+#endif
