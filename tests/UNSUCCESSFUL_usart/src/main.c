@@ -45,6 +45,7 @@
 #define PLL_P       4         // Main PLL (PLL) division factor for main system clock
 #define PLL_Q       5         // Main PLL (PLL) division factor for USB OTG FS, SDIO, and RNG.
 
+#define APB1_CLK    15000000UL
 
 void set_system_clock();
 void start_clocks();
@@ -73,7 +74,7 @@ void set_system_clock() {
 
   RCC->APB1ENR |= (1 << 28);  // Enable Power Interface clock
   
-  PWR->CR |= (0b01 << 14);   // Scale 3 mode <= 64MHz 
+  PWR->CR |= (1 << 14);   // Scale 3 mode <= 64MHz 
 
   RCC->CFGR |= (0 << 7);    // (0b0xxx) AHB prescaler = system clock not divided  
   RCC->CFGR |= (5 << 10);   // (0b101) APB low speed prescaler = AHB / 4
@@ -83,7 +84,7 @@ void set_system_clock() {
   * Configuring the PLL (Phase-Locked Loop) for the desired system clock:
   * 
   * 1. PLL_M: This value is directly set to the lowest bits [5:0] of the PLLCFGR register.
-  *           It divides the input clock before it's fed to the VCO.
+  *           It divides the input clock before it's fed to the VCO (Voltage-Controlled Oscillator).
   * 
   * 2. PLL_N: This value is shifted to the left by 6 bits and set to bits [14:6] of the PLLCFGR 
   *           register.
@@ -96,7 +97,7 @@ void set_system_clock() {
   * 
   * 4. PLL_Q: This value is shifted to the left by 24 bits and set to bits [27:24] of the PLLCFGR 
   *           register.
-  *           It determines the division factor for the OTG FS, SDIO, and RNG clocks.
+  *           It determines the division factor for the USB OTG FS, SDIO, and RNG clocks.
   * 
   * 5. (1 << 22): This bit sets the PLL source to HSE (High-Speed External) clock. If this bit is 
   *               reset, then HSI (High-Speed Internal) is used as the PLL source.
@@ -104,7 +105,7 @@ void set_system_clock() {
   RCC->PLLCFGR = PLL_M | (PLL_N << 6) | (((PLL_P >> 1) -1) << 16) | (PLL_Q << 24) | (1 << 22);
 
   RCC->CR |= (1 << 24);   // Enable main PLL
-  while (!(RCC->CR * (1 << 25)));   // Wait for PLL clock ready flag
+  while (!(RCC->CR & (1 << 25)));   // Wait for PLL clock ready flag
 
 /* Configure the Flash Access Control Register (ACR)
  * - (1 << 8): Prefetch enable. When set, it allows the Flash to fetch instructions before they are needed.
@@ -154,12 +155,6 @@ void user_gpio_init() {
 
 
 //**************************************************************************************************
-void user_led_init() {
-
-}
-
-
-//**************************************************************************************************
 void usart2_init() {
   // USART2 GPIO Pins Configuration
   GPIOA->MODER |= (2 << 4);     // Alternate function mode on PA2
@@ -177,7 +172,7 @@ void usart2_init() {
   USART2->CR1 = 0;    // Disable this USART
 
   unsigned long baud_rate = 9600;
-  USART2->BRR = FREQ / baud_rate; // Set the baud rate
+  USART2->BRR = APB1_CLK / baud_rate; // Set the baud rate
 
   USART2->CR1 |= (1 << 2);      // Usart receiver enable
   USART2->CR1 |= (1 << 3);      // Usart transmitter enable
@@ -193,8 +188,8 @@ void usart2_init() {
 
 //**************************************************************************************************
 static inline void usart_write_byte(uint8_t byte) {
-  //while ((USART2->SR & (1 << 7)) == 0); // Wait for TXE flag to be set (Transmit data register empty)
-  USART2->DR = byte;  // Send test character
+  while (!(USART2->SR & (1 << 7))); // Wait for TXE flag to be set (Transmit data register empty)
+  USART2->DR = byte;
 }
 
 
@@ -213,8 +208,7 @@ static inline uint8_t usart_read_byte() {
 //**************************************************************************************************
 void EXTI15_10_ISR(void) {
   if (EXTI->PR & (1 << 13)) {
-    while ((USART2->SR & (1 << 7)) == 0); // Wait for TXE flag to be set (Transmit data register empty)
-    USART2->DR = 'A';  // Send test character
+    usart_write_byte('A');  // Send test character
 
     EXTI->PR |= (1 << 13);    // Clear flag
   }
@@ -226,9 +220,9 @@ void USART2_ISR(void) {
   if (USART2->SR & (1 << 5)) {  // Check if RXNE (Read Data Register Not Empty) is set
     uint8_t received_char = (USART2->DR & 255);  // Read the data. This also clears the RXNE flag
     if (received_char == 'A') {
-      GPIOA->ODR ^= (1 << 5); // Toggle LED
+      GPIOA->ODR |= (1 << 5); // Toggle LED
     } else {
-      GPIOA->ODR ^= (1 << 5); // Toggle LED
+      GPIOA->ODR |= (1 << 5); // Toggle LED
     }
   }
 }
