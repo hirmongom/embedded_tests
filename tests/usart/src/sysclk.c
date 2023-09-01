@@ -30,8 +30,14 @@
 #include "stm32f410rb.h"
 
 
+#define PLL_M       16        // Division factor for the main PLL (PLL) input clock (VCO input = 1MHz)
+#define PLL_N       240       // Main PLL (PLL) multiplication factor for VCO (VCO output = 240MHz)
+#define PLL_P       4         // Main PLL (PLL) division factor for main system clock (SysClk = 60MHz)
+#define PLL_Q       5         // Main PLL (PLL) division factor for USB OTG FS, SDIO, and RNG.
+
+
 /**************************************************************************************************/
-static inline void confiugre_pll(void) {
+static inline void configure_pll(void) {
 /* 
  * Configuring the PLL (Phase-Locked Loop) for the desired system clock:
  * 
@@ -51,10 +57,10 @@ static inline void confiugre_pll(void) {
  *           register.
  *           It determines the division factor for the USB OTG FS, SDIO, and RNG clocks.
  * 
- * 5. (1 << 22): This bit sets the PLL source to HSE (High-Speed External) clock. If this bit is 
+ * 5. (bit:22): This bit sets the PLL source to HSE (High-Speed External) clock. If this bit is 
  *               reset, then HSI (High-Speed Internal) is used as the PLL source.
  */
-  RCC->PLLCFGR = PLL_M | (PLL_N << 6) | (((PLL_P >> 1) -1) << 16) | (PLL_Q << 24) | (1 << 22);
+  RCC->PLLCFGR = PLL_M | (PLL_N << 6) | (((PLL_P >> 1) -1) << 16) | (PLL_Q << 24) | (0 << 22);
 }
 
 
@@ -72,8 +78,8 @@ static inline void configure_flash(void) {
 
 /**************************************************************************************************/
 void set_system_clock(void) {
-  RCC->CR |= (1 << 16);   // Enable HSE clock
-  while(!(RCC->CR & (1 << 17)));    // Wait for HSE clock ready flag
+  RCC->CR |= (1 << 0);   // Enable HSI oscillator (16MHz)
+  while(!(RCC->CR & (1 << 1)));    // Wait for HSI clock ready flag
 
   RCC->APB1ENR |= (1 << 28);  // Enable Power Interface clock
   PWR->CR |= (1 << 14);   // Scale 3 mode <= 64MHz 

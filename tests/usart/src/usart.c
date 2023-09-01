@@ -29,11 +29,11 @@
 
 #include <stdint.h>
 #include <stddef.h>
+#include "sysclk.h"
 #include "stm32f410rb.h"
 
 void usart2_init(void) {
   RCC->AHB1ENR |= (1 << 0);   // Enable clock for GPIOA
-  // @todo wait for flag?
 
   // USART2 GPIO Pins Configuration
   GPIOA->MODER |= (2 << 4);     // Alternate function mode on PA2
@@ -51,7 +51,7 @@ void usart2_init(void) {
   USART2->CR1 = 0;    // Disable this USART
 
   unsigned long baud_rate = 9600;
-  USART2->BRR = APB1_CLK / baud_rate; // Set the baud rate @todo APB1_CLK from sysclk.h
+  USART2->BRR = APB1_FREQ / baud_rate;
 
   USART2->CR1 |= (1 << 2);      // Usart receiver enable
   USART2->CR1 |= (1 << 3);      // Usart transmitter enable
@@ -71,5 +71,6 @@ void usart2_write_buffer(char *buffer, size_t length) {
 
 
 uint8_t usart2_read_byte(void) {
+  while (!(USART2->SR & (1 << 5))); // Wait for RXNE flag to be set (Data is ready to be read)
   return (uint8_t) (USART2->DR & 255);
 }

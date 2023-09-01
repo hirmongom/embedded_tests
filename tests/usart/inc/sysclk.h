@@ -32,7 +32,11 @@
 #define SYSCLK_H
 
 
-// @todo macros for resulting speeds
+#define SYS_CLK       60000000UL
+#define AHB_FREQ      (SYS_CLK * 1UL)
+#define APB1_FREQ     (AHB_FREQ / 4UL)
+#define APB2_FREQ     (AHB_FREQ / 2UL)
+
 
 void set_system_clock(void);  /* Sets the System Clock to 60MHz */
 
