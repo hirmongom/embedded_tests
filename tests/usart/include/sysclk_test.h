@@ -1,10 +1,10 @@
 /***************************************************************************************************
- * @file        usart.h
+ * @file        sysclk.h
  * 
- * @brief       Header file for the USART2 peripheral
+ * @brief       Header file for System Clock
  * 
- * @details     This file provides the necessary definitions and functions for initializing and
- *              using the USART2 peripheral
+ * @details     This file provides the necessary definitions and functions for configuring the
+ *              System Clock.
  * 
  * @author      Hiram Montejano Gómez (hiram.montejano.gomez@gmail.com)
  * 
@@ -27,18 +27,17 @@
  *              see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef USART2_H
-#define USART2_H
+
+#ifndef SYSCLK_TEST_H
+#define SYSCLK_TEST_H
 
 
-#include <stdint.h>
-#include <stddef.h>
+#define SYS_CLK       60000000UL
+#define AHB_FREQ      (SYS_CLK * 1UL)
+#define APB1_FREQ     (AHB_FREQ / 4UL)
+#define APB2_FREQ     (AHB_FREQ / 2UL)
 
 
-void usart2_init(void);
-void usart2_write_byte(uint8_t byte);
-void usart2_write_buffer(char *buffer, size_t length);
-uint8_t usart2_read_byte(void);
-
+void set_system_clock(void);  /* Sets the System Clock to 60MHz */
 
 #endif

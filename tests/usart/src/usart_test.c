@@ -7,7 +7,7 @@
  * 
  * @author      Hiram Montejano Gómez (hiram.montejano.gomez@gmail.com)
  * 
- * @date        Last Updated: 31/08/2023
+ * @date        Last Updated: 02/09/2023
  * 
  * @copyright   This file is part of the "STM32F10RB Microcontroller Applications" project.
  * 
@@ -29,8 +29,10 @@
 
 #include <stdint.h>
 #include <stddef.h>
-#include "sysclk.h"
 #include "stm32f410rb.h"
+#include "sysclk_test.h"
+#include "usart_test.h"
+
 
 void usart2_init(void) {
   RCC->AHB1ENR |= (1 << 0);   // Enable clock for GPIOA
@@ -55,7 +57,13 @@ void usart2_init(void) {
 
   USART2->CR1 |= (1 << 2);      // Usart receiver enable
   USART2->CR1 |= (1 << 3);      // Usart transmitter enable
-  USART2->CR1 |= (1 << 13);     // Usart enable
+
+  // Configure receiver interrupt
+  USART2->CR1 |= (1 << 5);    // RXNEIE = 1: RXNE interrupt enabled
+  NVIC->ISER[1] |= (1 << 6);  // Enable interrupt for USART2 in NVIC
+  NVIC->IPR[38] |= (1 << 4);  // Set priority
+
+  USART2->CR1 |= (1 << 13);   // Usart enable
 }
 
 
@@ -66,7 +74,7 @@ void usart2_write_byte(uint8_t byte) {
 
 
 void usart2_write_buffer(char *buffer, size_t length) {
-  while (length-- > 0) usart_write_byte(*(uint8_t *)buffer++);
+  while (length-- > 0) usart2_write_byte(*(uint8_t *)buffer++);
 }
 
 

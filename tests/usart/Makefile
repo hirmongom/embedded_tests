@@ -4,7 +4,7 @@ STARTUP_DIR := $(PROJECT_ROOT)/startup
 
 CC = arm-none-eabi-gcc
 MCPU = cortex-m4
-CFLAGS = -c -I$(DRIVERS_DIR) -Iinc -mcpu=$(MCPU) -mthumb -mfloat-abi=soft -std=gnu11 -Wall -Wextra -pedantic -O0
+CFLAGS = -c -I$(DRIVERS_DIR) -Iinclude -mcpu=$(MCPU) -mthumb -mfloat-abi=soft -std=gnu11 -Wall -Wextra -pedantic -O0
 
 LD = arm-none-eabi-ld
 LS = $(PROJECT_ROOT)/tools/linker_script.ld
