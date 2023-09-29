@@ -34,10 +34,14 @@
 #include "sysclk_test.h"
 #include "usart_test.h"
 
+static uint8_t send_flag;
+
+// Tx = PA9, Rx = PA10
+
 //**************************************************************************************************
 int main(void) {
   set_system_clock();
-  usart2_init();
+  usart1_init();
 
   RCC->AHB1ENR |= (1 << 2);       // Enable clock for GPIOC
   GPIOC->PUPDR |= (1 << 26);      // PC13 pull-down
@@ -55,23 +59,28 @@ int main(void) {
   NVIC->ISER[1] |= (1 << 8);  // Enable interrupt
   NVIC->IPR[40] |= (2 << 4);  // Set priority
 
-  while(1);
+  while(1) {
+    if (send_flag & (1 << 0)) {
+      usart1_write_byte('A');
+      send_flag &= ~(1 << 0)
+    }
+  }
 }
 
 
 //**************************************************************************************************
 void EXTI15_10_ISR(void) {
   if (EXTI->PR & (1 << 13)) {
-    usart2_write_buffer("Hello", 5);
+    send_flag |= (1 << 0)
     EXTI->PR |= (1 << 13);    // Clear flag
   }
 }
 
 
 //**************************************************************************************************
-void USART2_ISR(void) {
-  if (USART2->SR & (1 << 5)) {  // Check if RXNE (Read Data Register Not Empty) is set
-    uint8_t received_char = (USART2->DR & 255);  // Read the data. This also clears the RXNE flag
+void USART1_ISR(void) {
+  if (USART1->SR & (1 << 5)) {  // Check if RXNE (Read Data Register Not Empty) is set
+    uint8_t received_char = (USART1->DR & 255);  // Read the data. This also clears the RXNE flag
     if (received_char == 'A') {
       GPIOA->ODR |= (1 << 5);
     } else {

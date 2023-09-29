@@ -1,0 +1,8 @@
+1. Measure signal of the receiver and transmitter pins:
+  - PA2 (Tx) = 0V, Logic Low?
+  - PA3 (Rx) = 0V, Logic Low?
+
+2. Test different USART Peripheral
+  - (WIP) Code should be ready, pending tests
+  
+3. Test transmission between different USART Peripherals

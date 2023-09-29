@@ -34,51 +34,48 @@
 #include "usart_test.h"
 
 
-void usart2_init(void) {
+void usart1_init(void) {
   RCC->AHB1ENR |= (1 << 0);   // Enable clock for GPIOA
 
   // USART2 GPIO Pins Configuration
-  GPIOA->MODER |= (2 << 4);     // Alternate function mode on PA2
-  GPIOA->MODER |= (2 << 6);     // Alternate function mode on PA3
+  GPIOA->MODER |= (2 << 18);     // Alternate function mode on PA9
+  GPIOA->MODER |= (2 << 20);     // Alternate function mode on PA10
 
   GPIOA->OSPEEDR |= (3 << 4);   // High speed
   GPIOA->OSPEEDR |= (3 << 6);   // High speed
 
-  GPIOA->PUPDR &= ~(3 << 4);    // No pull-up, pull-down
-  GPIOA->PUPDR &= ~(3 << 6);    // No pull-up, pull-down
+  GPIOA->AFRH |= (7 << 4);      // Alternate Function 7 on PA9 (Tx)
+  GPIOA->AFRH |= (7 << 8);     // Alternate Function 7 on PA10 (Rx)
 
-  GPIOA->AFRL |= (7 << 8);      // Alternate Function 7 on PA2
-  GPIOA->AFRL |= (7 << 12);     // Alternate Function 7 on PA3
-
-  USART2->CR1 = 0;    // Disable this USART
+  USART1->CR1 = 0;    // Disable this USART
 
   unsigned long baud_rate = 9600;
-  USART2->BRR = APB1_FREQ / baud_rate;
+  USART1->BRR = APB1_FREQ / baud_rate;
 
-  USART2->CR1 |= (1 << 2);      // Usart receiver enable
-  USART2->CR1 |= (1 << 3);      // Usart transmitter enable
+  USART1->CR1 |= (1 << 2);      // Usart receiver enable
+  USART1->CR1 |= (1 << 3);      // Usart transmitter enable
 
   // Configure receiver interrupt
   USART2->CR1 |= (1 << 5);    // RXNEIE = 1: RXNE interrupt enabled
-  NVIC->ISER[1] |= (1 << 6);  // Enable interrupt for USART2 in NVIC
-  NVIC->IPR[38] |= (1 << 4);  // Set priority
+  NVIC->ISER[1] |= (1 << 5);  // Enable interrupt for USART2 in NVIC
+  NVIC->IPR[37] |= (1 << 4);  // Set priority
 
-  USART2->CR1 |= (1 << 13);   // Usart enable
+  USART1->CR1 |= (1 << 13);   // Usart enable
 }
 
 
-void usart2_write_byte(uint8_t byte) {
-  while (!(USART2->SR & (1 << 7))); // Wait for TXE flag to be set (Transmit data register empty)
-  USART2->DR = byte;
+void usart1_write_byte(uint8_t byte) {
+  while (!(USART1->SR & (1 << 7))); // Wait for TXE flag to be set (Transmit data register empty)
+  USART1->DR = byte;
 }
 
 
-void usart2_write_buffer(char *buffer, size_t length) {
-  while (length-- > 0) usart2_write_byte(*(uint8_t *)buffer++);
+void usart1_write_buffer(char *buffer, size_t length) {
+  while (length-- > 0) usart1_write_byte(*(uint8_t *)buffer++);
 }
 
 
-uint8_t usart2_read_byte(void) {
-  while (!(USART2->SR & (1 << 5))); // Wait for RXNE flag to be set (Data is ready to be read)
-  return (uint8_t) (USART2->DR & 255);
+uint8_t usart1_read_byte(void) {
+  while (!(USART1->SR & (1 << 5))); // Wait for RXNE flag to be set (Data is ready to be read)
+  return (uint8_t) (USART1->DR & 255);
 }
