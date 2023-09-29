@@ -8,7 +8,7 @@
  * 
  * @author      Hiram Montejano Gómez (hiram.montejano.gomez@gmail.com)
  * 
- * @date        Last Updated: 02/09/2023
+ * @date        Last Updated: 29/09/2023
  * 
  * @copyright   This file is part of the "STM32F10RB Microcontroller Applications" project.
  * 
@@ -37,7 +37,7 @@
 void usart1_init(void);
 void usart1_write_byte(uint8_t byte);
 void usart1_write_buffer(char *buffer, size_t length);
-uint8_t usart2_read_byte(void);
+uint8_t usart1_read_byte(void);
 
 
 #endif

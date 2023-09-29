@@ -4,11 +4,11 @@
  * @brief       Usart communication test program
  * 
  * @details     This programs pretends to test the usart functionality by performing a loopback on
- *              the USART2 peripheral
+ *              the USART1 peripheral
  * 
  * @author      Hiram Montejano Gómez (hiram.montejano.gomez@gmail.com)
  * 
- * @date        Last Updated: 02/09/2023
+ * @date        Last Updated: 29/09/2023
  * 
  * @copyright   This file is part of the "STM32F10RB Microcontroller Applications" project.
  * 

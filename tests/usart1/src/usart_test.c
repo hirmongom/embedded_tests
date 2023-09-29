@@ -3,11 +3,11 @@
  * 
  * @brief       Source file for the USART2 peripheral
  * 
- * @details     This file implements the functions for initializing and using the USART2 peripheral.
+ * @details     This file implements the functions for initializing and using the USART1 peripheral.
  * 
  * @author      Hiram Montejano Gómez (hiram.montejano.gomez@gmail.com)
  * 
- * @date        Last Updated: 02/09/2023
+ * @date        Last Updated: 29/09/2023
  * 
  * @copyright   This file is part of the "STM32F10RB Microcontroller Applications" project.
  * 
