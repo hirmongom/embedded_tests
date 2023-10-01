@@ -10,7 +10,7 @@
  * 
  * @author      Hiram Montejano Gómez (hiram.montejano.gomez@gmail.com)
  * 
- * @date        Last Updated:   21/07/2023
+ * @date        Last Updated:   01/10/2023
  * 
  * @copyright   This file is part of the "STM32F10RB Microcontroller Applications" project.
  * 
@@ -155,7 +155,7 @@ typedef struct {
   __IO    uint32_t OSPEEDR;     /**< 0x08 (R/W) Output speed */
   __IO    uint32_t PUPDR;       /**< 0x0C (R/W) Pull-up/pull-down */
   __I     uint32_t IDR;         /**< 0x10 (R) Input data */
-  __IO     uint32_t ODR;        /**< 0x14 (R/W) Output data */
+  __IO    uint32_t ODR;         /**< 0x14 (R/W) Output data */
   __IO    uint32_t BSRR;        /**< 0x18 (R/W) Bit set/reset */
   __IO    uint32_t LCKR;        /**< 0x1C (R/W) Configuration lock */
   __IO    uint32_t AFRL;        /**< 0x20 (R/W) Alternate function low */

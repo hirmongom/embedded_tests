@@ -50,7 +50,7 @@ void usart1_init(void) {
   USART1->CR1 = 0;    // Disable this USART
 
   unsigned long baud_rate = 9600;
-  USART1->BRR = APB1_FREQ / baud_rate;
+  USART1->BRR = APB2_FREQ / baud_rate;
 
   USART1->CR1 |= (1 << 2);      // Usart receiver enable
   USART1->CR1 |= (1 << 3);      // Usart transmitter enable
@@ -60,12 +60,13 @@ void usart1_init(void) {
   NVIC->ISER[1] |= (1 << 5);  // Enable interrupt for USART2 in NVIC
   NVIC->IPR[37] |= (1 << 4);  // Set priority
 
+  while(1);
   USART1->CR1 |= (1 << 13);   // Usart enable
 }
 
 
 void usart1_write_byte(uint8_t byte) {
-  while (!(USART1->SR & (1 << 7))); // Wait for TXE flag to be set (Transmit data register empty)
+  // @todo while (!(USART1->SR & (1 << 7))); // Wait for TXE flag to be set (Transmit data register empty)
   USART1->DR = byte;
 }
 
@@ -76,6 +77,7 @@ void usart1_write_buffer(char *buffer, size_t length) {
 
 
 uint8_t usart1_read_byte(void) {
-  while (!(USART1->SR & (1 << 5))); // Wait for RXNE flag to be set (Data is ready to be read)
+  // @todo while (!(USART1->SR & (1 << 5))); // Wait for RXNE flag to be set (Data is ready to be read)
+  GPIOA->ODR ^= (1 << 5);
   return (uint8_t) (USART1->DR & 255);
 }
