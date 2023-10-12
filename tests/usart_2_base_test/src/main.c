@@ -4,7 +4,7 @@
  * @brief       Usart communication test program
  * 
  * @details     This programs pretends to test the usart functionality by performing a loopback on
- *              the USART1 peripheral
+ *              the USART2 peripheral
  * 
  * @author      Hiram Montejano Gómez (hiram.montejano.gomez@gmail.com)
  * 
@@ -31,70 +31,36 @@
 #include <stdint.h>
 #include "stm32f410rb.h"
 
-#include "sysclk_test.h"
-#include "usart_test.h"
 
-static uint8_t send_flag;
+void usart2_init(void);
+void usart2_write(uint8_t ch);
 
-// Tx = PA9, Rx = PA10
 
 //**************************************************************************************************
 int main(void) {
-  set_system_clock();
-  usart1_init();
+  usart2_init();
 
-  RCC->AHB1ENR |= (1 << 2);       // Enable clock for GPIOC
-  GPIOC->PUPDR |= (1 << 26);      // PC13 pull-down
-  GPIOA->MODER |= (1 << 10);      // Set PA5 as output
-  
-  // EXTI line 13 for PC13 
-  RCC->APB2ENR |= (1 << 14);        // Enable system configuration controller clock
-
-  SYSCFG->EXTICR[3] &= ~(0xF << 4); // Clear register
-  SYSCFG->EXTICR[3] |= (2 << 4);    // Select source input for the EXTI13
-  
-  EXTI->IMR |= (1 << 13);     // Unmask pin in EXTI line
-  EXTI->FTSR &= ~(1 << 13); 
-  EXTI->RTSR |= (1 << 13);    // Enable rising edge trigger
-
-  NVIC->ISER[1] |= (1 << 8);  // Enable interrupt
-  NVIC->IPR[40] |= (2 << 4);  // Set priority
-
-  while(1) {
-    if (send_flag == 1) {
-      usart1_write_byte('A');
-      send_flag = 0;
-
-      for(int i = 0; i < 10000; i++);
-      uint8_t c = usart1_read_byte();
-      if (c == 'A') {
-        GPIOA->ODR ^= (1 << 5);
-      }
-    }
+  while (1) {
+    usart2_write('A');
   }
 }
 
 
 //**************************************************************************************************
-void EXTI15_10_ISR(void) {
-  if (EXTI->PR & (1 << 13)) {
-    send_flag |= 1;
-    EXTI->PR |= (1 << 13);    // Clear flag
-  }
+void usart2_init(void) {
+  RCC->APB1ENR |= (1 << 17);
+  RCC->AHB1ENR |= (1 << 0);
+  GPIOA->AFRL |= (7 << 8);
+  GPIOA->MODER |= (1 << 5);
+
+  USART2->BRR = 16000000 / 9600;
+  USART2->CR1 |= (1 << 3);
+  USART2->CR1 |= (1 << 13);
 }
 
 
 //**************************************************************************************************
-void USART1_ISR(void) {
-  GPIOA->ODR ^= (1 << 5);
-  /*
-  if (USART1->SR & (1 << 5)) {  // Check if RXNE (Read Data Register Not Empty) is set
-    uint8_t received_char = (USART1->DR & 255);  // Read the data. This also clears the RXNE flag
-    if (received_char == 'A') {
-      GPIOA->ODR |= (1 << 5);
-    } else { // Turn ON LED no matter what happens
-      GPIOA->ODR |= (1 << 5);
-    }
-    
-  } */
+void usart2_write(uint8_t ch) {
+  while (!(USART2->SR & (1 << 7)));
+  USART2->DR = (ch & 0xFF);
 }

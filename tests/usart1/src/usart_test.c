@@ -7,7 +7,7 @@
  * 
  * @author      Hiram Montejano Gómez (hiram.montejano.gomez@gmail.com)
  * 
- * @date        Last Updated: 29/09/2023
+ * @date        Last Updated: 01/10/2023
  * 
  * @copyright   This file is part of the "STM32F10RB Microcontroller Applications" project.
  * 
@@ -55,18 +55,19 @@ void usart1_init(void) {
   USART1->CR1 |= (1 << 2);      // Usart receiver enable
   USART1->CR1 |= (1 << 3);      // Usart transmitter enable
 
+  /*
   // Configure receiver interrupt
   USART2->CR1 |= (1 << 5);    // RXNEIE = 1: RXNE interrupt enabled
   NVIC->ISER[1] |= (1 << 5);  // Enable interrupt for USART2 in NVIC
   NVIC->IPR[37] |= (1 << 4);  // Set priority
-
-  while(1);
+  */
   USART1->CR1 |= (1 << 13);   // Usart enable
 }
 
 
 void usart1_write_byte(uint8_t byte) {
   // @todo while (!(USART1->SR & (1 << 7))); // Wait for TXE flag to be set (Transmit data register empty)
+  // Gets stuck on TXE check
   USART1->DR = byte;
 }
 
@@ -78,6 +79,6 @@ void usart1_write_buffer(char *buffer, size_t length) {
 
 uint8_t usart1_read_byte(void) {
   // @todo while (!(USART1->SR & (1 << 5))); // Wait for RXNE flag to be set (Data is ready to be read)
-  GPIOA->ODR ^= (1 << 5);
+  // Gets stuck on RXNE check
   return (uint8_t) (USART1->DR & 255);
 }
