@@ -1,14 +1,14 @@
 /***************************************************************************************************
- * @file        main.c
+ * @file        usart.h
  * 
- * @brief       Usart communication test program
+ * @brief       Header file for the USART2 peripheral
  * 
- * @details     This programs pretends to test the usart functionality by performing a loopback on
- *              the USART2 peripheral
+ * @details     This file provides the necessary definitions and functions for initializing and
+ *              using the USART2 peripheral
  * 
  * @author      Hiram Montejano Gómez (hiram.montejano.gomez@gmail.com)
  * 
- * @date        Last Updated: 01/10/2023
+ * @date        Last Updated: 04/11/2023
  * 
  * @copyright   This file is part of the "STM32F10RB Microcontroller Applications" project.
  * 
@@ -27,40 +27,17 @@
  *              see <http://www.gnu.org/licenses/>.
  */
 
+#ifndef USART_TEST_H
+#define USART_TEST_H
 
 #include <stdint.h>
-#include "stm32f410rb.h"
+#include <stddef.h>
 
 
 void usart2_init(void);
-void usart2_write(uint8_t ch);
+void usart2_write_byte(uint8_t byte);
+void usart2_write_buffer(char *buffer, size_t length);
+uint8_t usart2_read_byte(void);
 
 
-//**************************************************************************************************
-int main(void) {
-  usart2_init();
-
-  while (1) {
-    usart2_write('A');
-  }
-}
-
-
-//**************************************************************************************************
-void usart2_init(void) {
-  RCC->APB1ENR |= (1 << 17);
-  RCC->AHB1ENR |= (1 << 0);
-  GPIOA->AFRL |= (7 << 8);
-  GPIOA->MODER |= (1 << 5);
-
-  USART2->BRR = 16000000 / 9600;
-  USART2->CR1 |= (1 << 3);
-  USART2->CR1 |= (1 << 13);
-}
-
-
-//**************************************************************************************************
-void usart2_write(uint8_t ch) {
-  while (!(USART2->SR & (1 << 7)));
-  USART2->DR = (ch & 0xFF);
-}
+#endif

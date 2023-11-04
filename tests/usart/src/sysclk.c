@@ -7,7 +7,7 @@
  * 
  * @author      Hiram Montejano Gómez (hiram.montejano.gomez@gmail.com)
  * 
- * @date        Last Updated: 02/09/2023
+ * @date        Last Updated: 04/11/2023
  * 
  * @copyright   This file is part of the "STM32F10RB Microcontroller Applications" project.
  * 
@@ -28,7 +28,7 @@
 
 
 #include "stm32f410rb.h"
-#include "sysclk_test.h"
+#include "sysclk.h"
 
 #define PLL_M       16        // Division factor for the main PLL (PLL) input clock (VCO input = 1MHz)
 #define PLL_N       240       // Main PLL (PLL) multiplication factor for VCO (VCO output = 240MHz)
