@@ -8,7 +8,7 @@
  * 
  * @author      Hiram Montejano Gómez (hiram.montejano.gomez@gmail.com)
  * 
- * @date        Last Updated: 29/09/2023
+ * @date        Last Updated: 11/11/2023
  * 
  * @note 				USART1_TX on PB6 (APB2)
  * 							USART1_RX on PB7 (APB2)
@@ -34,33 +34,26 @@
 #include <stdint.h>
 #include "stm32f410rb.h"
 
-// #include "sysclk.h"
-// #include "usart.h"
-
-#define APB2_FREQ 16000000
+#include "sysclk.h"
+#include "usart.h"
 
 
 /**************************************************************************************************/
 int main(void) {
-	RCC->APB2ENR |= (1 << 4);			// Enable Clock for USART 1
-	RCC->AHB1ENR |= (1 << 1);			// Enable Clock for GPIOB
+	set_system_clock();
+	usart1_init();
 
-	GPIOB->MODER |= (2 << 12);		// Enable Alternate function on PB6
-	GPIOB->MODER |= (2 << 14);		// Enable Alternate function on PB7
+	RCC->AHB1ENR |= (1 << 0);       // Enable clock for GPIOA
+	GPIOA->MODER |= (1 << 10);      // Set PA5 as output
 
-	GPIOB->OSPEEDR |= (3 << 12);	// Set output to very high speed on PB6
-	GPIOB->OSPEEDR |= (3 << 14);	// Set output to very high speed on PB7
-
-	GPIOB->AFRL |= (7 << 24);			// Enable USART1_TX AF on PB6	
-	GPIOB->AFRL |= (7 << 28);			// Enable USART1_RX AF on PB7
-
-	USART1->CR1 = (0 << 13);    	// Usart disable
-
-  unsigned long baud_rate = 9600;
-  USART1->BRR = APB2_FREQ / baud_rate; // @todo
-
-  USART1->CR1 |= (1 << 2);      // Usart receiver enable
-  USART1->CR1 |= (1 << 3);      // Usart transmitter enable
-
-  USART1->CR1 |= (1 << 13);   	// Usart enable
+	int num = 0;
+	while (1) {
+		num = (num + 1) % 10;
+		for (int i = 0; i < 1000000; i++);
+		usart1_write_byte(num);
+		for (int i = 0; i < 1000000; i++);
+		if (usart1_read_byte() == 1) {
+			GPIOA->ODR ^= (1 << 5);
+		}
+	}
 }
