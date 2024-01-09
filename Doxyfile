@@ -1,0 +1,72 @@
+# Doxyfile
+
+#---------------------------------------------------------------------------
+# Project configuration
+#---------------------------------------------------------------------------
+
+PROJECT_NAME            = "STM32F10RB Microcontroller"
+OUTPUT_DIRECTORY        = ./docs
+CREATE_SUBDIRS          = YES
+
+#---------------------------------------------------------------------------
+# Build related configuration options
+#---------------------------------------------------------------------------
+
+EXTRACT_ALL             = NO
+EXTRACT_PRIVATE         = YES
+EXTRACT_STATIC          = YES
+EXTRACT_LOCAL_CLASSES   = YES
+EXTRACT_LOCAL_METHODS   = YES
+RECURSIVE               = YES
+OPTIMIZE_OUTPUT_FOR_C   = YES
+
+#---------------------------------------------------------------------------
+# Configuration options related to the input files
+#---------------------------------------------------------------------------
+
+INPUT                   = ./startup ./drivers ./README.md ./LICENSE
+FILE_PATTERNS           = *.c *.h
+LAYOUT_FILE             = ./doxygen_layout.xml
+USE_MDFILE_AS_MAINPAGE  = README.md
+
+#---------------------------------------------------------------------------
+# Configuration options related to the HTML output
+#---------------------------------------------------------------------------
+
+GENERATE_HTML           = YES
+HTML_OUTPUT             = doxygen
+
+#---------------------------------------------------------------------------
+# Configuration options related to the LATEX output
+#---------------------------------------------------------------------------
+
+GENERATE_LATEX          = NO
+
+#---------------------------------------------------------------------------
+# Configuration options related to the DOT tool
+#---------------------------------------------------------------------------
+
+HAVE_DOT                = NO
+CALL_GRAPH              = NO
+CALLER_GRAPH            = NO
+
+#---------------------------------------------------------------------------
+# Miscellaneous configuration options
+#---------------------------------------------------------------------------
+
+QUIET                   = YES
+WARN_IF_UNDOCUMENTED    = NO
+
+MARKDOWN_SUPPORT        = YES
+TOC_INCLUDE_HEADINGS    = 0
+
+SORT_BRIEF_DOCS         = NO
+SORT_MEMBER_DOCS        = NO
+
+INLINE_SOURCES          = YES
+INLINE_SIMPLE_STRUCTS   = YES
+
+JAVADOC_BANNER          = YES
+
+DISABLE_INDEX           = YES
+GENERATE_TREEVIEW       = YES
